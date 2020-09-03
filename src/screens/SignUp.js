@@ -23,9 +23,9 @@ function SignUp({navigation}) {
 
   //google sign in
   GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+    scopes: ['email', 'profile'], // what API you want to access on behalf of the user, default is email and profile
     webClientId:
-      '24758434460-j2nngqcqh1k7idfbl97esegna48ad6rk.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      '24758434460-eeahus85qnrjs25grp4ukag1evs8m0tq.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     androidClientId:
       '24758434460-mtkoleq0oodi10tu8c3ee54ouhns4gnf.apps.googleusercontent.com',
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
@@ -33,7 +33,6 @@ function SignUp({navigation}) {
     loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
     forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
     accountName: '', // [Android] specifies an account name on the device that should be used
-    iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
   });
   //google sign in
   const signInWithGoogle = async () => {
@@ -45,28 +44,17 @@ function SignUp({navigation}) {
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        Alert.alert(
-          'Something went wrong',
-          'An issue occured while signing in',
-        );
+        Alert.alert('Something went wrong', 'You cancelled the process');
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (e.g. sign in) is in progress already
-        Alert.alert(
-          'Something went wrong',
-          'An issue occured while signing in',
-        );
+        Alert.alert('Sign In already in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
-        Alert.alert(
-          'Something went wrong',
-          'An issue occured while signing in',
-        );
+        Alert.alert('Something went wrong', 'Google Play services unavailable');
       } else {
         // some other error happened
-        Alert.alert(
-          'Something went wrong',
-          'An issue occured while signing in',
-        );
+        Alert.alert('Something went wrong', error.toString());
+        console.log(error);
       }
     }
   };
@@ -143,17 +131,34 @@ function SignUp({navigation}) {
       {/* user data modal */}
       <Modal animationType="slide" transparent={true} visible={visible}>
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>{user && user.toString()}</Text>
+          {user && (
+            <View style={styles.modalView}>
+              <Text style={styles.head}>User Details</Text>
+              <Text style={styles.modalText}>
+                Name : {user.user.name ? user.user.name : ''}
+              </Text>
+              <Text style={styles.modalText}>
+                Email : {user.user.email ? user.user.email : ''}
+              </Text>
+              <Text style={styles.modalText}>
+                Family Name : {user.user.familyName ? user.user.familyName : ''}
+              </Text>
+              <Text style={styles.modalText}>
+                Id : {user.user.id ? user.user.id : ''}
+              </Text>
+              <Text style={styles.modalText}>
+                Photo Url : {user.user.photo ? user.user.photo : ''}
+              </Text>
 
-            <TouchableOpacity
-              style={{...styles.openButton, backgroundColor: '#2196F3'}}
-              onPress={() => {
-                setVisible(!visible);
-              }}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={{...styles.openButton, backgroundColor: '#2196F3'}}
+                onPress={() => {
+                  setVisible(!visible);
+                }}>
+                <Text style={styles.textStyle}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </Modal>
     </ScrollView>
@@ -307,6 +312,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
     // marginLeft: 31,
   },
+  centeredView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
   modalView: {
     margin: 20,
     backgroundColor: 'white',
@@ -333,9 +344,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  head: {
+    fontSize: 20,
+    fontWeight: '700',
+    marginVertical: 20,
+  },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontSize: 16,
   },
 });
 
