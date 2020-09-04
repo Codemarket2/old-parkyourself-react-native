@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
   },
   signUp: {
-    fontFamily: 'roboto-500',
+    //fontFamily: 'roboto-500',
     color: 'rgba(252,250,250,1)',
     fontSize: 26,
     marginVertical: 23,
@@ -193,14 +193,14 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
   },
   createAccount: {
-    fontFamily: 'roboto-500',
+    //fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 15,
     marginTop: 19,
     marginLeft: 100,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(245,245,245,1)',
     textAlign: 'center',
     fontSize: 15,

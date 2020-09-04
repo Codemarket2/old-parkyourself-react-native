@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.24758434460-tvj5bfite2s545k6s81cpdfjln15v95s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>24758434460-k3se8um0332vskncit7je32299p8kdp3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDWNHAqmsy-70fMMD8Ij8GfhRtRigg_bbg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>24758434460</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.ParkYourSelf-RN</string>
+	<key>PROJECT_ID</key>
+	<string>parkyourself-287907</string>
+	<key>STORAGE_BUCKET</key>
+	<string>parkyourself-287907.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:24758434460:ios:01524accb86169f24fcb59</string>
+	<key>DATABASE_URL</key>
+	<string>https://parkyourself-287907.firebaseio.com</string>
+</dict>
+</plist>

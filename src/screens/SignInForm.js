@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    //fontFamily: 'roboto-500',
     color: 'rgba(252,248,248,1)',
     fontSize: 26,
     marginTop: 22,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   exampleGmailCom: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(246,246,246,1)',
     height: 49,
     width: 240,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   xxxxxxxxxxxxxxxxxx: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(246,246,246,1)',
     height: 42,
     width: 240,
@@ -206,21 +206,21 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
   },
   login: {
-    fontFamily: 'roboto-500',
+    //fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 22,
     marginTop: 15,
     marginLeft: 129,
   },
   forgotPassword: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(227,221,221,1)',
     fontSize: 14,
     marginTop: 13,
     marginLeft: 200,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(245,245,245,1)',
     textAlign: 'center',
     fontSize: 15,

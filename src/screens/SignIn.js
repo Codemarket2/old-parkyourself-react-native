@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   Modal,
+  Dimensions,
 } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -28,6 +29,7 @@ function SignIn({navigation}) {
       '24758434460-eeahus85qnrjs25grp4ukag1evs8m0tq.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     androidClientId:
       '24758434460-mtkoleq0oodi10tu8c3ee54ouhns4gnf.apps.googleusercontent.com',
+    iosClientId:'24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com',
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     hostedDomain: '', // specifies a hosted domain restriction
     loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   rect: {
-    height: 480,
+    minHeight:500,
     backgroundColor: 'rgba(39,170,225,1)',
     marginTop: 45,
     alignItems: 'center',
@@ -201,7 +203,7 @@ const styles = StyleSheet.create({
     width: 34,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(246,244,244,1)',
     fontSize: 15,
     marginLeft: 39,
@@ -239,7 +241,6 @@ const styles = StyleSheet.create({
     width: 33,
   },
   signInWithGoogle: {
-    fontFamily: 'roboto-regular',
     color: 'rgba(248,248,248,1)',
     fontSize: 15,
     marginLeft: 49,
@@ -270,14 +271,14 @@ const styles = StyleSheet.create({
     // marginLeft: 34,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-700',
+    //fontFamily: 'roboto-700',
     color: 'rgba(92,159,188,1)',
     fontSize: 15,
     marginTop: 20,
     marginLeft: 28,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(252,250,250,1)',
     opacity: 0.66,
     letterSpacing: 0,
@@ -294,20 +295,20 @@ const styles = StyleSheet.create({
     // marginLeft: 34,
   },
   signUp: {
-    fontFamily: 'roboto-500',
+    //fontFamily: 'roboto-500',
     color: 'rgba(235,233,233,1)',
     fontSize: 18,
     marginTop: 13,
     marginLeft: 119,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(239,237,237,1)',
     marginTop: 35,
     // marginLeft: 38,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-regular',
+    //fontFamily: 'roboto-regular',
     color: 'rgba(247,245,245,1)',
     marginTop: 4,
     // marginLeft: 31,
