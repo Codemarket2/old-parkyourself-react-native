@@ -28,7 +28,7 @@ function SignUpForm({navigation}) {
       if (password != password2) {
         Alert.alert('Password Mismatch', 'Both passwords should match');
       } else {
-        navigation.navigate('Home');
+        navigation.navigate('Tabs');
       }
     } else {
       Alert.alert('Missing Inputs', 'Please fill all the inputs');

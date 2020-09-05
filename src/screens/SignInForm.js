@@ -22,7 +22,7 @@ function SignInForm({navigation}) {
   const signInHandler = () => {
     if (email && password) {
       if (email == EMAIL && password == PASSWORD) {
-        navigation.navigate('Home');
+        navigation.navigate('Tabs');
       } else {
         Alert.alert('Invalid Credentials', 'Invalid username or password');
       }

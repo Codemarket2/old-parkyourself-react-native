@@ -18,10 +18,16 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 
 function SignIn({navigation}) {
-  const [user, setUser] = useState(null);
-  const [visible, setVisible] = useState(false);
+  // const [user, setUser] = useState(null);
+  // const [visible, setVisible] = useState(false);
 
   GoogleSignin.configure({
     scopes: ['email', 'profile'], // what API you want to access on behalf of the user, default is email and profile
@@ -29,7 +35,8 @@ function SignIn({navigation}) {
       '24758434460-eeahus85qnrjs25grp4ukag1evs8m0tq.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     androidClientId:
       '24758434460-mtkoleq0oodi10tu8c3ee54ouhns4gnf.apps.googleusercontent.com',
-    iosClientId:'24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com',
+    iosClientId:
+      '24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com',
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     hostedDomain: '', // specifies a hosted domain restriction
     loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -41,12 +48,14 @@ function SignIn({navigation}) {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      setUser(userInfo);
-      setVisible(true);
+      alert('Logged In! ', `Welcome, ${userInfo.user.name}`);
+      navigation.navigate('Tabs');
+      // setUser(userInfo);
+      // setVisible(true);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
-        Alert.alert('Something went wrong', 'You cancelled the process');
+        Alert.alert('Something went wrong', 'Process was cancelled abruptly');
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (e.g. sign in) is in progress already
         Alert.alert('Sign In already in progress');
@@ -63,31 +72,36 @@ function SignIn({navigation}) {
 
   //facebook login
   async function facebookLogIn() {
-    // try {
-    //   await Facebook.initializeAsync('441063166853184');
-    //   const {
-    //     type,
-    //     token,
-    //     expires,
-    //     permissions,
-    //     declinedPermissions,
-    //   } = await Facebook.logInWithReadPermissionsAsync({
-    //     permissions: ['public_profile'],
-    //   });
-    //   if (type === 'success') {
-    //     // Get the user's name using Facebook's Graph API
-    //     const response = await fetch(
-    //       `https://graph.facebook.com/me?access_token=${token}`,
-    //     );
-    //     Alert.alert('Logged in!', `Welcome ${(await response.json()).name}!`);
-    //     navigation.navigate('Tabs');
-    //   } else {
-    //     Alert.alert('Facebook Login Failed');
-    //   }
-    // } catch ({message}) {
-    //   Alert.alert('Facebook Login Failed', message);
-    // }
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function (result) {
+        if (result.isCancelled) {
+          Alert.alert('Something went wrong', 'Process was cancelled abruptly');
+        } else {
+          AccessToken.getCurrentAccessToken().then((data) => {
+            const infoRequest = new GraphRequest(
+              '/me?fields=first_name,last_name,name,email,friends,picture',
+              null,
+              _responseInfoCallback,
+            );
+            // Start the graph request.
+            new GraphRequestManager().addRequest(infoRequest).start();
+          });
+        }
+      },
+      function (error) {
+        Alert.alert('Something went wrong', error.toString());
+      },
+    );
   }
+
+  const _responseInfoCallback = (error, result) => {
+    if (error) {
+      Alert.alert('Something went wrong', error.toString());
+    } else {
+      Alert.alert('Logged In! ', `Welcome, ${result.name}`);
+      navigation.navigate('Tabs');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -131,7 +145,7 @@ function SignIn({navigation}) {
       </View>
 
       {/* user data modal */}
-      <Modal animationType="slide" transparent={true} visible={visible}>
+      {/* <Modal animationType="slide" transparent={true} visible={visible}>
         <View style={styles.centeredView}>
           {user && (
             <View style={styles.modalView}>
@@ -162,7 +176,7 @@ function SignIn({navigation}) {
             </View>
           )}
         </View>
-      </Modal>
+      </Modal> */}
     </ScrollView>
   );
 }
@@ -174,7 +188,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   rect: {
-    minHeight:500,
+    minHeight: 500,
     backgroundColor: 'rgba(39,170,225,1)',
     marginTop: 45,
     alignItems: 'center',

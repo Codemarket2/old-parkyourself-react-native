@@ -1,8 +1,8 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import SignInStack from './SignInStack';
 import SignUpStack from './SignUpStack';
-import Home from '../screens/Home';
+import Tabs from './Tabs';
 
 const Stack = createStackNavigator();
 
@@ -14,21 +14,22 @@ export default function MainStack() {
           elevation: 0,
           shadowOpacity: 0,
         },
-      }}>
+      }}
+    >
       <Stack.Screen
-        name="SignInStack"
+        name='SignInStack'
         component={SignInStack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="SignUpStack"
+        name='SignUpStack'
         component={SignUpStack}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
+        name='Tabs'
+        component={Tabs}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
