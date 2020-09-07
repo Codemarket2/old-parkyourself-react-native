@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Share,
   StyleSheet,
@@ -12,7 +12,7 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 
-function Untitled6({ price, location, navigation }) {
+function Untitled6({price, location, navigation}) {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -40,36 +40,33 @@ function Untitled6({ price, location, navigation }) {
             <View style={styles.imageRow}>
               <Image
                 source={require('../assets/images/cars.jpg')}
-                resizeMode='stretch'
-                style={styles.image}
-              ></Image>
+                resizeMode="stretch"
+                style={styles.image}></Image>
               <View style={styles.loremIpsumStack}>
-                <Text style={styles.loremIpsum}></Text>
+                {/* <Text style={styles.loremIpsum}></Text> */}
                 <View style={styles.rect3}>
                   <View style={styles.rect4Stack}>
-                    <View style={styles.rect4}>
-                      <View style={styles.iconRow}>
-                        <TouchableOpacity onPress={onShare}>
-                          <EntypoIcon
-                            name='share'
-                            style={styles.icon}
-                          ></EntypoIcon>
-                        </TouchableOpacity>
-                        <View style={styles.rect6}>
-                          <View style={styles.icon2Row}>
-                            <IoniconsIcon
-                              name='ios-walk'
-                              style={styles.icon2}
-                            ></IoniconsIcon>
-                            <Text style={styles.loremIpsum4}>20 min</Text>
-                          </View>
-                        </View>
-                      </View>
-                    </View>
                     <View style={styles.rect5}>
                       <View style={styles.loremIpsum2Row}>
                         <Text style={styles.loremIpsum2}>{price}</Text>
                         <Text style={styles.loremIpsum3}>/401 feet</Text>
+                      </View>
+                    </View>
+                    <View style={styles.rect4}>
+                      <View style={styles.iconRow}>
+                        <TouchableOpacity onPress={onShare}>
+                          <EntypoIcon
+                            name="share"
+                            style={styles.icon}></EntypoIcon>
+                        </TouchableOpacity>
+                        <View style={styles.rect6}>
+                          <View style={styles.icon2Row}>
+                            <IoniconsIcon
+                              name="ios-walk"
+                              style={styles.icon2}></IoniconsIcon>
+                            <Text style={styles.loremIpsum4}>20 min</Text>
+                          </View>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -101,34 +98,31 @@ function Untitled6({ price, location, navigation }) {
         <View style={styles.rect12}>
           <View style={styles.materialButtonPrimaryRow}>
             <MaterialButtonPrimary
-              caption='BOOK NOW'
+              caption="BOOK NOW"
               style={styles.materialButtonPrimary}
               onPress={() => {
                 navigation.navigate('PayNow');
-              }}
-            ></MaterialButtonPrimary>
+              }}></MaterialButtonPrimary>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('MoreDetails');
-              }}
-            >
+              }}>
               <Text style={styles.moreDetails}>More Details</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.rect13}
-              onPress={() => navigation.navigate('Reviews')}
-            >
+              onPress={() => navigation.navigate('Reviews')}>
               <View style={styles.icon3Row}>
-                <EntypoIcon name='star' style={styles.icon3}></EntypoIcon>
-                <EntypoIcon name='star' style={styles.icon4}></EntypoIcon>
-                <EntypoIcon name='star' style={styles.icon5}></EntypoIcon>
-                <EntypoIcon name='star' style={styles.icon6}></EntypoIcon>
-                <EntypoIcon name='star' style={styles.icon7}></EntypoIcon>
+                <EntypoIcon name="star" style={styles.icon3}></EntypoIcon>
+                <EntypoIcon name="star" style={styles.icon4}></EntypoIcon>
+                <EntypoIcon name="star" style={styles.icon5}></EntypoIcon>
+                <EntypoIcon name="star" style={styles.icon6}></EntypoIcon>
+                <EntypoIcon name="star" style={styles.icon7}></EntypoIcon>
                 <Text style={styles.loremIpsum6}>123</Text>
                 <SimpleLineIcon
-                  name='arrow-right'
+                  name="arrow-right"
                   size={9}
-                  color='rgba(160,156,156,1)'
+                  color="rgba(160,156,156,1)"
                 />
               </View>
             </TouchableOpacity>
@@ -162,7 +156,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: '100%',
-    height: 205,
+    // padding: 5,
+    // height: 205,
     // position: 'absolute',
     // borderWidth: 1,
     // borderColor: '#000000',
@@ -181,9 +176,9 @@ const styles = StyleSheet.create({
     marginTop: 11,
   },
   loremIpsum: {
-    top: 18,
-    left: 27,
-    position: 'absolute',
+    // top: 18,
+    // left: 27,
+    // position: 'absolute',
     fontFamily: 'roboto-regular',
     color: '#121212',
   },
@@ -191,8 +186,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: '100%',
-    height: 70,
-    position: 'absolute',
+    // height: 70,
+    // position: 'absolute',
   },
   rect4: {
     top: 0,
@@ -250,11 +245,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   rect5: {
-    top: 0,
-    left: 0,
-    width: 175,
+    // top: 0,
+    // left: 0,
+    // width: 175,
     height: 45,
-    position: 'absolute',
+    // position: 'absolute',
     flexDirection: 'row',
   },
   loremIpsum2: {
@@ -266,7 +261,7 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(171,170,170,1)',
     fontSize: 13,
-    marginLeft: 8,
+    // marginLeft: 8,
     marginTop: 9,
   },
   loremIpsum2Row: {
@@ -274,12 +269,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     marginRight: 36,
-    marginLeft: 11,
+    // marginLeft: 11,
     marginTop: 7,
   },
   rect4Stack: {
-    width: 288,
+    // width: 288,
     height: 45,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
   },
   carPark: {
     fontFamily: 'roboto-500',
@@ -296,10 +294,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 4,
     marginLeft: 8,
-    marginRight: 30,
+    // marginRight: 30,
   },
   loremIpsumStack: {
-    width: 288,
+    // width: 288,
     height: 70,
     marginLeft: 6,
   },
@@ -310,7 +308,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   rect7: {
-    width: 351,
+    width: '100%',
     height: 62,
     flexDirection: 'row',
   },
@@ -320,13 +318,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(196,195,195,1)',
     borderRadius: 42,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   valet: {
     fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    fontSize: 12,
-    marginTop: 6,
-    marginLeft: 10,
+    fontSize: 10,
+    // marginTop: 6,
+    // marginLeft: 10,
   },
   rect9: {
     width: 76,
@@ -335,13 +335,15 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(196,195,195,1)',
     borderRadius: 42,
     marginLeft: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   covered: {
     fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    fontSize: 12,
-    marginTop: 6,
-    marginLeft: 13,
+    fontSize: 10,
+    // marginTop: 6,
+    // marginLeft: 13,
   },
   rect10: {
     width: 104,
@@ -350,13 +352,15 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(196,195,195,1)',
     borderRadius: 42,
     marginLeft: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   onSiteStaff: {
     fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    fontSize: 12,
-    marginTop: 7,
-    marginLeft: 11,
+    fontSize: 10,
+    // marginTop: 7,
+    // marginLeft: 11,
   },
   rect11: {
     width: 89,
@@ -366,13 +370,15 @@ const styles = StyleSheet.create({
     borderRadius: 42,
     marginLeft: 5,
     marginTop: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   accessible: {
     fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    fontSize: 12,
-    marginTop: 7,
-    marginLeft: 11,
+    fontSize: 10,
+    // marginTop: 7,
+    // marginLeft: 11,
   },
   rect8Row: {
     height: 29,
@@ -383,11 +389,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   rect12: {
-    top: 132,
+    // top: 132,
     left: 0,
     width: '100%',
-    height: 74,
-    position: 'absolute',
+    // height: 74,
+    // position: 'absolute',
+    marginVertical: 10,
     flexDirection: 'row',
   },
   materialButtonPrimary: {
@@ -475,7 +482,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 5,
     marginLeft: 12,
-    marginTop: 19,
+    // marginTop: 19,
   },
   rectStack: {
     width: '100%',

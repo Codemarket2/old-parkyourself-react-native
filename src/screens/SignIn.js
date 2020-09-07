@@ -48,7 +48,7 @@ function SignIn({navigation}) {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      alert('Logged In! ', `Welcome, ${userInfo.user.name}`);
+      Alert.alert('Logged In! ', `Welcome, ${userInfo.user.name}`);
       navigation.navigate('Tabs');
       // setUser(userInfo);
       // setVisible(true);

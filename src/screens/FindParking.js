@@ -255,13 +255,10 @@ function FindParking({navigation}) {
               key={marker.id}
               // title={marker.price}
               // description={marker.description}
-            >
-              <MapMarker
-                title={marker.price}
-                onPress={() => {
-                  showSpecificCard(marker.id);
-                }}
-              />
+              onPress={() => {
+                showSpecificCard(marker.id);
+              }}>
+              <MapMarker title={marker.price} />
             </Marker>
           ))}
       </MapView>

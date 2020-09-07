@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     height: 21,
     width: 19,
-    marginTop: 2,
+    // marginTop: 2,
     width: '6%',
   },
   placeholder: {
@@ -349,13 +349,14 @@ const styles = StyleSheet.create({
     height: 28,
     width: '83%',
     marginLeft: 14,
+    // marginTop: 10,
   },
   icon4: {
     fontSize: 21,
     height: 21,
     width: 21,
     marginLeft: 5,
-    marginTop: 2,
+    // marginTop: 2,
     width: '6%',
   },
   icon3Row: {
@@ -365,6 +366,7 @@ const styles = StyleSheet.create({
     marginRight: 13,
     marginLeft: 10,
     marginTop: 7,
+    alignItems: 'center',
   },
   rect5: {
     width: '47%',
