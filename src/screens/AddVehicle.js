@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,22 +10,20 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 
-function Untitled19(props) {
+function AddVehicle({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.addAVehicle}>Add a Vehicle</Text>
       <TouchableOpacity style={styles.button}>
         <MaterialCommunityIconsIcon
-          name='image-plus'
-          style={styles.icon}
-        ></MaterialCommunityIconsIcon>
+          name="image-plus"
+          style={styles.icon}></MaterialCommunityIconsIcon>
         <Text style={styles.uploadImage}>Upload Image</Text>
       </TouchableOpacity>
       <TextInput
-        placeholder='License Plate'
-        placeholderTextColor='rgba(214,214,214,1)'
-        style={styles.licensePlate}
-      ></TextInput>
+        placeholder="License Plate"
+        placeholderTextColor="rgba(214,214,214,1)"
+        style={styles.licensePlate}></TextInput>
       <TouchableOpacity style={styles.button2}>
         <Text style={styles.vehicleType}>Vehicle Type</Text>
       </TouchableOpacity>
@@ -36,10 +34,9 @@ function Untitled19(props) {
         <Text style={styles.model}>Model</Text>
       </TouchableOpacity>
       <TextInput
-        placeholder='Year'
-        placeholderTextColor='rgba(214,214,214,1)'
-        style={styles.placeholder}
-      ></TextInput>
+        placeholder="Year"
+        placeholderTextColor="rgba(214,214,214,1)"
+        style={styles.placeholder}></TextInput>
       <View style={styles.vehicleSizeRow}>
         <Text style={styles.vehicleSize}>Vehicle Size</Text>
         <Text style={styles.loremIpsum}>Vehicle size description</Text>
@@ -49,57 +46,50 @@ function Untitled19(props) {
           <View style={styles.button5Row}>
             <TouchableOpacity style={styles.button5}>
               <FontAwesomeIcon
-                name='motorcycle'
-                style={styles.icon2}
-              ></FontAwesomeIcon>
+                name="motorcycle"
+                style={styles.icon2}></FontAwesomeIcon>
               <Text style={styles.motorcycle}>Motorcycle</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button6}>
               <View style={styles.icon3Stack}>
                 <MaterialCommunityIconsIcon
-                  name='car-sports'
-                  style={styles.icon3}
-                ></MaterialCommunityIconsIcon>
+                  name="car-sports"
+                  style={styles.icon3}></MaterialCommunityIconsIcon>
                 <Text style={styles.compact}>Compact</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button7}>
               <View style={styles.icon4Stack}>
                 <MaterialCommunityIconsIcon
-                  name='car-side'
-                  style={styles.icon4}
-                ></MaterialCommunityIconsIcon>
+                  name="car-side"
+                  style={styles.icon4}></MaterialCommunityIconsIcon>
                 <Text style={styles.midSized}>Mid Sized</Text>
               </View>
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.button8}>
             <FontAwesomeIcon
-              name='truck'
-              style={styles.icon6}
-            ></FontAwesomeIcon>
+              name="truck"
+              style={styles.icon6}></FontAwesomeIcon>
             <Text style={styles.oversized}>Oversized</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.button9}>
           <View style={styles.icon5Stack}>
             <MaterialCommunityIconsIcon
-              name='car-estate'
-              style={styles.icon5}
-            ></MaterialCommunityIconsIcon>
+              name="car-estate"
+              style={styles.icon5}></MaterialCommunityIconsIcon>
             <Text style={styles.large}>Large</Text>
           </View>
         </TouchableOpacity>
       </View>
       <TextInput
-        placeholder='Color'
-        placeholderTextColor='rgba(214,214,214,1)'
-        style={styles.placeholder2}
-      ></TextInput>
+        placeholder="Color"
+        placeholderTextColor="rgba(214,214,214,1)"
+        style={styles.placeholder2}></TextInput>
       <MaterialButtonPrimary
-        caption='ADD VEHICLE'
-        style={styles.materialButtonPrimary}
-      ></MaterialButtonPrimary>
+        caption="ADD VEHICLE"
+        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </View>
   );
 }
@@ -394,4 +384,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled19;
+export default AddVehicle;

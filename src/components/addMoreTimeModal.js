@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
-import Svg, { Ellipse } from 'react-native-svg';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import MaterialButtonPrimary from './MaterialButtonPrimary';
+import Svg, {Ellipse} from 'react-native-svg';
 
-function Untitled14(props) {
+function AddMoreTimeModal(props) {
   return (
     <View style={styles.rect}>
       <Text style={styles.addMoreTime}>Add More Time</Text>
@@ -36,19 +36,17 @@ function Untitled14(props) {
         <Text style={styles.selectCustomHour}>Select custom hour</Text>
       </View>
       <MaterialButtonPrimary
-        caption='ADD MORE TIME'
-        style={styles.materialButtonPrimary}
-      ></MaterialButtonPrimary>
-      <Svg viewBox='0 0 100 100' style={styles.ellipse}>
+        caption="ADD MORE TIME"
+        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
+      <Svg viewBox="0 0 100 100" style={styles.ellipse}>
         <Ellipse
-          stroke='rgba(230, 230, 230,1)'
+          stroke="rgba(230, 230, 230,1)"
           strokeWidth={0}
-          fill='rgba(230, 230, 230,1)'
+          fill="rgba(230, 230, 230,1)"
           cx={50}
           cy={50}
           rx={50}
-          ry={50}
-        ></Ellipse>
+          ry={50}></Ellipse>
       </Svg>
     </View>
   );
@@ -217,4 +215,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled14;
+export default AddMoreTimeModal;

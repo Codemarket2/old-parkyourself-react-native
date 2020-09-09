@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import MaterialButtonPrimary from './MaterialButtonPrimary';
 
-function Untitled17(props) {
+function AdditionTimeAddedModal(props) {
   return (
     <View style={styles.rect}>
       <Text style={styles.additionTimeAdded}>Addition Time Added</Text>
@@ -13,9 +13,8 @@ function Untitled17(props) {
         clicking below button.
       </Text>
       <MaterialButtonPrimary
-        caption='VIEW DETAILS'
-        style={styles.materialButtonPrimary}
-      ></MaterialButtonPrimary>
+        caption="VIEW DETAILS"
+        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </View>
   );
 }
@@ -61,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled17;
+export default AdditionTimeAddedModal;

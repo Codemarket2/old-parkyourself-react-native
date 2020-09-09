@@ -12,7 +12,7 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 
-function Untitled6({price, location, navigation}) {
+function CardListItem({price, location, navigation}) {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -492,4 +492,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled6;
+export default CardListItem;

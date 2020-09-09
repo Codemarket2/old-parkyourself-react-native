@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, TextInput} from 'react-native';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 
-function Untitled21(props) {
+function AddPromoCode(props) {
   return (
     <View style={styles.rect}>
       <Text style={styles.addPromoCode}>Add Promo Code</Text>
       <TextInput
-        placeholder='Enter your Promo Code'
-        placeholderTextColor='rgba(214,214,214,1)'
-        style={styles.textInput}
-      ></TextInput>
+        placeholder="Enter your Promo Code"
+        placeholderTextColor="rgba(214,214,214,1)"
+        style={styles.textInput}></TextInput>
       <View style={styles.rect2Row}>
         <View style={styles.rect2}>
           <Text style={styles.cancel}>CANCEL</Text>
         </View>
         <MaterialButtonPrimary
-          caption='ADD CODE'
-          style={styles.materialButtonPrimary}
-        ></MaterialButtonPrimary>
+          caption="ADD CODE"
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
       </View>
     </View>
   );
@@ -89,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled21;
+export default AddPromoCode;

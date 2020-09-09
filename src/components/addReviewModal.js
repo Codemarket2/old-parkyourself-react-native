@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, Image, TextInput} from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialButtonPrimary from './MaterialButtonPrimary';
 
-function Untitled15(props) {
+function AddReviewModal(props) {
   return (
     <View style={styles.rectStack}>
       <View style={styles.rect}>
@@ -12,9 +12,8 @@ function Untitled15(props) {
           <View style={styles.imageRow}>
             <Image
               source={require('../assets/images/cars2.jpg')}
-              resizeMode='stretch'
-              style={styles.image}
-            ></Image>
+              resizeMode="stretch"
+              style={styles.image}></Image>
             <Text style={styles.loremIpsum3}>Owner Name : Alexander Smith</Text>
           </View>
         </View>
@@ -25,25 +24,23 @@ function Untitled15(props) {
         <View style={styles.rect3Stack}>
           <View style={styles.rect3}>
             <View style={styles.icon1Row}>
-              <EntypoIcon name='star' style={styles.icon1}></EntypoIcon>
-              <EntypoIcon name='star' style={styles.icon2}></EntypoIcon>
-              <EntypoIcon name='star' style={styles.icon3}></EntypoIcon>
-              <EntypoIcon name='star' style={styles.icon4}></EntypoIcon>
+              <EntypoIcon name="star" style={styles.icon1}></EntypoIcon>
+              <EntypoIcon name="star" style={styles.icon2}></EntypoIcon>
+              <EntypoIcon name="star" style={styles.icon3}></EntypoIcon>
+              <EntypoIcon name="star" style={styles.icon4}></EntypoIcon>
             </View>
           </View>
-          <EntypoIcon name='star' style={styles.icon}></EntypoIcon>
+          <EntypoIcon name="star" style={styles.icon}></EntypoIcon>
         </View>
         <Text style={styles.provideAFeedback}>Provide a feedback :</Text>
         <TextInput
-          placeholder='Write your feedback here...'
+          placeholder="Write your feedback here..."
           numberOfLines={10}
           maxLength={200}
-          style={styles.textInput}
-        ></TextInput>
+          style={styles.textInput}></TextInput>
         <MaterialButtonPrimary
-          caption='SUBMIT'
-          style={styles.materialButtonPrimary}
-        ></MaterialButtonPrimary>
+          caption="SUBMIT"
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
       </View>
       <Text style={styles.loremIpsum2}>
         906 Peg Shop St. Franklyn, NY 11209
@@ -212,4 +209,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled15;
+export default AddReviewModal;

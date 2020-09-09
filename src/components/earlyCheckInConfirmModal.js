@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import MaterialButtonPrimary from './MaterialButtonPrimary';
 
-function Untitled18(props) {
+function EarlyCheckInConfirmModal(props) {
   return (
     <View style={styles.rect}>
       <Text style={styles.loremIpsum}>Early Check-In Confirmation</Text>
@@ -15,13 +15,11 @@ function Untitled18(props) {
       <Text style={styles.loremIpsum4}>End: Jan-02 2019, 03:00 PM</Text>
       <View style={styles.materialButtonPrimaryRow}>
         <MaterialButtonPrimary
-          caption='VIEW DETAILS'
-          style={styles.materialButtonPrimary}
-        ></MaterialButtonPrimary>
+          caption="VIEW DETAILS"
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
         <MaterialButtonPrimary
-          caption='OK'
-          style={styles.materialButtonPrimary2}
-        ></MaterialButtonPrimary>
+          caption="OK"
+          style={styles.materialButtonPrimary2}></MaterialButtonPrimary>
       </View>
     </View>
   );
@@ -107,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled18;
+export default EarlyCheckInConfirmModal;

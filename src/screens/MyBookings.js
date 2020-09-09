@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import BookingItem from '../components/BookingItem';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-function Untitled10(props) {
+function MyBookings(props) {
   const [activeIndex, setActiveIndex] = useState(1);
   return (
     <View style={styles.container}>
@@ -14,10 +14,9 @@ function Untitled10(props) {
             <Text
               style={
                 activeIndex == 0
-                  ? { ...styles.tab, ...styles.active }
+                  ? {...styles.tab, ...styles.active}
                   : styles.tab
-              }
-            >
+              }>
               CURRENT
             </Text>
           </TouchableOpacity>
@@ -25,10 +24,9 @@ function Untitled10(props) {
             <Text
               style={
                 activeIndex == 1
-                  ? { ...styles.tab, ...styles.active }
+                  ? {...styles.tab, ...styles.active}
                   : styles.tab
-              }
-            >
+              }>
               UPCOMING
             </Text>
           </TouchableOpacity>
@@ -36,10 +34,9 @@ function Untitled10(props) {
             <Text
               style={
                 activeIndex == 2
-                  ? { ...styles.tab, ...styles.active }
+                  ? {...styles.tab, ...styles.active}
                   : styles.tab
-              }
-            >
+              }>
               COMPLETED
             </Text>
           </TouchableOpacity>
@@ -47,10 +44,9 @@ function Untitled10(props) {
             <Text
               style={
                 activeIndex == 3
-                  ? { ...styles.tab, ...styles.active }
+                  ? {...styles.tab, ...styles.active}
                   : styles.tab
-              }
-            >
+              }>
               CANCELLED
             </Text>
           </TouchableOpacity>
@@ -61,8 +57,7 @@ function Untitled10(props) {
       {activeIndex == 1 ? (
         <ScrollView
           horizontal={false}
-          contentContainerStyle={styles.scrollArea_contentContainerStyle}
-        >
+          contentContainerStyle={styles.scrollArea_contentContainerStyle}>
           <BookingItem />
           <BookingItem />
           <BookingItem />
@@ -370,4 +365,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled10;
+export default MyBookings;

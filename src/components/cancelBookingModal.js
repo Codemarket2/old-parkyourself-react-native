@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import MaterialButtonPrimary from './MaterialButtonPrimary';
 
-function Untitled16(props) {
+function CancelBookingModal(props) {
   return (
     <View style={styles.rect}>
       <Text style={styles.bookingCancellation}>Booking Cancellation</Text>
@@ -14,9 +14,8 @@ function Untitled16(props) {
       <Text style={styles.loremIpsum2}>Start : Jan-01 2019, 04:30 PM</Text>
       <Text style={styles.loremIpsum3}>End : Jan-02 2019, 03:00 PM</Text>
       <MaterialButtonPrimary
-        caption='VIEW DETAILS'
-        style={styles.materialButtonPrimary}
-      ></MaterialButtonPrimary>
+        caption="VIEW DETAILS"
+        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </View>
   );
 }
@@ -83,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled16;
+export default CancelBookingModal;

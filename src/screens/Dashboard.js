@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
   TextInput,
   Switch,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
@@ -13,148 +14,165 @@ import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-function Untitled13(props) {
+function Dashboard({navigation}) {
+  const [showPersonalForm, setShowPersonalForm] = useState(false);
+  const [showBusinessForm, setShowBusinessForm] = useState(false);
+
+  const navigationHandler = (screen) => {
+    navigation.navigate(screen);
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.dashboard}>Dashboard</Text>
       <View style={styles.rect}>
-        <View style={styles.rect2}>
-          <View style={styles.iconRow}>
+        <TouchableOpacity
+          style={styles.rect2}
+          onPress={() => setShowPersonalForm(!showPersonalForm)}>
+          <View style={styles.wrapper}>
             <MaterialCommunityIconsIcon
               name="google"
               style={styles.icon}></MaterialCommunityIconsIcon>
-            <View style={styles.personalProfileColumn}>
-              <Text style={styles.personalProfile}>PERSONAL PROFILE</Text>
-              <Text style={styles.exampleGmailCom}>example@gmail.com</Text>
+            <View style={styles.profileColumn}>
+              <Text style={styles.profile}>PERSONAL PROFILE</Text>
+              <Text style={styles.email}>example@gmail.com</Text>
             </View>
-            <IoniconsIcon
-              name="ios-arrow-up"
-              style={styles.icon2}></IoniconsIcon>
           </View>
-        </View>
-        <View style={styles.rect3}>
-          <TextInput
-            placeholder="First Name"
-            placeholderTextColor="rgba(211,211,211,1)"
-            style={styles.placeholder}></TextInput>
-          <TextInput
-            placeholder="Last Name"
-            placeholderTextColor="rgba(211,211,211,1)"
-            style={styles.placeholder1}></TextInput>
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="rgba(211,211,211,1)"
-            style={styles.placeholder2}></TextInput>
-          <TextInput
-            placeholder="Mobile Number"
-            placeholderTextColor="rgba(211,211,211,1)"
-            style={styles.placeholder3}></TextInput>
-          <View style={styles.placeholder4Stack}>
+          <FontAwesomeIcon
+            name={showPersonalForm ? 'arrow-up' : 'arrow-down'}
+            style={styles.icon2}></FontAwesomeIcon>
+        </TouchableOpacity>
+        {showPersonalForm && (
+          <View style={styles.form}>
             <TextInput
-              placeholder="Password"
-              placeholderTextColor="rgba(211,211,211,1)"
-              style={styles.placeholder4}></TextInput>
-            <Text style={styles.change}>Change</Text>
+              placeholder="First Name"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <TextInput
+              placeholder="Last Name"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <TextInput
+              placeholder="Email"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <TextInput
+              placeholder="Mobile Number"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <View style={styles.placeholderStack}>
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+              <Text style={styles.change}>Change</Text>
+            </View>
           </View>
-        </View>
+        )}
       </View>
-      <View style={styles.rect4}>
-        <View style={styles.rect5}>
-          <View style={styles.icon3Row}>
+      <View style={styles.rect}>
+        <TouchableOpacity
+          style={styles.rect2}
+          onPress={() => setShowBusinessForm(!showBusinessForm)}>
+          <View style={styles.wrapper}>
             <SimpleLineIconsIcon
               name="briefcase"
-              style={styles.icon3}></SimpleLineIconsIcon>
-            <View style={styles.businessProfileColumn}>
-              <Text style={styles.businessProfile}>BUSINESS PROFILE</Text>
-              <Text style={styles.loremIpsum}>Set Up Business Profile</Text>
+              style={styles.icon}></SimpleLineIconsIcon>
+            <View style={styles.profileColumn}>
+              <Text style={styles.profile}>BUSINESS PROFILE</Text>
+              <Text style={styles.email}>Set Up Business Profile</Text>
             </View>
-            <IoniconsIcon
-              name="ios-arrow-up"
-              style={styles.icon4}></IoniconsIcon>
           </View>
-        </View>
-        <TextInput
-          placeholder="Business Name"
-          placeholderTextColor="rgba(211,211,211,1)"
-          style={styles.placeholder5}></TextInput>
-        <TextInput
-          placeholder="Business Email"
-          placeholderTextColor="rgba(211,211,211,1)"
-          style={styles.placeholder6}></TextInput>
-        <TextInput
-          placeholder="Mobile Number"
-          placeholderTextColor="rgba(211,211,211,1)"
-          style={styles.placeholder7}></TextInput>
-        <View style={styles.placeholder8Stack}>
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="rgba(211,211,211,1)"
-            style={styles.placeholder8}></TextInput>
-          <Text style={styles.change1}>Change</Text>
-        </View>
+          <FontAwesomeIcon
+            name={showBusinessForm ? 'arrow-up' : 'arrow-down'}
+            style={styles.icon2}></FontAwesomeIcon>
+        </TouchableOpacity>
+        {showBusinessForm && (
+          <View style={styles.form}>
+            <TextInput
+              placeholder="Business Name"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <TextInput
+              placeholder="Business Email"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <TextInput
+              placeholder="Mobile Number"
+              placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+            <View style={styles.placeholderStack}>
+              <TextInput
+                placeholder="Password"
+                placeholderTextColor="rgba(211,211,211,1)"></TextInput>
+              <Text style={styles.change}>Change</Text>
+            </View>
+          </View>
+        )}
       </View>
       <Text style={styles.moreInformation}>MORE INFORMATION</Text>
-      <View style={styles.rect6}>
-        <View style={styles.icon5Row}>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => navigationHandler('MyBookings')}>
+        <View style={styles.wrapper}>
           <MaterialCommunityIconsIcon
             name="calendar-clock"
-            style={styles.icon5}></MaterialCommunityIconsIcon>
-          <Text style={styles.myBookings}>My Bookings</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon6}></IoniconsIcon>
+            style={styles.icon}></MaterialCommunityIconsIcon>
+          <Text style={styles.btnText}>My Bookings</Text>
         </View>
-      </View>
-      <View style={styles.rect8}>
-        <View style={styles.icon9Row}>
-          <FontAwesomeIcon name="car" style={styles.icon9}></FontAwesomeIcon>
-          <Text style={styles.payment}>Vehicles</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon10}></IoniconsIcon>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.rect2}>
+        <View style={styles.wrapper}>
+          <FontAwesomeIcon name="car" style={styles.icon}></FontAwesomeIcon>
+          <Text style={styles.btnText}>Vehicles</Text>
         </View>
-      </View>
-      <View style={styles.rect8}>
-        <View style={styles.icon9Row}>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('Payments');
+        }}>
+        <View style={styles.wrapper}>
           <FontAwesomeIcon
             name="credit-card"
-            style={styles.icon9}></FontAwesomeIcon>
-          <Text style={styles.payment}>Payment</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon10}></IoniconsIcon>
+            style={styles.icon}></FontAwesomeIcon>
+          <Text style={styles.btnText}>Payment</Text>
         </View>
-      </View>
 
-      <View style={styles.rect10}>
-        <View style={styles.icon13Row}>
-          <FeatherIcon name="mail" style={styles.icon13}></FeatherIcon>
-          <Text style={styles.reviews}>Messages</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon14}></IoniconsIcon>
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.rect2}>
+        <View style={styles.wrapper}>
+          <FeatherIcon name="mail" style={styles.icon}></FeatherIcon>
+          <Text style={styles.btnText}>Messages</Text>
         </View>
-      </View>
-      <View style={styles.rect10}>
-        <View style={styles.icon13Row}>
-          <FontAwesomeIcon
-            name="star-o"
-            style={styles.icon13}></FontAwesomeIcon>
-          <Text style={styles.reviews}>Reviews</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon14}></IoniconsIcon>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.rect2}>
+        <View style={styles.wrapper}>
+          <FontAwesomeIcon name="star-o" style={styles.icon}></FontAwesomeIcon>
+          <Text style={styles.btnText}>Reviews</Text>
         </View>
-      </View>
-      <View style={styles.rect10}>
-        <View style={styles.icon13Row}>
-          <FeatherIcon name="gift" style={styles.icon13}></FeatherIcon>
-          <Text style={styles.reviews}>Send a Gift</Text>
-          <IoniconsIcon
-            name="ios-arrow-forward"
-            style={styles.icon14}></IoniconsIcon>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.rect2}>
+        <View style={styles.wrapper}>
+          <FeatherIcon name="gift" style={styles.icon}></FeatherIcon>
+          <Text style={styles.btnText}>Send a Gift</Text>
         </View>
-      </View>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
       <View style={styles.rect12}>
         <Switch value={true} style={styles.switch}></Switch>
         <Text style={styles.loremIpsum2}>Switch to SPACE OWNER</Text>
@@ -171,7 +189,6 @@ function Untitled13(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
   },
@@ -179,114 +196,68 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
-    // marginTop: 38,
-    // marginLeft: 25,
   },
   rect: {
     width: '100%',
-    // height: 381,
+  },
+  rect2: {
+    width: '100%',
+    padding: 20,
+    // height: 64,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 30,
+    backgroundColor: '#fff',
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 6,
       height: 6,
     },
-    elevation: 30,
     shadowOpacity: 0.16,
     shadowRadius: 20,
-    marginTop: 30,
-    // marginLeft: 25,
-    backgroundColor: '#fff',
+    marginTop: 20,
   },
-  rect2: {
-    width: 329,
-    height: 64,
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   icon: {
     color: 'rgba(11,64,148,1)',
     fontSize: 25,
     height: 27,
-    width: 25,
-    marginTop: 8,
   },
-  personalProfile: {
+  profile: {
     fontFamily: 'roboto-300',
     color: '#121212',
     fontSize: 13,
   },
-  exampleGmailCom: {
+  email: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 4,
   },
-  personalProfileColumn: {
-    width: 150,
+  profileColumn: {
     marginLeft: 19,
   },
   icon2: {
     color: 'rgba(39,170,225,1)',
     fontSize: 22,
     height: 24,
-    width: 15,
-    marginLeft: 90,
-    marginTop: 5,
   },
-  iconRow: {
-    height: 39,
-    flexDirection: 'row',
-    marginTop: 11,
-    marginLeft: 14,
-    marginRight: 16,
-  },
-  rect3: {
-    width: 329,
-    height: 317,
-  },
-  placeholder: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 47,
-    width: 302,
-    fontSize: 16,
-    marginTop: 10,
-    marginLeft: 14,
-  },
-  placeholder1: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 47,
-    width: 302,
-    fontSize: 16,
-    marginTop: 9,
-    marginLeft: 14,
-  },
-  placeholder2: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 47,
-    width: 302,
-    fontSize: 16,
-    marginTop: 11,
-    marginLeft: 12,
-  },
-  placeholder3: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 47,
-    width: 302,
-    fontSize: 16,
-    marginTop: 14,
-    marginLeft: 12,
-  },
-  placeholder4: {
-    top: 0,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 47,
-    width: 302,
-    fontSize: 16,
-    left: 0,
+  form: {
+    padding: 15,
+    elevation: 30,
+    backgroundColor: '#fff',
+    shadowColor: 'rgba(0,0,0,1)',
+    shadowOffset: {
+      width: 6,
+      height: 6,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 20,
   },
   change: {
     top: 20,
@@ -297,413 +268,21 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textDecorationLine: 'underline',
   },
-  placeholder4Stack: {
-    width: 302,
+  placeholderStack: {
+    width: '100%',
     height: 47,
-    marginTop: 12,
-    marginLeft: 12,
-  },
-  rect4: {
-    width: '100%',
-    // height: 314,
-    shadowColor: 'rgba(0,0,0,1)',
-    shadowOffset: {
-      width: 6,
-      height: 6,
-    },
-    elevation: 30,
-    shadowOpacity: 0.16,
-    shadowRadius: 20,
-    marginTop: 33,
-    // marginLeft: 25,
-    backgroundColor: '#fff',
-  },
-  rect5: {
-    width: '100%',
-    height: 62,
-  },
-  icon3: {
-    color: 'rgba(11,64,148,1)',
-    fontSize: 24,
-    height: 27,
-    width: 24,
-    marginTop: 4,
-  },
-  businessProfile: {
-    fontFamily: 'roboto-300',
-    color: '#121212',
-    fontSize: 13,
-  },
-  loremIpsum: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginTop: 2,
-  },
-  businessProfileColumn: {
-    width: 165,
-    marginLeft: 27,
-  },
-  icon4: {
-    color: 'rgba(39,170,225,1)',
-    fontSize: 22,
-    height: 24,
-    width: 15,
-    marginLeft: 70,
-    marginTop: 5,
-  },
-  icon3Row: {
-    height: 37,
-    flexDirection: 'row',
-    marginTop: 13,
-    marginLeft: 15,
-    marginRight: 13,
-  },
-  placeholder5: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 43,
-    width: 302,
-    lineHeight: 16,
-    fontSize: 16,
-    marginTop: 8,
-    marginLeft: 14,
-  },
-  placeholder6: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 43,
-    width: 302,
-    lineHeight: 16,
-    fontSize: 16,
-    marginTop: 16,
-    marginLeft: 12,
-  },
-  placeholder7: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 43,
-    width: 302,
-    lineHeight: 16,
-    fontSize: 16,
-    marginTop: 15,
-    marginLeft: 12,
-  },
-  placeholder8: {
-    top: 0,
-    left: 0,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    height: 43,
-    width: 302,
-    lineHeight: 16,
-    fontSize: 16,
-  },
-  change1: {
-    top: 15,
-    left: 259,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 11,
-    textDecorationLine: 'underline',
-  },
-  placeholder8Stack: {
-    width: 302,
-    height: 43,
-    marginTop: 17,
-    marginLeft: 12,
   },
   moreInformation: {
     fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 41,
-    // marginLeft: 25,
   },
-  rect6: {
-    width: '100%',
-    height: 58,
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    flexDirection: 'row',
-    marginTop: 20,
-    // marginLeft: 25,
-    backgroundColor: '#fff',
-  },
-  icon5: {
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-    height: 24,
-    width: 22,
-    marginTop: 2,
-  },
-  myBookings: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginLeft: 25,
-    marginTop: 2,
-  },
-  icon6: {
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-    height: 23,
-    width: 7,
-    marginLeft: 157,
-  },
-  icon5Row: {
-    height: 26,
-    flexDirection: 'row',
-    flex: 1,
-    marginRight: 13,
-    marginLeft: 14,
-    marginTop: 18,
-  },
-  icon7: {
-    top: 20,
-    left: 309,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-  },
-  rect7: {
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: 58,
-    position: 'absolute',
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    backgroundColor: '#fff',
-  },
-  vehicles: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginTop: 21,
-    marginLeft: 62,
-  },
-  icon7Stack: {
-    top: 0,
-    left: 0,
-    width: 329,
-    height: 58,
-    position: 'absolute',
-  },
-  icon8: {
-    top: 19,
-    left: 17,
-    position: 'absolute',
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-  },
-  icon7StackStack: {
-    width: 329,
-    height: 58,
-    marginTop: 21,
-    marginLeft: 25,
-  },
-  rect8: {
-    width: '100%',
-    height: 58,
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    flexDirection: 'row',
-    marginTop: 21,
-    // marginLeft: 25,
-    backgroundColor: '#fff',
-  },
-  icon9: {
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-    height: 22,
-    width: 24,
-  },
-  payment: {
+  btnText: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginLeft: 24,
-  },
-  icon10: {
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-    height: 23,
-    width: 8,
-    marginLeft: 182,
-  },
-  icon9Row: {
-    height: 23,
-    flexDirection: 'row',
-    flex: 1,
-    marginRight: 11,
-    marginLeft: 17,
-    marginTop: 19,
-  },
-  icon11: {
-    top: 19,
-    left: 310,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-  },
-  rect9: {
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: 58,
-    position: 'absolute',
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    backgroundColor: '#fff',
-  },
-  messages: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginTop: 20,
-    marginLeft: 65,
-  },
-  icon11Stack: {
-    top: 0,
-    left: 0,
-    width: 329,
-    height: 58,
-    position: 'absolute',
-  },
-  icon12: {
-    top: 18,
-    left: 17,
-    position: 'absolute',
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-  },
-  icon11StackStack: {
-    width: 329,
-    height: 58,
-    marginTop: 20,
-    marginLeft: 25,
-  },
-  rect10: {
-    width: '100%',
-    height: 58,
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    flexDirection: 'row',
-    marginTop: 20,
-    // marginLeft: 25,
-    backgroundColor: '#fff',
-  },
-  icon13: {
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-    height: 22,
-    width: 21,
-  },
-  reviews: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginLeft: 29,
-    marginTop: 1,
-  },
-  icon14: {
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-    height: 23,
-    width: 8,
-    marginLeft: 184,
-    marginTop: 1,
-  },
-  icon13Row: {
-    height: 24,
-    flexDirection: 'row',
-    flex: 1,
-    marginRight: 11,
-    marginLeft: 17,
-    marginTop: 18,
-  },
-  icon15: {
-    top: 19,
-    left: 310,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 21,
-  },
-  rect11: {
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: 58,
-    position: 'absolute',
-    shadowColor: 'rgba(208,206,206,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 20,
-    shadowOpacity: 0.88,
-    shadowRadius: 20,
-    backgroundColor: '#fff',
-  },
-  sendAGift: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 16,
-    marginTop: 21,
-    marginLeft: 66,
-  },
-  icon15Stack: {
-    top: 0,
-    left: 0,
-    width: 329,
-    height: 58,
-    position: 'absolute',
-  },
-  icon16: {
-    top: 18,
-    left: 17,
-    position: 'absolute',
-    color: 'rgba(11,64,148,1)',
-    fontSize: 22,
-  },
-  icon15StackStack: {
-    width: 329,
-    height: 58,
-    marginTop: 21,
-    marginLeft: 25,
   },
   rect12: {
     // width: 260,
@@ -778,4 +357,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled13;
+export default Dashboard;

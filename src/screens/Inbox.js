@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 function Untitled23(props) {
@@ -9,9 +9,8 @@ function Untitled23(props) {
       <View style={styles.rect}>
         <View style={styles.iconRow}>
           <FontAwesomeIcon
-            name='user-circle'
-            style={styles.icon}
-          ></FontAwesomeIcon>
+            name="user-circle"
+            style={styles.icon}></FontAwesomeIcon>
           <View style={styles.rect2}>
             <View style={styles.gabrielaPepeRow}>
               <Text style={styles.gabrielaPepe}>Gabriela &amp; Pepe</Text>
@@ -40,9 +39,8 @@ function Untitled23(props) {
         <Text style={styles.loremIpsum6}>5 min ago</Text>
         <Text style={styles.gabrielaPepe1}>Gabriela &amp; Pepe</Text>
         <FontAwesomeIcon
-          name='user-circle'
-          style={styles.icon1}
-        ></FontAwesomeIcon>
+          name="user-circle"
+          style={styles.icon1}></FontAwesomeIcon>
       </View>
     </View>
   );

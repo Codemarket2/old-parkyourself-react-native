@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function Untitled24(props) {
+function ChatScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.gabrielaPepe}>Gabriela &amp; Pepe</Text>
@@ -10,7 +10,7 @@ function Untitled24(props) {
       <View style={styles.rect}>
         <View style={styles.rect2}>
           <View style={styles.iconRow}>
-            <Icon name='user-circle' style={styles.icon}></Icon>
+            <Icon name="user-circle" style={styles.icon}></Icon>
             <View style={styles.rect3}>
               <Text style={styles.loremIpsum2}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Untitled24;
+export default ChatScreen;
