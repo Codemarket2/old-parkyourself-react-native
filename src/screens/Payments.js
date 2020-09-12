@@ -1,17 +1,20 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
+import AddPromoCodeBottomsheet from '../components/AddPromoCodeBottomsheet';
 
 function Payments({navigation}) {
+  const [visible, setVisible] = useState(false);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.payments}>Payments</Text>

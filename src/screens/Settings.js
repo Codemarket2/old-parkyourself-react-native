@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Switch, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Switch,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
 function Settings({navigation}) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.settings}>Settings</Text>
       <View style={styles.rect}>
         <Text style={styles.pushNotifications}>Push Notifications</Text>
@@ -17,7 +24,11 @@ function Settings({navigation}) {
       <View style={styles.rect1}>
         <Text style={styles.dataPreferences}>Data Preferences</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate('TermsAndConditions');
+        }}>
         <View style={styles.termsConditionsRow}>
           <Text style={styles.termsConditions}>Terms &amp; Conditions</Text>
           <IoniconsIcon
@@ -25,7 +36,11 @@ function Settings({navigation}) {
             style={styles.icon3}></IoniconsIcon>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button2}>
+      <TouchableOpacity
+        style={styles.button2}
+        onPress={() => {
+          navigation.navigate('PrivacyPolicy');
+        }}>
         <View style={styles.privacyPolicyRow}>
           <Text style={styles.privacyPolicy}>Privacy Policy</Text>
           <IoniconsIcon
@@ -48,37 +63,40 @@ function Settings({navigation}) {
       <TouchableOpacity style={styles.button5}>
         <Text style={styles.deactivateAccount}>DEACTIVATE ACCOUNT</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    backgroundColor: '#fff',
+    padding: 20,
   },
   settings: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 59,
-    marginLeft: 18,
+    // marginTop: 59,
+    // marginLeft: 18,
   },
   rect: {
-    width: 339,
+    width: '100%',
     height: 65,
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    elevation: 90,
+    elevation: 20,
     shadowOpacity: 0.07,
     shadowRadius: 30,
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     flexDirection: 'row',
     marginTop: 26,
-    marginLeft: 18,
+    // marginLeft: 18,
+    backgroundColor: '#fff',
   },
   pushNotifications: {
     fontFamily: 'roboto-regular',
@@ -92,20 +110,21 @@ const styles = StyleSheet.create({
     marginTop: 21,
   },
   rect1: {
-    width: 339,
+    width: '100%',
     height: 65,
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    elevation: 90,
+    elevation: 20,
     shadowOpacity: 0.07,
     shadowRadius: 30,
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 17,
-    marginLeft: 18,
+    // marginLeft: 18,
+    backgroundColor: '#fff',
   },
   dataPreferences: {
     fontFamily: 'roboto-regular',
@@ -115,21 +134,22 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   button: {
-    width: 339,
+    width: '100%',
     height: 65,
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    elevation: 90,
+    elevation: 20,
     shadowOpacity: 0.07,
     shadowRadius: 30,
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     flexDirection: 'row',
     marginTop: 18,
-    marginLeft: 18,
+    // marginLeft: 18,
+    backgroundColor: '#fff',
   },
   termsConditions: {
     fontFamily: 'roboto-regular',
@@ -152,14 +172,14 @@ const styles = StyleSheet.create({
     marginTop: 23,
   },
   button2: {
-    width: 339,
+    width: '100%',
     height: 65,
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    elevation: 90,
+    elevation: 20,
     shadowOpacity: 0.07,
     shadowRadius: 30,
     borderWidth: 1,
@@ -167,6 +187,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
     alignSelf: 'center',
+    backgroundColor: '#fff',
   },
   privacyPolicy: {
     fontFamily: 'roboto-regular',
@@ -196,14 +217,16 @@ const styles = StyleSheet.create({
       width: 3,
       height: 3,
     },
-    elevation: 60,
+    elevation: 20,
     shadowOpacity: 0.1,
     shadowRadius: 20,
     borderWidth: 1,
     borderColor: 'rgba(232,231,231,1)',
     flexDirection: 'row',
     marginTop: 96,
-    marginLeft: 83,
+    // marginLeft: 83,
+    alignSelf: 'center',
+    backgroundColor: '#fff',
   },
   icon: {
     color: 'rgba(248,231,28,1)',
@@ -240,7 +263,9 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     flexDirection: 'row',
     marginTop: 12,
-    marginLeft: 83,
+    // marginLeft: 83,
+    alignSelf: 'center',
+    backgroundColor: '#fff',
   },
   icon2: {
     color: 'rgba(255,255,255,1)',
@@ -276,7 +301,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 20,
     marginTop: 12,
-    marginLeft: 83,
+    // marginLeft: 83,
+    alignSelf: 'center',
+    backgroundColor: '#fff',
   },
   deactivateAccount: {
     fontFamily: 'roboto-regular',

@@ -15,7 +15,7 @@ export default function MainStack() {
           shadowOpacity: 0,
         },
       }}>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="SignInStack"
         component={SignInStack}
         options={{headerShown: false}}
@@ -24,7 +24,7 @@ export default function MainStack() {
         name="SignUpStack"
         component={SignUpStack}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="Tabs"
         component={Tabs}

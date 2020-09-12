@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-function Untitled23(props) {
+function Untitled23({navigation}) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.inbox}>Inbox</Text>
-      <View style={styles.rect}>
+      <TouchableOpacity
+        style={styles.rect}
+        onPress={() => {
+          navigation.navigate('ChatScreen');
+        }}>
         <View style={styles.iconRow}>
           <FontAwesomeIcon
             name="user-circle"
@@ -24,53 +29,85 @@ function Untitled23(props) {
             </Text>
           </View>
         </View>
-      </View>
-      <View style={styles.loremIpsum4StackStack}>
-        <View style={styles.loremIpsum4Stack}>
-          <Text style={styles.loremIpsum4}>
-            Lorem ipsum amet sit dolor bipsum consectur aet lorem dolor
-          </Text>
-          <View style={styles.rect3}></View>
-          <View style={styles.rect4}></View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect}
+        onPress={() => {
+          navigation.navigate('ChatScreen');
+        }}>
+        <View style={styles.iconRow}>
+          <FontAwesomeIcon
+            name="user-circle"
+            style={styles.icon}></FontAwesomeIcon>
+          <View style={styles.rect2}>
+            <View style={styles.gabrielaPepeRow}>
+              <Text style={styles.gabrielaPepe}>Gabriela &amp; Pepe</Text>
+              <Text style={styles.loremIpsum}>5 min ago</Text>
+            </View>
+            <Text style={styles.loremIpsum2}>
+              906 Peg Shop St. Franklyn, NY 11209
+            </Text>
+            <Text style={styles.loremIpsum3}>
+              Lorem ipsum amet sit dolor bipsum consectur aet lorem dolor
+            </Text>
+          </View>
         </View>
-        <Text style={styles.loremIpsum5}>
-          906 Peg Shop St. Franklyn, NY 11209
-        </Text>
-        <Text style={styles.loremIpsum6}>5 min ago</Text>
-        <Text style={styles.gabrielaPepe1}>Gabriela &amp; Pepe</Text>
-        <FontAwesomeIcon
-          name="user-circle"
-          style={styles.icon1}></FontAwesomeIcon>
-      </View>
-    </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect}
+        onPress={() => {
+          navigation.navigate('ChatScreen');
+        }}>
+        <View style={styles.iconRow}>
+          <FontAwesomeIcon
+            name="user-circle"
+            style={styles.icon}></FontAwesomeIcon>
+          <View style={styles.rect2}>
+            <View style={styles.gabrielaPepeRow}>
+              <Text style={styles.gabrielaPepe}>Gabriela &amp; Pepe</Text>
+              <Text style={styles.loremIpsum}>5 min ago</Text>
+            </View>
+            <Text style={styles.loremIpsum2}>
+              906 Peg Shop St. Franklyn, NY 11209
+            </Text>
+            <Text style={styles.loremIpsum3}>
+              Lorem ipsum amet sit dolor bipsum consectur aet lorem dolor
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    backgroundColor: '#fff',
+    padding: 20,
   },
   inbox: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 58,
-    marginLeft: 21,
+    // marginTop: 58,
+    // marginLeft: 21,
   },
   rect: {
-    width: 338,
+    width: '100%',
     height: 124,
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    elevation: 60,
+    elevation: 15,
     shadowOpacity: 0.1,
     shadowRadius: 20,
     flexDirection: 'row',
     marginTop: 21,
-    marginLeft: 21,
+    backgroundColor: '#fff',
+    // marginLeft: 21,
   },
   icon: {
     color: 'rgba(128,128,128,1)',

@@ -8,19 +8,24 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import {toggleUserType} from '../actions/user';
 
-function Dashboard({navigation}) {
+function Dashboard({navigation, isSpaceOwner, toggleUserType}) {
   const [showPersonalForm, setShowPersonalForm] = useState(false);
   const [showBusinessForm, setShowBusinessForm] = useState(false);
 
   const navigationHandler = (screen) => {
     navigation.navigate(screen);
   };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.dashboard}>Dashboard</Text>
@@ -143,7 +148,11 @@ function Dashboard({navigation}) {
           style={styles.icon2}></FontAwesomeIcon>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.rect2}>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('Inbox');
+        }}>
         <View style={styles.wrapper}>
           <FeatherIcon name="mail" style={styles.icon}></FeatherIcon>
           <Text style={styles.btnText}>Messages</Text>
@@ -153,7 +162,11 @@ function Dashboard({navigation}) {
           name="arrow-right"
           style={styles.icon2}></FontAwesomeIcon>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.rect2}>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('MyReviews');
+        }}>
         <View style={styles.wrapper}>
           <FontAwesomeIcon name="star-o" style={styles.icon}></FontAwesomeIcon>
           <Text style={styles.btnText}>Reviews</Text>
@@ -173,8 +186,55 @@ function Dashboard({navigation}) {
           name="arrow-right"
           style={styles.icon2}></FontAwesomeIcon>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('ReferFriend');
+        }}>
+        <View style={styles.wrapper}>
+          <FontAwesome5Icon
+            name="hands-helping"
+            style={styles.icon}></FontAwesome5Icon>
+          <Text style={styles.btnText}>Refer a Friend</Text>
+        </View>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('FAQ');
+        }}>
+        <View style={styles.wrapper}>
+          <FeatherIcon name="help-circle" style={styles.icon}></FeatherIcon>
+          <Text style={styles.btnText}>FAQs</Text>
+        </View>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.rect2}
+        onPress={() => {
+          navigationHandler('Settings');
+        }}>
+        <View style={styles.wrapper}>
+          <FeatherIcon name="settings" style={styles.icon}></FeatherIcon>
+          <Text style={styles.btnText}>Settings</Text>
+        </View>
+
+        <FontAwesomeIcon
+          name="arrow-right"
+          style={styles.icon2}></FontAwesomeIcon>
+      </TouchableOpacity>
       <View style={styles.rect12}>
-        <Switch value={true} style={styles.switch}></Switch>
+        <Switch
+          value={isSpaceOwner}
+          style={styles.switch}
+          onValueChange={toggleUserType}></Switch>
         <Text style={styles.loremIpsum2}>Switch to SPACE OWNER</Text>
       </View>
       <View style={styles.rect13}>
@@ -357,4 +417,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Dashboard;
+Dashboard.propTypes = {
+  toggleUserType: PropTypes.func.isRequired,
+  isSpaceOwner: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isSpaceOwner: state.user.isSpaceOwner,
+});
+
+export default connect(mapStateToProps, {toggleUserType})(Dashboard);

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 
 function ReferFriend({navigation}) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.referAFriend}>Refer a Friend</Text>
       <Image
         source={require('../assets/images/referfriend.jpg')}
@@ -25,25 +25,27 @@ function ReferFriend({navigation}) {
       <MaterialButtonPrimary
         caption="INVITE FRIENDS"
         style={styles.materialButtonPrimary}></MaterialButtonPrimary>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    backgroundColor: '#fff',
+    padding: 20,
   },
   referAFriend: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 59,
-    marginLeft: 21,
+    // marginTop: 59,
+    // marginLeft: 21,
   },
   image: {
     height: 286,
     width: 285,
-    marginLeft: 45,
+    alignSelf: 'center',
   },
   loremIpsum: {
     fontFamily: 'roboto-500',

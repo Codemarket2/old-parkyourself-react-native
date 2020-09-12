@@ -67,12 +67,13 @@ function MyReviews({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   reviews: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 53,
+    // marginTop: 53,
     marginLeft: 20,
   },
   loremIpsum: {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   rect8: {
     top: 0,
     left: 1,
-    width: 332,
+    width: '100%',
     height: 233,
     position: 'absolute',
     borderWidth: 1,
@@ -95,9 +96,10 @@ const styles = StyleSheet.create({
       height: 10,
       width: 10,
     },
-    elevation: 60,
+    elevation: 30,
     shadowOpacity: 0.17,
     shadowRadius: 20,
+    backgroundColor: '#fff',
   },
   loremIpsum2: {
     top: 59,

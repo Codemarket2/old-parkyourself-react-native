@@ -1,0 +1,1 @@
+export const TOGGLE_USER_TYPE = 'TOGGLE_USER_TYPE';
