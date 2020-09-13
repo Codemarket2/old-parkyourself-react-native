@@ -1,6 +1,7 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import ParkingOrders from '../../screens/SpaceOwner/ParkingOrders';
+import HeaderLogo from '../HeaderLogo';
 
 const Stack = createStackNavigator();
 
@@ -17,8 +18,9 @@ const ParkingOrdersStack = () => {
       <Stack.Screen
         name="ParkingOrders"
         component={ParkingOrders}
-        options={({navigation}) => ({
+        options={({ navigation }) => ({
           headerTitle: () => <HeaderLogo />,
+          headerTitleAlign: 'center',
         })}
       />
     </Stack.Navigator>

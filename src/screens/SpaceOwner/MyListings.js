@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -31,7 +31,6 @@ function MyListings(props) {
           </View>
         </View>
       </View>
-      <MyListingListItem />
       <MyListingListItem />
       <MyListingListItem />
       <MyListingListItem />
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
     height: 30,
     flexDirection: 'row',
     marginBottom: 20,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   rect8: {
     top: 1,

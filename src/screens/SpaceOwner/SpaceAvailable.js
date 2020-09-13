@@ -1,13 +1,65 @@
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, Switch, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
 import RadioButton from '../../components/RadioButton';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-function SpaceAvailable(props) {
+function SpaceAvailable({ navigation }) {
+  const [monday, setMonday] = useState(false);
+  const [tuesday, setTuesday] = useState(false);
+  const [wednesday, setWednesday] = useState(false);
+  const [thursday, setThursday] = useState(false);
+  const [friday, setFriday] = useState(false);
+  const [saturday, setSaturday] = useState(false);
+  const [sunday, setSunday] = useState(false);
+  const [scheduleType, setScheduleType] = useState(0);
+  const [instantBooking, setInstantBooking] = useState(true);
+
+  // date picker
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [mode, setMode] = useState('time');
+  const [showStart, setStartShow] = useState(false);
+  const [showEnd, setEndShow] = useState(false);
+
+  //date picker functions
+  const onStartDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setEndShow(false);
+    setStartShow(false);
+    setStartDate(currentDate);
+  };
+
+  const onEndDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || endDate;
+    setStartShow(false);
+    setEndShow(false);
+    setEndDate(currentDate);
+  };
+
+  const showMode = (currentMode, item) => {
+    setMode(currentMode);
+    if (item == 'start') {
+      setEndShow(false);
+      setStartShow(true);
+    } else if (item == 'end') {
+      setStartShow(false);
+      setEndShow(true);
+    }
+  };
+
+  const showDatepicker = (item) => {
+    showMode('time', item);
+  };
+
+  const onSubmitHandler = () => {
+    navigation.navigate('SetPricingType');
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.spaceAvailable}>Space Available</Text>
       <Text style={styles.loremIpsum}>
         What days can drivers park at your listing?
@@ -15,112 +67,127 @@ function SpaceAvailable(props) {
       <View style={styles.rect}>
         <Text style={styles.monday}>Monday</Text>
         <Switch
-          value={true}
+          value={monday}
+          onValueChange={() => setMonday(!monday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
           style={styles.switch}></Switch>
       </View>
-      <View style={styles.switch2Stack}>
+      <View style={styles.rect}>
+        <Text style={styles.monday}>Tuesday</Text>
         <Switch
-          value={true}
+          value={tuesday}
+          onValueChange={() => setTuesday(!tuesday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch2}></Switch>
-        <View style={styles.rect1}>
-          <Text style={styles.tuesday}>Tuesday</Text>
-        </View>
+          style={styles.switch}></Switch>
       </View>
-      <View style={styles.switch3Stack}>
+      <View style={styles.rect}>
+        <Text style={styles.monday}>Wednesday</Text>
         <Switch
-          value={true}
+          value={wednesday}
+          onValueChange={() => setWednesday(!wednesday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch3}></Switch>
-        <View style={styles.rect2}>
-          <Text style={styles.wednesday}>Wednesday</Text>
-        </View>
-      </View>
-      <View style={styles.switch4Stack}>
+          style={styles.switch}></Switch>
+      </View><View style={styles.rect}>
+        <Text style={styles.monday}>Thursday</Text>
         <Switch
-          value={true}
+          value={thursday}
+          onValueChange={() => setThursday(!thursday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch4}></Switch>
-        <View style={styles.rect3}>
-          <Text style={styles.thursday}>Thursday</Text>
-        </View>
-      </View>
-      <View style={styles.switch5Stack}>
+          style={styles.switch}></Switch>
+      </View><View style={styles.rect}>
+        <Text style={styles.monday}>Friday</Text>
         <Switch
-          value={true}
+          value={friday}
+          onValueChange={() => setFriday(!friday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch5}></Switch>
-        <View style={styles.rect4}>
-          <Text style={styles.friday}>Friday</Text>
-        </View>
-      </View>
-      <View style={styles.switch6Stack}>
+          style={styles.switch}></Switch>
+      </View><View style={styles.rect}>
+        <Text style={styles.monday}>Saturday</Text>
         <Switch
-          value={true}
+          value={saturday}
+          onValueChange={() => setSaturday(!saturday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch6}></Switch>
-        <View style={styles.rect5}>
-          <Text style={styles.saturday}>Saturday</Text>
-        </View>
+          style={styles.switch}></Switch>
       </View>
-      <View style={styles.switch7Stack}>
+      <View style={styles.rect}>
+        <Text style={styles.monday}>Sunday</Text>
         <Switch
-          value={true}
+          value={sunday}
+          onValueChange={() => setSunday(!sunday)}
           trackColor={{
             true: 'rgba(39,170,225,1)',
             false: 'rgba(230, 230, 230,1)',
           }}
-          style={styles.switch7}></Switch>
-        <View style={styles.rect6}>
-          <Text style={styles.sunday}>Sunday</Text>
-        </View>
+          style={styles.switch}></Switch>
       </View>
+
       <Text style={styles.text}>
         Set a daily schedule or set it to 24 hours a day
       </Text>
       <View style={styles.materialRadio1Row}>
-        <RadioButton checked={true} style={styles.materialRadio1}></RadioButton>
+        <RadioButton checked={scheduleType == 0} style={styles.materialRadio1} onPress={() => setScheduleType(0)}></RadioButton>
         <Text style={styles.loremIpsum2}>Set to a daily schedule</Text>
       </View>
       <View style={styles.button2Row}>
-        <TouchableOpacity style={styles.button2}>
-          <Text style={styles.startTime}>Start Time</Text>
+        <TouchableOpacity style={styles.button2} onPress={() => showDatepicker('start')}>
+          <Text style={styles.startTime} numberOfLines={1}>{startDate ? startDate.toString() : 'Start Time'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button3}>
-          <Text style={styles.endTime}>End Time</Text>
+        <TouchableOpacity style={styles.button3} onPress={() => showDatepicker('end')}>
+          <Text style={styles.endTime} numberOfLines={1}>{endDate ? endDate.toString() : 'End Time'}</Text>
         </TouchableOpacity>
       </View>
+
+      {showStart && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={startDate ? startDate : new Date()}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onStartDateChange}
+        />
+      )}
+      {showEnd && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={endDate ? endDate : new Date()}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onEndDateChange}
+        />
+      )}
+
       <View style={styles.materialRadio2Row}>
-        <RadioButton style={styles.materialRadio2}></RadioButton>
+        <RadioButton checked={scheduleType == 1} style={styles.materialRadio2} onPress={() => setScheduleType(1)}></RadioButton>
         <Text style={styles.loremIpsum3}>Set to 24 hours a day</Text>
       </View>
-      <View style={styles.rect9}>
+      <TouchableOpacity style={styles.rect9} onPress={() => { navigation.navigate('CustomSchedule') }}>
         <Text style={styles.loremIpsum4}>SET A CUSTOM SCHEDULE</Text>
-      </View>
+      </TouchableOpacity>
       <Text style={styles.loremIpsum5}>
         How much notice do you need before a Guest arrives?
       </Text>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.hour}>! hour</Text>
+        <Text style={styles.hour}>1 hour</Text>
       </TouchableOpacity>
       <Text style={styles.loremIpsum6}>
         Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
@@ -139,18 +206,25 @@ function SpaceAvailable(props) {
       <Text style={styles.loremIpsum10}>How long can guests stay?</Text>
       <View style={styles.rect10}>
         <View style={styles.iconRow}>
-          <EntypoIcon name="circle-with-minus" style={styles.icon}></EntypoIcon>
+          <TouchableOpacity>
+            <EntypoIcon name="circle-with-minus" style={styles.icon}></EntypoIcon>
+          </TouchableOpacity>
           <Text style={styles.loremIpsum11}>1 hour Minimum</Text>
-          <EntypoIcon name="circle-with-plus" style={styles.icon2}></EntypoIcon>
+          <TouchableOpacity>
+            <EntypoIcon name="circle-with-plus" style={styles.icon2}></EntypoIcon>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.rect11}>
         <View style={styles.icon4Row}>
-          <EntypoIcon
-            name="circle-with-minus"
-            style={styles.icon4}></EntypoIcon>
+          <TouchableOpacity>
+            <EntypoIcon
+              name="circle-with-minus"
+              style={styles.icon4}></EntypoIcon></TouchableOpacity>
           <Text style={styles.loremIpsum12}>30 Days Maximum</Text>
-          <EntypoIcon name="circle-with-plus" style={styles.icon3}></EntypoIcon>
+          <TouchableOpacity>
+            <EntypoIcon name="circle-with-plus" style={styles.icon3}></EntypoIcon>
+          </TouchableOpacity>
         </View>
       </View>
       <Text style={styles.loremIpsum13}>
@@ -161,50 +235,47 @@ function SpaceAvailable(props) {
         Which booking process do you prefer?
       </Text>
       <View style={styles.icon5Row}>
-        <IoniconsIcon
-          name="md-radio-button-on"
-          style={styles.icon5}></IoniconsIcon>
+        <RadioButton checked={instantBooking} style={styles.materialRadio2} onPress={() => setInstantBooking(true)}></RadioButton>
         <Text style={styles.instantBooking}>Instant Booking</Text>
       </View>
       <View style={styles.icon6Row}>
-        <IoniconsIcon
-          name="md-radio-button-off"
-          style={styles.icon6}></IoniconsIcon>
+        <RadioButton checked={!instantBooking} style={styles.materialRadio2} onPress={() => setInstantBooking(false)}></RadioButton>
         <Text style={styles.approvalIsRequired}>Approval is required</Text>
       </View>
       <MaterialButtonPrimary
+        onPress={onSubmitHandler}
         caption="NEXT"
         style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    backgroundColor: '#fff',
+    padding: 20
   },
   spaceAvailable: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 27,
-    marginLeft: 23,
   },
   loremIpsum: {
     fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
-    marginTop: 21,
-    marginLeft: 22,
+    marginVertical: 21,
   },
   rect: {
-    width: 331,
+    width: '100%',
     height: 48,
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
     flexDirection: 'row',
-    marginTop: 26,
-    marginLeft: 22,
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d6d6d6',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   monday: {
     fontFamily: 'roboto-regular',
@@ -214,177 +285,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   switch: {
-    marginLeft: 212,
-    marginTop: 14,
-  },
-  switch2: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect1: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  tuesday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 13,
-    marginLeft: 1,
-  },
-  switch2Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 7,
-    marginLeft: 22,
-  },
-  switch3: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect2: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  wednesday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 13,
-    marginLeft: 2,
-  },
-  switch3Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 7,
-    marginLeft: 22,
-  },
-  switch4: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect3: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  thursday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 12,
-    marginLeft: 3,
-  },
-  switch4Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 8,
-    marginLeft: 22,
-  },
-  switch5: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect4: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  friday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 12,
-    marginLeft: 3,
-  },
-  switch5Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 7,
-    marginLeft: 22,
-  },
-  switch6: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect5: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  saturday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 12,
-    marginLeft: 2,
-  },
-  switch6Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 7,
-    marginLeft: 22,
-  },
-  switch7: {
-    position: 'absolute',
-    top: 14,
-    left: 285,
-  },
-  rect6: {
-    top: 0,
-    left: 0,
-    width: 331,
-    height: 48,
-    position: 'absolute',
-    borderWidth: 1,
-    borderColor: 'rgba(214,214,214,1)',
-  },
-  sunday: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 20,
-    marginTop: 12,
-    marginLeft: 2,
-  },
-  switch7Stack: {
-    width: 331,
-    height: 48,
-    marginTop: 7,
-    marginLeft: 22,
+
   },
   text: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 20,
     marginTop: 37,
-    marginLeft: 23,
   },
   materialRadio1: {
     height: 30,
@@ -394,20 +301,19 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
-    marginLeft: 6,
-    marginTop: 6,
+    marginLeft: 10,
+    // marginTop: 6,
   },
   materialRadio1Row: {
     height: 30,
     flexDirection: 'row',
     marginTop: 20,
-    marginLeft: 19,
-    marginRight: 151,
+    alignItems: 'center'
   },
   button2: {
     width: 142,
     height: 39,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(182,182,182,1)',
   },
   startTime: {
@@ -415,12 +321,13 @@ const styles = StyleSheet.create({
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
-    marginLeft: 28,
+    // marginLeft: 28,
+
   },
   button3: {
     width: 142,
     height: 39,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 38,
   },
@@ -429,7 +336,7 @@ const styles = StyleSheet.create({
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
-    marginLeft: 33,
+    // marginLeft: 33,
   },
   button2Row: {
     height: 39,
@@ -446,15 +353,13 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
-    marginLeft: 6,
-    marginTop: 5,
+    marginLeft: 10,
   },
   materialRadio2Row: {
     height: 30,
     flexDirection: 'row',
     marginTop: 28,
-    marginLeft: 19,
-    marginRight: 161,
+    alignItems: 'center'
   },
   rect9: {
     width: 238,
@@ -464,92 +369,92 @@ const styles = StyleSheet.create({
       width: 3,
       height: 3,
     },
-    elevation: 60,
+    elevation: 10,
     shadowOpacity: 0.1,
     shadowRadius: 20,
     borderWidth: 2,
     borderColor: 'rgba(39,170,225,1)',
     marginTop: 21,
     marginLeft: 27,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   loremIpsum4: {
     fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
-    marginTop: 12,
-    marginLeft: 38,
+
   },
   loremIpsum5: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 48,
-    marginLeft: 27,
   },
   button: {
-    width: 325,
+    width: '100%',
     height: 46,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 17,
-    marginLeft: 28,
   },
   hour: {
     fontFamily: 'roboto-regular',
     color: 'rgba(0,0,0,1)',
     fontSize: 16,
     marginTop: 15,
-    marginLeft: 13,
+    // marginLeft: 13,
   },
   loremIpsum6: {
     fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     lineHeight: 20,
     marginTop: 25,
-    marginLeft: 28,
+    // marginLeft: 28,
   },
   loremIpsum7: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 31,
-    marginLeft: 29,
+    // marginLeft: 29,
   },
   button4: {
-    width: 325,
+    width: '100%',
     height: 46,
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 16,
-    marginLeft: 26,
+    // marginLeft: 26,
   },
   loremIpsum8: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 15,
-    marginLeft: 11,
+    // marginLeft: 11,
   },
   loremIpsum9: {
     fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     lineHeight: 20,
     marginTop: 24,
-    marginLeft: 29,
+    // marginLeft: 29,
   },
   loremIpsum10: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 24,
-    marginLeft: 29,
+    // marginLeft: 29,
   },
   rect10: {
     width: 195,
     height: 31,
     flexDirection: 'row',
     marginTop: 25,
-    marginLeft: 55,
+    marginLeft: 25,
   },
   icon: {
     color: 'rgba(39,170,225,1)',
@@ -583,7 +488,7 @@ const styles = StyleSheet.create({
     height: 31,
     flexDirection: 'row',
     marginTop: 15,
-    marginLeft: 55,
+    marginLeft: 25,
   },
   icon4: {
     color: 'rgba(39,170,225,1)',
@@ -619,14 +524,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     height: 60,
     marginTop: 20,
-    marginLeft: 29,
+    // marginLeft: 29,
   },
   loremIpsum14: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 24,
-    marginLeft: 27,
+    // marginLeft: 27,
   },
   icon5: {
     color: 'rgba(39,170,225,1)',
@@ -636,7 +541,6 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     marginLeft: 11,
-    marginTop: 3,
   },
   icon5Row: {
     height: 22,
@@ -653,7 +557,6 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     marginLeft: 12,
-    marginTop: 2,
   },
   icon6Row: {
     height: 22,
@@ -665,8 +568,9 @@ const styles = StyleSheet.create({
   materialButtonPrimary1: {
     width: 100,
     height: 36,
-    marginTop: 67,
-    marginLeft: 136,
+    marginVertical: 67,
+    alignSelf: 'center'
+    // marginLeft: 136,
   },
 });
 

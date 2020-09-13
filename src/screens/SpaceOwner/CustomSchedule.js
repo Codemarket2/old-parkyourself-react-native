@@ -1,9 +1,15 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import React, {Component, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function CustomSchedule(props) {
+function CustomSchedule({navigation}) {
   const [mode, setMode] = useState('date');
   const [date, setDate] = useState('');
 
@@ -44,6 +50,9 @@ function CustomSchedule(props) {
       <Text style={styles.loremIpsum}>Add another time range</Text>
 
       <MaterialButtonPrimary
+        onPress={() => {
+          navigation.navigate('SpaceAvailable');
+        }}
         caption="SAVE SCHEDULE"
         style={styles.materialButtonPrimary7}></MaterialButtonPrimary>
     </ScrollView>
@@ -54,7 +63,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: '#fff',
-    padding: 20
+    padding: 20,
   },
   customSchedule: {
     fontFamily: 'roboto-500',
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     // marginLeft: 22,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   calendar: {
     fontFamily: 'roboto-regular',
@@ -145,7 +154,7 @@ const styles = StyleSheet.create({
     width: 150,
     backgroundColor: 'rgba(39,170,225,1)',
     marginVertical: 80,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
 });
 

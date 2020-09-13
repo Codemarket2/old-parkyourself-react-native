@@ -1,19 +1,40 @@
-import React, { Component } from 'react';
+import React, {Component, useState} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Modal,
 } from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RadioButton from '../../components/RadioButton';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
+import VehicleSizesModal from '../../components/SpaceOwner/VehicleSizesModal';
 
-function AddListingSpaceDetails(props) {
+function AddListingSpaceDetails({navigation}) {
+  const [isTandem, setIsTandem] = useState(false);
+  const [isSideBySide, setIsSideBySide] = useState(false);
+  const [qtyOfSpaces, setQtyOfSpaces] = useState('');
+  const [vehicleHeightLimit, setVehicleHeightLimit] = useState('');
+  const [sameSizeSpaces, setSameSizeSpaces] = useState(false);
+  const [motorcycle, setMotorcycle] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [midSized, setMidSized] = useState(false);
+  const [large, setLarged] = useState(false);
+  const [oversized, setOversized] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [motorcycleSpaces, setMotorcycleSpaces] = useState('');
+  const [compactSpaces, setCompactSpaces] = useState('');
+  const [midsizedSpaces, setMidsizedSpaces] = useState('');
+  const [largeSpaces, setLargeSpaces] = useState('');
+  const [oversizedSpaces, setOversizedSpaces] = useState('');
+  const [aboutSpace, setAboutSpace] = useState('');
+  const [accessInstructions, setAccessInstructions] = useState('');
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addAListing1}>Add a Listing</Text>
@@ -21,40 +42,69 @@ function AddListingSpaceDetails(props) {
       <Text style={styles.parkingSpaceType}>Parking Space Type</Text>
       <View style={styles.rect5}>
         <View style={styles.rect4Row}>
-          <View style={styles.rect4}>
-            <View style={styles.icon4Stack}>
-              <IoniconsIcon name="ios-car" style={styles.icon4}></IoniconsIcon>
-              <Text style={styles.tandem}>Tandem</Text>
-            </View>
-          </View>
-          <View style={styles.rect3}>
+          <TouchableOpacity
+            style={isTandem ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setIsTandem(true);
+              setIsSideBySide(false);
+            }}>
+            <IoniconsIcon
+              name="ios-car"
+              style={
+                isTandem ? styles.activeIcon : styles.inactiveIcon
+              }></IoniconsIcon>
+            <Text style={isTandem ? styles.activeText : styles.inactiveText}>
+              Tandem
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={isSideBySide ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setIsTandem(false);
+              setIsSideBySide(true);
+            }}>
             <MaterialCommunityIconsIcon
               name="garage"
-              style={styles.icon3}></MaterialCommunityIconsIcon>
-            <Text style={styles.sideBySide}>Side by Side</Text>
-          </View>
+              style={
+                isSideBySide ? styles.activeIcon : styles.inactiveIcon
+              }></MaterialCommunityIconsIcon>
+            <Text
+              style={isSideBySide ? styles.activeText : styles.inactiveText}>
+              Side by Side
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <TextInput
         placeholder="Total Quantity of Parking Spaces"
         placeholderTextColor="rgba(182,182,182,1)"
+        value={qtyOfSpaces}
+        onChangeText={(input) => setQtyOfSpaces(input)}
         style={styles.textInput}></TextInput>
       <Text style={styles.loremIpsum}>
         Are all parking spaces of same size?
       </Text>
       <View style={styles.materialRadioRow}>
         <View style={styles.option}>
-          <RadioButton checked={false} style={styles.materialRadio}></RadioButton>
+          <RadioButton
+            checked={sameSizeSpaces}
+            style={styles.materialRadio}
+            onPress={() => setSameSizeSpaces(!sameSizeSpaces)}></RadioButton>
           <Text style={styles.yes}>Yes</Text>
         </View>
         <View style={styles.option}>
-          <RadioButton checked={true} style={styles.materialRadio1}></RadioButton>
+          <RadioButton
+            checked={!sameSizeSpaces}
+            style={styles.materialRadio1}
+            onPress={() => setSameSizeSpaces(!sameSizeSpaces)}></RadioButton>
           <Text style={styles.loremIpsum2}>No, some are different</Text>
         </View>
       </View>
       <TextInput
         placeholder="Vehicle Height Limit (if applicable)"
         placeholderTextColor="rgba(182,182,182,1)"
+        value={vehicleHeightLimit}
+        onChangeText={(input) => setVehicleHeightLimit(input)}
         style={styles.textInput1}></TextInput>
       <Text style={styles.vehicleSizes}>Vehicle Sizes</Text>
       <Text style={styles.loremIpsum3}>
@@ -64,70 +114,151 @@ function AddListingSpaceDetails(props) {
       <View style={styles.rect6Stack}>
         <View style={styles.rect6}>
           <View style={styles.motorcycle1StackStackRow}>
-            <View style={styles.motorcycle1StackStack}>
-              <View style={styles.motorcycle1Stack}>
-                <Text style={styles.motorcycle1}>Motorcycle</Text>
-                <TouchableOpacity style={styles.button5}></TouchableOpacity>
-              </View>
+            <TouchableOpacity
+              style={motorcycle ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setMotorcycle(!motorcycle)}>
               <FontAwesomeIcon
                 name="motorcycle"
-                style={styles.icon9}></FontAwesomeIcon>
-            </View>
-            <TouchableOpacity style={styles.button4}>
-              <View style={styles.compact1Stack}>
-                <Text style={styles.compact1}>Compact</Text>
-                <MaterialCommunityIconsIcon
-                  name="car-sports"
-                  style={styles.icon8}></MaterialCommunityIconsIcon>
-              </View>
+                style={
+                  motorcycle ? styles.activeIcon : styles.inactiveIcon
+                }></FontAwesomeIcon>
+              <Text
+                style={motorcycle ? styles.activeText : styles.inactiveText}>
+                Motorcycle
+              </Text>
             </TouchableOpacity>
-            <View style={styles.midSized1Stack}>
-              <Text style={styles.midSized1}>Mid Sized</Text>
+            <TouchableOpacity
+              style={compact ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setCompact(!compact)}>
+              <MaterialCommunityIconsIcon
+                name="car-sports"
+                style={
+                  compact ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={compact ? styles.activeText : styles.inactiveText}>
+                Compact
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={midSized ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setMidSized(!midSized)}>
               <MaterialCommunityIconsIcon
                 name="car-side"
-                style={styles.icon7}></MaterialCommunityIconsIcon>
-              <TouchableOpacity style={styles.button3}></TouchableOpacity>
-            </View>
+                style={
+                  midSized ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={midSized ? styles.activeText : styles.inactiveText}>
+                Mid Sized
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.oversized1StackStack}>
-            <View style={styles.oversized1Stack}>
-              <Text style={styles.oversized1}>Oversized</Text>
-              <TouchableOpacity style={styles.button1}></TouchableOpacity>
-            </View>
-            <FontAwesomeIcon
-              name="truck"
-              style={styles.icon5}></FontAwesomeIcon>
-          </View>
-          <TouchableOpacity style={styles.button2}>
-            <View style={styles.large1Stack}>
-              <Text style={styles.large1}>Large</Text>
+            <TouchableOpacity
+              style={large ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setLarged(!large)}>
               <MaterialCommunityIconsIcon
                 name="car-estate"
-                style={styles.icon6}></MaterialCommunityIconsIcon>
-            </View>
-          </TouchableOpacity>
+                style={
+                  large ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={large ? styles.activeText : styles.inactiveText}>
+                Large
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={oversized ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setOversized(!oversized)}>
+              <FontAwesomeIcon
+                name="truck"
+                style={
+                  oversized ? styles.activeIcon : styles.inactiveIcon
+                }></FontAwesomeIcon>
+              <Text style={oversized ? styles.activeText : styles.inactiveText}>
+                Oversized
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
       </View>
-      <Text style={styles.loremIpsum4}>How do I determine my space size?</Text>
-      <Text style={styles.compactCarSpaces}>Compact Car Spaces</Text>
-      <TextInput
-        placeholder="Number of Spaces"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.numerOfSpaces}></TextInput>
-      <Text style={styles.largeCarSpaces}>Large Car Spaces</Text>
-      <TextInput
-        placeholder="Number of Spaces"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.numerOfSpaces1}></TextInput>
+      <TouchableOpacity onPress={() => setVisible(true)}>
+        <Text style={styles.loremIpsum4}>
+          How do I determine my space size?
+        </Text>
+      </TouchableOpacity>
+      <Modal visible={visible}>
+        <VehicleSizesModal onPress={() => setVisible(false)} />
+      </Modal>
+
+      {motorcycle && (
+        <View>
+          <Text style={styles.compactCarSpaces}>Motorcycle Spaces</Text>
+          <TextInput
+            placeholder="Number of Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.numerOfSpaces}
+            value={motorcycleSpaces}
+            onChangeText={(input) => setMotorcycleSpaces(input)}></TextInput>
+        </View>
+      )}
+      {compact && (
+        <View>
+          <Text style={styles.compactCarSpaces}>Compact Car Spaces</Text>
+          <TextInput
+            placeholder="Number of Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.numerOfSpaces}
+            value={compactSpaces}
+            onChangeText={(input) => setCompactSpaces(input)}></TextInput>
+        </View>
+      )}
+      {midSized && (
+        <View>
+          <Text style={styles.largeCarSpaces}>Mid-Sized Car Spaces</Text>
+          <TextInput
+            placeholder="Number of Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.numerOfSpaces1}
+            value={midsizedSpaces}
+            onChangeText={(input) => setMidsizedSpaces(input)}></TextInput>
+        </View>
+      )}
+      {large && (
+        <View>
+          <Text style={styles.largeCarSpaces}>Large Car Spaces</Text>
+          <TextInput
+            placeholder="Number of Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.numerOfSpaces1}
+            value={largeSpaces}
+            onChangeText={(input) => setLargeSpaces(input)}></TextInput>
+        </View>
+      )}
+      {oversized && (
+        <View>
+          <Text style={styles.largeCarSpaces}>Oversized Car Spaces</Text>
+          <TextInput
+            placeholder="Number of Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.numerOfSpaces1}
+            value={oversizedSpaces}
+            onChangeText={(input) => setOversizedSpaces(input)}></TextInput>
+        </View>
+      )}
+
       <Text style={styles.loremIpsum5}>
         Are the spaces numbered or labelled ?
       </Text>
       <View style={styles.materialRadio3Row}>
-        <RadioButton checked={true} style={styles.materialRadio3}></RadioButton>
-        <Text style={styles.yes1}>Yes</Text>
-        <RadioButton style={styles.materialRadio2}></RadioButton>
-        <Text style={styles.no}>No</Text>
+        <View style={styles.option}>
+          <RadioButton
+            checked={true}
+            style={styles.materialRadio3}></RadioButton>
+          <Text style={styles.yes1}>Yes</Text>
+        </View>
+        <View style={styles.option}>
+          <RadioButton style={styles.materialRadio2}></RadioButton>
+          <Text style={styles.no}>No</Text>
+        </View>
       </View>
       <Text style={styles.enterSpaceLabels}>Enter Space Labels</Text>
       <View style={styles.rect7}>
@@ -181,9 +312,6 @@ function AddListingSpaceDetails(props) {
           style={styles.spaceLabelNumber1}></TextInput>
       </View>
 
-
-
-
       <Text style={styles.loremIpsum6}>Tell Guests about your space</Text>
       <TextInput
         placeholder="What makes your space great? Is it near notable landmarks or destinations?"
@@ -193,7 +321,9 @@ function AddListingSpaceDetails(props) {
         maxLength={300}
         multiline={true}
         selectTextOnFocus={true}
-        style={styles.placeholder}></TextInput>
+        style={styles.placeholder}
+        value={aboutSpace}
+        onChangeText={(input) => setAboutSpace(input)}></TextInput>
       <Text style={styles.accessInstructions}>Access Instructions</Text>
       <TextInput
         placeholder="Tell Guests what to do when they arrive? Provide special instructions (if any)"
@@ -203,10 +333,15 @@ function AddListingSpaceDetails(props) {
         maxLength={300}
         multiline={true}
         selectTextOnFocus={true}
-        style={styles.placeholder1}></TextInput>
+        style={styles.placeholder1}
+        value={accessInstructions}
+        onChangeText={(input) => setAccessInstructions(input)}></TextInput>
       <MaterialButtonPrimary
         caption="NEXT"
-        style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
+        style={styles.materialButtonPrimary1}
+        onPress={() => {
+          navigation.navigate('SpaceAvailable');
+        }}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -215,13 +350,12 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: '#fff',
-    padding: 20
+    padding: 20,
   },
   addAListing1: {
     fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    marginTop: 28,
     // marginLeft: 24,
   },
   spaceDetails: {
@@ -245,53 +379,24 @@ const styles = StyleSheet.create({
     marginTop: 23,
     // marginLeft: 23,
   },
-  rect4: {
-    width: 119,
-    height: 112,
+  inactiveBtn: {
+    width: 120,
+    height: 110,
     backgroundColor: 'rgba(39,170,225,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
-  icon4: {
-    top: 0,
-    left: 0,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 60,
-    height: 65,
-    width: 49,
-  },
-  tandem: {
-    top: 63,
-    left: 5,
-    position: 'absolute',
+  inactiveText: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
   },
-  icon4Stack: {
-    width: 49,
-    height: 76,
-    marginTop: 13,
-    marginLeft: 35,
-  },
-  rect3: {
-    width: 119,
-    height: 112,
-    backgroundColor: 'rgba(39,170,225,0.2)',
-    marginLeft: 12,
-  },
-  icon3: {
+  inactiveIcon: {
     color: 'rgba(39,170,225,1)',
     fontSize: 60,
-    height: 65,
-    width: 60,
-    marginTop: 11,
-    marginLeft: 28,
-  },
-  sideBySide: {
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 11,
-    marginLeft: 30,
+    // height: 65,
+    // width: 49,
   },
   rect4Row: {
     height: 112,
@@ -304,18 +409,16 @@ const styles = StyleSheet.create({
     height: 44,
     width: 328,
     marginTop: 22,
-    // marginLeft: 24,
   },
   loremIpsum: {
     fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     marginTop: 17,
-    // marginLeft: 25,
   },
   option: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 20
+    marginRight: 20,
   },
   materialRadio: {
     height: 30,
@@ -344,7 +447,7 @@ const styles = StyleSheet.create({
     marginTop: 11,
     // marginLeft: 27,
     marginRight: 100,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textInput1: {
     fontFamily: 'roboto-regular',
@@ -410,137 +513,35 @@ const styles = StyleSheet.create({
     width: 103,
     height: 96,
   },
-  button4: {
-    width: 103,
-    height: 96,
+  activeBtn: {
+    width: 120,
+    height: 110,
     backgroundColor: 'rgba(39,170,225,1)',
-    marginLeft: 9,
+    // marginLeft: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
   },
-  compact1: {
-    top: 57,
-    left: 3,
-    position: 'absolute',
+  activeText: {
     fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 13,
   },
-  icon8: {
-    top: 0,
-    left: 0,
-    position: 'absolute',
+  activeIcon: {
     color: 'rgba(255,255,255,1)',
     fontSize: 58,
-    height: 63,
-    width: 58,
-  },
-  compact1Stack: {
-    width: 58,
-    height: 73,
-    marginTop: 5,
-    marginLeft: 22,
-  },
-  midSized1: {
-    top: 64,
-    left: 24,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 13,
-  },
-  icon7: {
-    top: 8,
-    left: 23,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 58,
-    height: 63,
-    width: 58,
-  },
-  button3: {
-    top: 0,
-    left: 0,
-    width: 103,
-    height: 96,
-    position: 'absolute',
-    backgroundColor: 'rgba(39,170,225,0.3)',
-  },
-  midSized1Stack: {
-    width: 103,
-    height: 96,
-    marginLeft: 9,
+    // height: 63,
+    // width: 58,
   },
   motorcycle1StackStackRow: {
     height: 96,
     flexDirection: 'row',
   },
-  oversized1: {
-    top: 64,
-    left: 25,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: '#121212',
-    fontSize: 13,
-  },
-  button1: {
-    top: 0,
-    left: 0,
-    width: 103,
-    height: 96,
-    position: 'absolute',
-    backgroundColor: 'rgba(39,170,225,0.3)',
-  },
-  oversized1Stack: {
-    top: 0,
-    left: 0,
-    width: 103,
-    height: 96,
-    position: 'absolute',
-  },
-  icon5: {
-    top: 11,
-    left: 26,
-    position: 'absolute',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 50,
-    height: 50,
-    width: 50,
-  },
   oversized1StackStack: {
     width: 103,
     height: 96,
-    marginTop: 8,
-    marginLeft: 111,
-  },
-  button2: {
-    top: 104,
-    left: 0,
-    width: 103,
-    height: 96,
-    position: 'absolute',
-    backgroundColor: 'rgba(39,170,225,1)',
-  },
-  large1: {
-    top: 55,
-    left: 12,
-    position: 'absolute',
-    fontFamily: 'roboto-regular',
-    color: 'rgba(255,255,255,1)',
-    fontSize: 13,
-  },
-  icon6: {
-    top: 0,
-    left: 0,
-    position: 'absolute',
-    color: 'rgba(255,255,255,1)',
-    fontSize: 58,
-    height: 63,
-    width: 58,
-  },
-  large1Stack: {
-    width: 58,
-    height: 71,
-    marginTop: 8,
-    marginLeft: 23,
+    marginTop: 25,
+    flexDirection: 'row',
   },
   rect6Stack: {
     width: '100%',
@@ -552,8 +553,8 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     textDecorationLine: 'underline',
-    marginTop: 33,
-    marginLeft: 71,
+    marginTop: 50,
+    alignSelf: 'center',
   },
   compactCarSpaces: {
     fontFamily: 'roboto-500',
@@ -570,7 +571,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 4,
     borderBottomWidth: 1,
-    borderBottomColor: '#d6d6d6'
+    borderBottomColor: '#d6d6d6',
     // marginLeft: 27,
   },
   largeCarSpaces: {
@@ -588,13 +589,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 3,
     borderBottomWidth: 1,
-    borderBottomColor: '#d6d6d6'
+    borderBottomColor: '#d6d6d6',
     // marginLeft: 27,
   },
   loremIpsum5: {
     fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
-    marginTop: 20,
+    marginTop: 50,
     // marginLeft: 26,
   },
   materialRadio3: {
@@ -605,7 +606,6 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     marginLeft: 3,
-    marginTop: 8,
   },
   materialRadio2: {
     height: 30,
@@ -616,7 +616,6 @@ const styles = StyleSheet.create({
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     marginLeft: 5,
-    marginTop: 7,
   },
   materialRadio3Row: {
     height: 30,
@@ -624,6 +623,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
     // marginLeft: 20,
     marginRight: 195,
+  },
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
   },
   enterSpaceLabels: {
     fontFamily: 'roboto-500',
@@ -648,7 +652,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     // marginLeft: 21,
     backgroundColor: '#fff',
-    padding: 10
+    padding: 10,
   },
   spaceLabelNumber: {
     fontFamily: 'roboto-regular',
@@ -659,7 +663,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     // marginLeft: 18,
     borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   spaceLabelNumber1: {
     fontFamily: 'roboto-regular',
@@ -669,7 +673,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // marginLeft: 19,
     borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   spaceLabelNumber2: {
     top: 54,
@@ -909,7 +913,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 36,
     marginTop: 69,
-    marginLeft: 134,
+    alignSelf: 'center',
+    marginBottom: 50,
   },
 });
 

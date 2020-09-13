@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SpaceOwnerDashboard from '../../screens/SpaceOwner/SpaceOwnerDashboard';
 import CreateSpaceOwnerProfile from '../../screens/SpaceOwner/CreateSpaceOwnerProfile';
 import MyListings from '../../screens/SpaceOwner/MyListings';
+import ParkingOrders from '../../screens/SpaceOwner/ParkingOrders';
 import AddListingLocation from '../../screens/SpaceOwner/AddListingLocation';
 import AddListingSpaceDetails from '../../screens/SpaceOwner/AddListingSpaceDetails';
 import SpaceAvailable from '../../screens/SpaceOwner/SpaceAvailable';
@@ -10,6 +11,7 @@ import SetPricingType from '../../screens/SpaceOwner/SetPricingType';
 import FlatBillingType from '../../screens/SpaceOwner/FlatBillingType';
 import VariableBillingType from '../../screens/SpaceOwner/VariableBillingType';
 import SaveSpaceDetails from '../../screens/SpaceOwner/SaveSpaceDetails';
+import CustomSchedule from '../../screens/SpaceOwner/CustomSchedule';
 import HeaderLogo from '../HeaderLogo';
 
 const Stack = createStackNavigator();
@@ -29,6 +31,7 @@ const SpaceOwnerDashboardStack = () => {
         component={SpaceOwnerDashboard}
         options={({navigation}) => ({
           headerTitle: () => <HeaderLogo />,
+          headerTitleAlign: 'center',
         })}
       />
       <Stack.Screen
@@ -41,6 +44,13 @@ const SpaceOwnerDashboardStack = () => {
       <Stack.Screen
         name="MyListings"
         component={MyListings}
+        options={({navigation}) => ({
+          headerTitle: () => <HeaderLogo />,
+        })}
+      />
+      <Stack.Screen
+        name="ParkingOrders"
+        component={ParkingOrders}
         options={({navigation}) => ({
           headerTitle: () => <HeaderLogo />,
         })}
@@ -62,6 +72,13 @@ const SpaceOwnerDashboardStack = () => {
       <Stack.Screen
         name="SpaceAvailable"
         component={SpaceAvailable}
+        options={({navigation}) => ({
+          headerTitle: () => <HeaderLogo />,
+        })}
+      />
+      <Stack.Screen
+        name="CustomSchedule"
+        component={CustomSchedule}
         options={({navigation}) => ({
           headerTitle: () => <HeaderLogo />,
         })}

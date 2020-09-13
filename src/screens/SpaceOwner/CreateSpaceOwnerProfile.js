@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, TextInput, ScrollView} from 'react-native';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 
-function CreateSpaceOwnerProfile(props) {
+function CreateSpaceOwnerProfile({navigation}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.spaceOwnerProfile}>Space Owner Profile</Text>
@@ -56,6 +56,9 @@ function CreateSpaceOwnerProfile(props) {
         <Text style={styles.change2}>Change</Text>
       </View>
       <MaterialButtonPrimary
+        onPress={() => {
+          navigation.navigate('SpaceOwnerDashboard');
+        }}
         caption="SAVE PROFILE"
         style={styles.materialButtonPrimary6}></MaterialButtonPrimary>
     </ScrollView>

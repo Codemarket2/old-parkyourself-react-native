@@ -237,12 +237,12 @@ function Dashboard({navigation, isSpaceOwner, toggleUserType}) {
           onValueChange={toggleUserType}></Switch>
         <Text style={styles.loremIpsum2}>Switch to SPACE OWNER</Text>
       </View>
-      <View style={styles.rect13}>
+      <TouchableOpacity style={styles.rect13} onPress={() => {}}>
         <View style={styles.icon17Row}>
           <IoniconsIcon name="ios-log-out" style={styles.icon17}></IoniconsIcon>
           <Text style={styles.logOut}>LOG OUT</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
