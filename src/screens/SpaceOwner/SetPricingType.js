@@ -1,12 +1,29 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, Switch, ScrollView, Dimensions } from 'react-native';
+import React, {Component, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Switch,
+  ScrollView,
+  Dimensions,
+  Alert,
+} from 'react-native';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 
-function SetPricingType({ navigation }) {
+function SetPricingType({navigation}) {
   const [billingType, setBillingType] = useState(1);
   const onSubmitHandler = () => {
-    navigation.navigate('FlatBillingType')
-  }
+    try {
+      if (billingType == 0) {
+        navigation.navigate('VariableBillingType');
+      } else {
+        navigation.navigate('FlatBillingType');
+      }
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to set pricing type');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.setPricing}>Set Pricing</Text>
@@ -35,9 +52,7 @@ function SetPricingType({ navigation }) {
         <View style={styles.variableRateColumnRow}>
           <View style={styles.variableRateColumn}>
             <Text style={styles.variableRate}>Flat Rate only</Text>
-            <Text style={styles.loremIpsum2}>
-              Charge a flat rate per day
-            </Text>
+            <Text style={styles.loremIpsum2}>Charge a flat rate per day</Text>
           </View>
           <Switch
             value={billingType == 1}
@@ -61,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     padding: 20,
-    minHeight: Dimensions.get('window').height
+    minHeight: Dimensions.get('window').height,
   },
   setPricing: {
     fontFamily: 'roboto-500',
@@ -99,7 +114,7 @@ const styles = StyleSheet.create({
     marginLeft: 1,
     marginRight: 9,
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   materialButtonPrimary: {
     width: 100,
@@ -114,7 +129,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     marginTop: 157,
     alignSelf: 'center',
-    backgroundColor: '#27aae1'
+    backgroundColor: '#27aae1',
   },
 });
 

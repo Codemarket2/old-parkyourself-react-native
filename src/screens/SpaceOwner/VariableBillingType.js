@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Switch, ScrollView, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Switch,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {setListingPricingDetails} from '../../actions/listing';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import TipsSettingRatesModal from '../../components/SpaceOwner/TipsSettingRatesModal';
 import VariableVsFlatModal from '../../components/SpaceOwner/VariableVsFlatModal';
 
-function VariableBillingType({ navigation }) {
-
+function VariableBillingType({navigation, setListingPricingDetails}) {
   const [perHourRate, setPerHourRate] = useState('$ 1.80');
   const [perDayRate, setPerDayRate] = useState('$ 13.00');
   const [perWeekRate, setPerWeekRate] = useState('$ 60.00');
@@ -16,10 +27,33 @@ function VariableBillingType({ navigation }) {
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
+  const onPressHandler = () => {
+    setVisible2(true);
+  };
 
   const onSubmitHandler = () => {
-    setVisible2(true);
-  }
+    setVisible2(false);
+    try {
+      if (perHourRate && perDayRate && perWeekRate && perMonthRate) {
+        let pricingDetails = {
+          pricingType: 'Variable',
+          pricingRates: {
+            perHourRate,
+            perDayRate,
+            perWeekRate,
+            perMonthRate,
+          },
+        };
+        setListingPricingDetails(pricingDetails);
+        navigation.navigate('SaveSpaceDetails');
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to set pricing details');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.setPricing1}>Set Pricing</Text>
@@ -72,14 +106,21 @@ function VariableBillingType({ navigation }) {
           disabled={false}
           style={styles.switch}></Switch>
       </View>
-      <TouchableOpacity onPress={() => setVisible1(true)}><Text style={styles.loremIpsum2}>Tips for setting appropriate rates</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => setVisible1(true)}>
+        <Text style={styles.loremIpsum2}>
+          Tips for setting appropriate rates
+        </Text>
+      </TouchableOpacity>
       <MaterialButtonPrimary
-        onPress={onSubmitHandler}
+        onPress={onPressHandler}
         caption="NEXT"
         style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      <TipsSettingRatesModal visible={visible1} onPress={() => setVisible1(false)} />
-      <VariableVsFlatModal visible={visible2} onPress={() => { setVisible2(false); navigation.navigate('SaveSpaceDetails') }} />
-    </ScrollView >
+      <TipsSettingRatesModal
+        visible={visible1}
+        onPress={() => setVisible1(false)}
+      />
+      <VariableVsFlatModal visible={visible2} onPress={onSubmitHandler} />
+    </ScrollView>
   );
 }
 
@@ -88,8 +129,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    zIndex: 1
-
+    zIndex: 1,
   },
   setPricing1: {
     fontFamily: 'roboto-500',
@@ -107,7 +147,7 @@ const styles = StyleSheet.create({
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 45,
-    fontWeight: '700'
+    fontWeight: '700',
   },
   dailyMaximum: {
     fontFamily: 'roboto-regular',
@@ -117,12 +157,12 @@ const styles = StyleSheet.create({
   },
   perWeek: {
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   switch: {
     position: 'absolute',
     right: 10,
-    top: 10
+    top: 10,
   },
   placeholder: {
     fontFamily: 'roboto-regular',
@@ -132,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 10,
     borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   loremIpsum2: {
     fontFamily: 'roboto-regular',
@@ -153,8 +193,12 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     marginTop: 136,
     alignSelf: 'center',
-    backgroundColor: '#27aae1'
+    backgroundColor: '#27aae1',
   },
 });
 
-export default VariableBillingType;
+VariableBillingType.propTypes = {
+  setListingPricingDetails: PropTypes.func.isRequired,
+};
+
+export default connect(null, {setListingPricingDetails})(VariableBillingType);

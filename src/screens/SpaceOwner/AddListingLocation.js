@@ -1,15 +1,25 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
+import React, {Component, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import PropTypes from 'prop-types';
 import MapView from 'react-native-maps';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {addListingLocation} from '../../actions/listing';
+import {connect} from 'react-redux';
 
-function AddListingLocation({ navigation }) {
-  const [listingType, setListingType] = useState(0);
-  const [propertyType, setPropertyType] = useState(0);
+function AddListingLocation({navigation, addListingLocation}) {
+  const [listingType, setListingType] = useState(1);
+  const [propertyType, setPropertyType] = useState(1);
   const [propertyName, setPropertyName] = useState('');
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
@@ -18,10 +28,65 @@ function AddListingLocation({ navigation }) {
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [phone, setPhone] = useState('');
+  const [features, setFeatures] = useState([
+    '24/7 access',
+    'Car Wash',
+    'Paved',
+    'Unpaved',
+  ]);
 
   const onSubmitHandler = () => {
-    navigation.navigate('AddListingSpaceDetails');
-  }
+    try {
+      if (
+        listingType &&
+        propertyType &&
+        propertyName &&
+        country &&
+        address &&
+        unitNum &&
+        city &&
+        state &&
+        postalCode &&
+        phone
+      ) {
+        let locationData = {
+          listingType:
+            listingType == 1
+              ? 'Business'
+              : listingType == 2
+              ? 'Residential'
+              : 'Others',
+          propertyName: propertyName,
+          listingAddress: {
+            country,
+            address,
+            unitNum,
+            city,
+            state,
+            postalCode,
+            phone,
+          },
+          propertyType:
+            propertyType == 1
+              ? 'Driveway'
+              : propertyType == 2
+              ? 'Residential Garage'
+              : propertyType == 3
+              ? 'Open Air Lot'
+              : 'Commercial Parking Structure',
+          features: features,
+        };
+
+        addListingLocation(locationData);
+
+        navigation.navigate('AddListingSpaceDetails');
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to add location data');
+    }
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addAListing}>Add a Listing</Text>
@@ -29,14 +94,41 @@ function AddListingLocation({ navigation }) {
       <Text style={styles.listingType}>Listing Type</Text>
       <View style={styles.rect}>
         <View style={styles.rect2Row}>
-          <TouchableOpacity style={listingType == 0 ? styles.activeTab : styles.inactiveTab} onPress={() => { setListingType(0) }}>
-            <Text style={listingType == 0 ? styles.activeText : styles.inactiveText}>Business</Text>
+          <TouchableOpacity
+            style={listingType == 1 ? styles.activeTab : styles.inactiveTab}
+            onPress={() => {
+              setListingType(1);
+            }}>
+            <Text
+              style={
+                listingType == 1 ? styles.activeText : styles.inactiveText
+              }>
+              Business
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={listingType == 1 ? styles.activeTab : styles.inactiveTab} onPress={() => { setListingType(1) }}>
-            <Text style={listingType == 1 ? styles.activeText : styles.inactiveText}>Residential</Text>
+          <TouchableOpacity
+            style={listingType == 2 ? styles.activeTab : styles.inactiveTab}
+            onPress={() => {
+              setListingType(2);
+            }}>
+            <Text
+              style={
+                listingType == 2 ? styles.activeText : styles.inactiveText
+              }>
+              Residential
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={listingType == 2 ? styles.activeTab : styles.inactiveTab} onPress={() => { setListingType(2) }}>
-            <Text style={listingType == 2 ? styles.activeText : styles.inactiveText}>Others</Text>
+          <TouchableOpacity
+            style={listingType == 3 ? styles.activeTab : styles.inactiveTab}
+            onPress={() => {
+              setListingType(3);
+            }}>
+            <Text
+              style={
+                listingType == 3 ? styles.activeText : styles.inactiveText
+              }>
+              Others
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -261,34 +353,77 @@ function AddListingLocation({ navigation }) {
       <Text style={styles.propertyType}>Property Type</Text>
       <View style={styles.rect5}>
         <View style={styles.rect6Row}>
-          <TouchableOpacity style={propertyType == 0 ? styles.activeBtn : styles.inactiveBtn} onPress={() => { setPropertyType(0) }}>
-            <IoniconsIcon name="ios-car" style={propertyType == 0 ? styles.activeIcon : styles.inactiveIcon}></IoniconsIcon>
-            <Text style={propertyType == 0 ? styles.activeText : styles.inactiveText}>Driveway</Text>
+          <TouchableOpacity
+            style={propertyType == 1 ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setPropertyType(1);
+            }}>
+            <IoniconsIcon
+              name="ios-car"
+              style={
+                propertyType == 1 ? styles.activeIcon : styles.inactiveIcon
+              }></IoniconsIcon>
+            <Text
+              style={
+                propertyType == 1 ? styles.activeText : styles.inactiveText
+              }>
+              Driveway
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={propertyType == 1 ? styles.activeBtn : styles.inactiveBtn} onPress={() => { setPropertyType(1) }}>
+          <TouchableOpacity
+            style={propertyType == 2 ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setPropertyType(2);
+            }}>
             <MaterialCommunityIconsIcon
               name="garage"
-              style={propertyType == 1 ? styles.activeIcon : styles.inactiveIcon}></MaterialCommunityIconsIcon>
+              style={
+                propertyType == 2 ? styles.activeIcon : styles.inactiveIcon
+              }></MaterialCommunityIconsIcon>
 
-            <Text style={propertyType == 1 ? styles.activeText : styles.inactiveText}>Residential Garage</Text>
+            <Text
+              style={
+                propertyType == 2 ? styles.activeText : styles.inactiveText
+              }>
+              Residential Garage
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.icon2StackRow}>
-          <TouchableOpacity style={propertyType == 2 ? styles.activeBtn : styles.inactiveBtn} onPress={() => { setPropertyType(2) }}>
+          <TouchableOpacity
+            style={propertyType == 3 ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setPropertyType(3);
+            }}>
             <IoniconsIcon
               name="ios-car"
-              style={propertyType == 2 ? styles.activeIcon : styles.inactiveIcon}></IoniconsIcon>
+              style={
+                propertyType == 3 ? styles.activeIcon : styles.inactiveIcon
+              }></IoniconsIcon>
 
-            <Text style={propertyType == 2 ? styles.activeText : styles.inactiveText}>Open Air Lot</Text>
-
+            <Text
+              style={
+                propertyType == 3 ? styles.activeText : styles.inactiveText
+              }>
+              Open Air Lot
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={propertyType == 3 ? styles.activeBtn : styles.inactiveBtn} onPress={() => { setPropertyType(3) }}>
+          <TouchableOpacity
+            style={propertyType == 4 ? styles.activeBtn : styles.inactiveBtn}
+            onPress={() => {
+              setPropertyType(4);
+            }}>
             <MaterialCommunityIconsIcon
               name="garage"
-              style={propertyType == 3 ? styles.activeIcon : styles.inactiveIcon}></MaterialCommunityIconsIcon>
-            <Text style={propertyType == 3 ? styles.activeText : styles.inactiveText}>
+              style={
+                propertyType == 4 ? styles.activeIcon : styles.inactiveIcon
+              }></MaterialCommunityIconsIcon>
+            <Text
+              style={
+                propertyType == 4 ? styles.activeText : styles.inactiveText
+              }>
               Commercial Parking Structure
-              </Text>
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -376,7 +511,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: '#fff',
-    padding: 20
+    padding: 20,
   },
   addAListing: {
     fontFamily: 'roboto-500',
@@ -412,7 +547,7 @@ const styles = StyleSheet.create({
     borderRadius: 21,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10
+    marginRight: 10,
   },
   activeTab: {
     width: 110,
@@ -421,7 +556,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,1)',
     marginRight: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   activeBtn: {
     width: 120,
@@ -430,14 +565,13 @@ const styles = StyleSheet.create({
     // marginLeft: 9,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10
-
+    marginRight: 10,
   },
   activeText: {
     fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 13,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   activeIcon: {
     color: 'rgba(255,255,255,1)',
@@ -451,14 +585,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10
+    marginRight: 10,
   },
   inactiveText: {
     fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
-    textAlign: 'center'
-
+    textAlign: 'center',
   },
   inactiveIcon: {
     color: 'rgba(39,170,225,1)',
@@ -474,7 +607,6 @@ const styles = StyleSheet.create({
     borderRadius: 21,
     marginLeft: 5,
     marginTop: 8,
-
   },
   rect2Row: {
     height: 31,
@@ -490,7 +622,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#d6d6d6'
+    borderBottomColor: '#d6d6d6',
     // marginLeft: 24,
   },
   listingAddress: {
@@ -507,7 +639,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 26,
     borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
     // marginLeft: 23,
   },
   mapView: {
@@ -675,7 +807,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,1)',
     padding: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon4: {
     color: 'rgba(214,214,214,1)',
@@ -700,7 +832,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     padding: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon5: {
     color: 'rgba(214,214,214,1)',
@@ -734,7 +866,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,1)',
     padding: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   icon6: {
     color: 'rgba(214,214,214,1)',
@@ -776,7 +908,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'rgba(39,170,225,1)',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loremIpsum4: {
     fontFamily: 'roboto-regular',
@@ -790,15 +922,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   carWash: {
     fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
-    // marginTop: 10,
-    // marginLeft: 31,
-
   },
   rect17: {
     width: 110,
@@ -808,14 +937,12 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   covered: {
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
-    // marginTop: 11,
-    // marginLeft: 36,
   },
   rect15Row: {
     height: 32,
@@ -842,14 +969,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(182,182,182,1)',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   eyCharging: {
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
-    // marginTop: 11,
-    // marginLeft: 24,
   },
   loremIpsum5Stack: {
     width: 110,
@@ -863,7 +988,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   fenced: {
     fontFamily: 'roboto-regular',
@@ -880,7 +1005,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   mobilePass: {
     fontFamily: 'roboto-regular',
@@ -913,14 +1038,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'rgba(39,170,225,1)',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   paved: {
     fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
-    // marginTop: 9,
-    // marginLeft: 37,
   },
   loremIpsum6Stack: {
     width: 110,
@@ -934,14 +1057,12 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   security: {
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
-    // marginTop: 11,
-    // marginLeft: 35,
   },
   rect21: {
     width: 110,
@@ -951,7 +1072,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   staffOnsite: {
     fontFamily: 'roboto-regular',
@@ -959,7 +1080,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     // marginTop: 10,
     // marginLeft: 28,
-
   },
   loremIpsum6StackRow: {
     height: 32,
@@ -986,14 +1106,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(182,182,182,1)',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   tandem: {
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
-    // marginTop: 10,
-    // marginLeft: 36,
   },
   loremIpsum7Stack: {
     width: 110,
@@ -1006,14 +1124,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   unpaved: {
     fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
-    // marginTop: 11,
-    // marginLeft: 32,
   },
   rect24: {
     width: 110,
@@ -1023,14 +1139,12 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
     marginLeft: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   valet: {
     fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
-    // marginTop: 10,
-    // marginLeft: 42,
   },
   loremIpsum7StackRow: {
     height: 32,
@@ -1043,8 +1157,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 36,
     marginVertical: 67,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
 });
 
-export default AddListingLocation;
+AddListingLocation.propTypes = {
+  addListingLocation: PropTypes.func.isRequired,
+};
+
+export default connect(null, {addListingLocation})(AddListingLocation);

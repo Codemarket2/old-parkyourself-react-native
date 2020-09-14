@@ -1,11 +1,38 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ScrollView, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  Alert,
+} from 'react-native';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
+import {saveSpaceDetails} from '../../actions/listing';
 
-function SaveSpaceDetails({navigation}) {
+function SaveSpaceDetails({
+  navigation,
+  saveSpaceDetails,
+  listing: {locationDetails, spaceDetails, spaceAvailable, pricingDetails},
+}) {
   const onSubmitHandler = () => {
-    navigation.navigate('SpaceOwnerDashboard');
+    try {
+      let listingData = {
+        locationDetails,
+        spaceDetails,
+        spaceAvailable,
+        pricingDetails,
+      };
+      console.log(listingData);
+      saveSpaceDetails(listingData);
+      navigation.navigate('SpaceOwnerDashboard');
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to set pricing details');
+    }
   };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addASpace}>Add a Space</Text>
@@ -56,4 +83,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SaveSpaceDetails;
+SaveSpaceDetails.propTypes = {
+  listing: PropTypes.object.isRequired,
+  saveSpaceDetails: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  listing: state.listing,
+});
+
+export default connect(mapStateToProps, {saveSpaceDetails})(SaveSpaceDetails);

@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import TipsSettingRatesModal from '../../components/SpaceOwner/TipsSettingRatesModal';
+import {setListingPricingDetails} from '../../actions/listing';
 
-function FlatBillingType({ navigation }) {
+function FlatBillingType({navigation, setListingPricingDetails}) {
   const [dailyMax, setDailyMax] = useState('$ 5.00');
   const [visible, setVisible] = useState(false);
 
   const onSubmitHandler = () => {
-    navigation.navigate('VariableBillingType');
-  }
+    try {
+      if (dailyMax) {
+        let pricingDetails = {
+          pricingType: 'Flat',
+          pricingRates: {
+            dailyMax,
+          },
+        };
+        setListingPricingDetails(pricingDetails);
+        navigation.navigate('SaveSpaceDetails');
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to set pricing details');
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -23,12 +48,19 @@ function FlatBillingType({ navigation }) {
         value={dailyMax}
         onChangeText={(input) => setDailyMax(input)}
         style={styles.placeholder}></TextInput>
-      <TouchableOpacity onPress={() => setVisible(true)}><Text style={styles.loremIpsum2}>Tips for setting appropriate rates</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => setVisible(true)}>
+        <Text style={styles.loremIpsum2}>
+          Tips for setting appropriate rates
+        </Text>
+      </TouchableOpacity>
       <MaterialButtonPrimary
         onPress={onSubmitHandler}
         caption="NEXT"
         style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      <TipsSettingRatesModal visible={visible} onPress={() => setVisible(false)} />
+      <TipsSettingRatesModal
+        visible={visible}
+        onPress={() => setVisible(false)}
+      />
     </ScrollView>
   );
 }
@@ -38,8 +70,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    zIndex: 1
-
+    zIndex: 1,
   },
   setPricing1: {
     fontFamily: 'roboto-500',
@@ -57,7 +88,7 @@ const styles = StyleSheet.create({
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 45,
-    fontWeight: '700'
+    fontWeight: '700',
   },
   dailyMaximum: {
     fontFamily: 'roboto-regular',
@@ -73,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 10,
     borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   loremIpsum2: {
     fontFamily: 'roboto-regular',
@@ -94,8 +125,12 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     marginTop: 136,
     alignSelf: 'center',
-    backgroundColor: '#27aae1'
+    backgroundColor: '#27aae1',
   },
 });
 
-export default FlatBillingType;
+FlatBillingType.propTypes = {
+  setListingPricingDetails: PropTypes.func.isRequired,
+};
+
+export default connect(null, {setListingPricingDetails})(FlatBillingType);

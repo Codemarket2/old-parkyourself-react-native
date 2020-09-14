@@ -6,16 +6,21 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  FlatList,
 } from 'react-native';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import MyListingListItem from '../../components/SpaceOwner/MyListingListItem';
 
-function MyListings(props) {
+function MyListings({navigation, listings}) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <View style={styles.myListings4Row}>
-        <Text style={styles.myListings4}>My Listings (4)</Text>
+        <Text style={styles.myListings4}>
+          My Listings {`(${listings.length})`}
+        </Text>
         <View style={styles.rect}>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.button}>
@@ -31,17 +36,30 @@ function MyListings(props) {
           </View>
         </View>
       </View>
+      {listings.length > 0 ? (
+        <FlatList
+          data={listings}
+          renderItem={({item}) => (
+            <MyListingListItem item={item} navigation={navigation} />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <View style={styles.noItemsFound}>
+          <Text style={styles.notFoundText}>No items found</Text>
+        </View>
+      )}
+      {/* <MyListingListItem />
       <MyListingListItem />
       <MyListingListItem />
-      <MyListingListItem />
-      <MyListingListItem />
-    </ScrollView>
+      <MyListingListItem /> */}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: '#fff',
     padding: 20,
   },
@@ -687,6 +705,23 @@ const styles = StyleSheet.create({
     marginTop: 19,
     marginLeft: 18,
   },
+  noItemsFound: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: 18,
+    color: '#999',
+  },
 });
 
-export default MyListings;
+MyListings.propTypes = {
+  listings: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  listings: state.user.listings,
+});
+
+export default connect(mapStateToProps, null)(MyListings);

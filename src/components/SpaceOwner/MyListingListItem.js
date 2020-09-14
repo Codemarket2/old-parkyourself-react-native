@@ -1,8 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import MaterialButtonPrimary from '../MaterialButtonPrimary';
 
-export default function MyListingListItem() {
+export default function MyListingListItem({item, navigation}) {
+  console.log(item);
+  const {
+    address,
+    city,
+    state,
+    postalCode,
+  } = item.locationDetails.listingAddress;
+  const viewDetailsHandler = () => {
+    navigation.navigate('DetailsScreen', {item: item});
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -14,9 +24,9 @@ export default function MyListingListItem() {
         </View>
         <View style={styles.title}>
           <Text style={styles.location}>
-            906 Peg Shop St. Franklyn, NY, 11209
+            {address}, {city}, {state}, {postalCode}
           </Text>
-          <Text style={styles.bookings}>13 Upcoming Bookings</Text>
+          <Text style={styles.bookings}>No Upcoming Bookings</Text>
         </View>
         <View style={styles.tag}>
           <Text style={styles.tagText}>Manager</Text>
@@ -28,7 +38,8 @@ export default function MyListingListItem() {
         </TouchableOpacity>
         <MaterialButtonPrimary
           caption="VIEW DETAILS"
-          style={styles.viewDetails}></MaterialButtonPrimary>
+          style={styles.viewDetails}
+          onPress={viewDetailsHandler}></MaterialButtonPrimary>
         <TouchableOpacity style={styles.modifyButton}>
           <Text style={styles.modify}>MODIFY</Text>
         </TouchableOpacity>
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     fontWeight: '500',
-    marginTop: 10
+    marginTop: 10,
   },
   tag: {
     width: '15%',

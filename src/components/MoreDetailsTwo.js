@@ -1,8 +1,18 @@
-import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, {Component, Fragment} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import MapView from 'react-native-maps';
 
-export default function MoreDetailsTwo() {
+export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
+  const {address, city, state, postalCode} = locationDetails.listingAddress;
+  const {
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+  } = spaceAvailable.activeDays;
   return (
     <Fragment>
       <View style={styles.rect}>
@@ -180,16 +190,18 @@ export default function MoreDetailsTwo() {
               ],
             },
           ]}
-          style={styles.mapView}
-        ></MapView>
+          style={styles.mapView}></MapView>
         <Text style={styles.loremIpsum}>
-          906 Peg Shop St. Franklyn, NY 11209
+          {address}, {city}, {state}, {postalCode}
         </Text>
       </View>
       <View style={styles.rect2}>
         <Text style={styles.hours}>Hours</Text>
         <Text style={styles.loremIpsum2}>
-          This facility is open 24/7 from mon-thurs.
+          This facility is open 24/7 on {monday && 'Monday'},
+          {tuesday && 'Tuesday'},{wednesday && 'Wednesday'},
+          {thursday && 'Thursday'},{friday && 'Friday'},{saturday && 'Saturday'}
+          ,{sunday && 'Sunday'}.
         </Text>
       </View>
     </Fragment>

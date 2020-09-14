@@ -1,35 +1,39 @@
-import React, { Fragment } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import React, {Fragment} from 'react';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
-export default function MoreDetailsOne() {
+export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
+  const {propertyName, features} = locationDetails;
+  const {address, city, state, postalCode} = locationDetails.listingAddress;
+
   return (
     <Fragment>
-      <Text style={styles.loremIpsum}>906 Peg Shop St. Franklyn, NY 11209</Text>
-      <Text style={styles.ownerBusinessName}>Owner/Business Name</Text>
+      <Text style={styles.loremIpsum}>
+        {address}, {city}, {state}, {postalCode}
+      </Text>
+      <Text style={styles.ownerBusinessName}>{propertyName}</Text>
       <View style={styles.rectStack}>
         <View style={styles.rect}>
           <View style={styles.icon1Row}>
-            <IoniconsIcon name='ios-star' style={styles.icon1}></IoniconsIcon>
-            <IoniconsIcon name='ios-star' style={styles.icon2}></IoniconsIcon>
-            <IoniconsIcon name='ios-star' style={styles.icon3}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon1}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon2}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon3}></IoniconsIcon>
             <IoniconsIcon
-              name='ios-star-half'
-              style={styles.icon4}
-            ></IoniconsIcon>
+              name="ios-star-half"
+              style={styles.icon4}></IoniconsIcon>
             <Text style={styles.loremIpsum2}>656</Text>
           </View>
         </View>
-        <IoniconsIcon name='ios-star' style={styles.icon}></IoniconsIcon>
+        <IoniconsIcon name="ios-star" style={styles.icon}></IoniconsIcon>
       </View>
       <Image
         source={require('../assets/images/parking.jpg')}
-        resizeMode='stretch'
-        style={styles.image}
-      ></Image>
+        resizeMode="stretch"
+        style={styles.image}></Image>
       <View style={styles.rect2}>
         <Text style={styles.loremIpsum3}>
-          07/01/2019, 9:00 PM to 07/02/2019, 6:00 AM
+          {moment(startDate).format('lll')} to {moment(endDate).format('lll')}
         </Text>
         <View style={styles.loremIpsum4Row}>
           <Text style={styles.loremIpsum4}>
@@ -40,7 +44,13 @@ export default function MoreDetailsOne() {
           </TouchableOpacity>
         </View>
         <View style={styles.rect3Row}>
-          <View style={styles.rect3}>
+          {features &&
+            features.map((item) => (
+              <View style={styles.rect3}>
+                <Text style={styles.valet}>{item}</Text>
+              </View>
+            ))}
+          {/* <View style={styles.rect3}>
             <Text style={styles.valet}>VALET</Text>
           </View>
           <View style={styles.rect4}>
@@ -48,11 +58,11 @@ export default function MoreDetailsOne() {
           </View>
           <View style={styles.rect5}>
             <Text style={styles.onSiteStaff}>ON SITE STAFF</Text>
-          </View>
+          </View> */}
         </View>
-        <View style={styles.rect6}>
+        {/* <View style={styles.rect6}>
           <Text style={styles.accessible}>ACCESSIBLE</Text>
-        </View>
+        </View> */}
       </View>
     </Fragment>
   );
@@ -143,17 +153,18 @@ const styles = StyleSheet.create({
   },
   rect2: {
     width: '100%',
-    height: 183,
+    // height: 183,
     backgroundColor: 'rgba(255,255,255,1)',
     marginTop: 25,
     paddingHorizontal: 7,
+    paddingVertical: 10,
     // marginLeft: 10,
   },
   loremIpsum3: {
     fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 16,
-    marginTop: 16,
+    // marginTop: 16,
     marginLeft: 8,
   },
   loremIpsum4: {
@@ -176,17 +187,22 @@ const styles = StyleSheet.create({
     marginRight: 21,
   },
   rect3: {
-    width: 76,
-    height: 31,
+    // width: 76,
+    // height: 31,
     borderRadius: 19,
     borderWidth: 1,
     borderColor: 'rgba(196,195,195,1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginRight: 5,
   },
   valet: {
     fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    marginTop: 5,
-    marginLeft: 18,
+    // marginTop: 5,
+    // marginLeft: 18,
   },
   rect4: {
     width: 91,
@@ -217,11 +233,13 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   rect3Row: {
-    height: 31,
+    width: '100%',
+    // height: 31,
     flexDirection: 'row',
     marginTop: 21,
     marginLeft: 11,
     marginRight: 17,
+    flexWrap: 'wrap',
   },
   rect6: {
     width: 117,

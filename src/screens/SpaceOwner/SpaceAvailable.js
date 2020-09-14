@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Switch,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import RadioButton from '../../components/RadioButton';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {TextInput} from 'react-native-gesture-handler';
+import {addListingSpaceAvailable} from '../../actions/listing';
 
-function SpaceAvailable({ navigation }) {
+function SpaceAvailable({navigation, addListingSpaceAvailable}) {
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
   const [wednesday, setWednesday] = useState(false);
@@ -14,7 +26,9 @@ function SpaceAvailable({ navigation }) {
   const [friday, setFriday] = useState(false);
   const [saturday, setSaturday] = useState(false);
   const [sunday, setSunday] = useState(false);
-  const [scheduleType, setScheduleType] = useState(0);
+  const [scheduleType, setScheduleType] = useState(1);
+  const [noticeTime, setNoticeTime] = useState('1 Hour');
+  const [advanceBookingTime, setAdvanceBookingTime] = useState('');
   const [instantBooking, setInstantBooking] = useState(true);
 
   // date picker
@@ -55,8 +69,51 @@ function SpaceAvailable({ navigation }) {
   };
 
   const onSubmitHandler = () => {
-    navigation.navigate('SetPricingType');
-  }
+    try {
+      if (
+        (monday ||
+          tuesday ||
+          wednesday ||
+          thursday ||
+          friday ||
+          saturday ||
+          sunday) &&
+        scheduleType &&
+        noticeTime &&
+        advanceBookingTime &&
+        instantBooking
+      ) {
+        let spaceAvailableData = {
+          activeDays: {
+            monday: monday,
+            tuesday: tuesday,
+            wednesday: wednesday,
+            thursday: thursday,
+            friday: friday,
+            saturday: saturday,
+            sunday: sunday,
+          },
+          scheduleType: scheduleType == 1 ? 'daily' : 'custom',
+          startDate: startDate,
+          endDate: endDate,
+          noticeTime,
+          advanceBookingTime,
+          bookingProcessType: instantBooking
+            ? 'Instant Booking'
+            : 'Approval is Required',
+        };
+        addListingSpaceAvailable(spaceAvailableData);
+        navigation.navigate('SetPricingType');
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+      }
+    } catch (error) {
+      Alert.alert(
+        'Something Went wrong!',
+        'Unable to add space available details',
+      );
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -96,7 +153,8 @@ function SpaceAvailable({ navigation }) {
             false: 'rgba(230, 230, 230,1)',
           }}
           style={styles.switch}></Switch>
-      </View><View style={styles.rect}>
+      </View>
+      <View style={styles.rect}>
         <Text style={styles.monday}>Thursday</Text>
         <Switch
           value={thursday}
@@ -106,7 +164,8 @@ function SpaceAvailable({ navigation }) {
             false: 'rgba(230, 230, 230,1)',
           }}
           style={styles.switch}></Switch>
-      </View><View style={styles.rect}>
+      </View>
+      <View style={styles.rect}>
         <Text style={styles.monday}>Friday</Text>
         <Switch
           value={friday}
@@ -116,7 +175,8 @@ function SpaceAvailable({ navigation }) {
             false: 'rgba(230, 230, 230,1)',
           }}
           style={styles.switch}></Switch>
-      </View><View style={styles.rect}>
+      </View>
+      <View style={styles.rect}>
         <Text style={styles.monday}>Saturday</Text>
         <Switch
           value={saturday}
@@ -143,15 +203,26 @@ function SpaceAvailable({ navigation }) {
         Set a daily schedule or set it to 24 hours a day
       </Text>
       <View style={styles.materialRadio1Row}>
-        <RadioButton checked={scheduleType == 0} style={styles.materialRadio1} onPress={() => setScheduleType(0)}></RadioButton>
+        <RadioButton
+          checked={scheduleType == 1}
+          style={styles.materialRadio1}
+          onPress={() => setScheduleType(1)}></RadioButton>
         <Text style={styles.loremIpsum2}>Set to a daily schedule</Text>
       </View>
       <View style={styles.button2Row}>
-        <TouchableOpacity style={styles.button2} onPress={() => showDatepicker('start')}>
-          <Text style={styles.startTime} numberOfLines={1}>{startDate ? startDate.toString() : 'Start Time'}</Text>
+        <TouchableOpacity
+          style={styles.button2}
+          onPress={() => showDatepicker('start')}>
+          <Text style={styles.startTime} numberOfLines={1}>
+            {startDate ? startDate.toString() : 'Start Time'}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button3} onPress={() => showDatepicker('end')}>
-          <Text style={styles.endTime} numberOfLines={1}>{endDate ? endDate.toString() : 'End Time'}</Text>
+        <TouchableOpacity
+          style={styles.button3}
+          onPress={() => showDatepicker('end')}>
+          <Text style={styles.endTime} numberOfLines={1}>
+            {endDate ? endDate.toString() : 'End Time'}
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -177,18 +248,30 @@ function SpaceAvailable({ navigation }) {
       )}
 
       <View style={styles.materialRadio2Row}>
-        <RadioButton checked={scheduleType == 1} style={styles.materialRadio2} onPress={() => setScheduleType(1)}></RadioButton>
+        <RadioButton
+          checked={scheduleType == 2}
+          style={styles.materialRadio2}
+          onPress={() => setScheduleType(2)}></RadioButton>
         <Text style={styles.loremIpsum3}>Set to 24 hours a day</Text>
       </View>
-      <TouchableOpacity style={styles.rect9} onPress={() => { navigation.navigate('CustomSchedule') }}>
+      <TouchableOpacity
+        style={styles.rect9}
+        onPress={() => {
+          navigation.navigate('CustomSchedule');
+        }}>
         <Text style={styles.loremIpsum4}>SET A CUSTOM SCHEDULE</Text>
       </TouchableOpacity>
       <Text style={styles.loremIpsum5}>
         How much notice do you need before a Guest arrives?
       </Text>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.hour}>1 hour</Text>
-      </TouchableOpacity>
+      <View style={styles.button}>
+        <TextInput
+          style={styles.hour}
+          value={noticeTime}
+          onChangeText={(input) => {
+            setNoticeTime(input);
+          }}></TextInput>
+      </View>
       <Text style={styles.loremIpsum6}>
         Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
         arrival, but you might miss out last minute trips.
@@ -196,9 +279,14 @@ function SpaceAvailable({ navigation }) {
       <Text style={styles.loremIpsum7}>
         How far in advance can guests book?
       </Text>
-      <TouchableOpacity style={styles.button4}>
-        <Text style={styles.loremIpsum8}>Dates unavailable by default</Text>
-      </TouchableOpacity>
+      <View style={styles.button4}>
+        <TextInput
+          style={styles.loremIpsum8}
+          value={advanceBookingTime}
+          onChangeText={(input) => {
+            setAdvanceBookingTime(input);
+          }}></TextInput>
+      </View>
       <Text style={styles.loremIpsum9}>
         Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
         arrival, but you might miss out last minute trips.
@@ -207,11 +295,15 @@ function SpaceAvailable({ navigation }) {
       <View style={styles.rect10}>
         <View style={styles.iconRow}>
           <TouchableOpacity>
-            <EntypoIcon name="circle-with-minus" style={styles.icon}></EntypoIcon>
+            <EntypoIcon
+              name="circle-with-minus"
+              style={styles.icon}></EntypoIcon>
           </TouchableOpacity>
           <Text style={styles.loremIpsum11}>1 hour Minimum</Text>
           <TouchableOpacity>
-            <EntypoIcon name="circle-with-plus" style={styles.icon2}></EntypoIcon>
+            <EntypoIcon
+              name="circle-with-plus"
+              style={styles.icon2}></EntypoIcon>
           </TouchableOpacity>
         </View>
       </View>
@@ -220,10 +312,13 @@ function SpaceAvailable({ navigation }) {
           <TouchableOpacity>
             <EntypoIcon
               name="circle-with-minus"
-              style={styles.icon4}></EntypoIcon></TouchableOpacity>
+              style={styles.icon4}></EntypoIcon>
+          </TouchableOpacity>
           <Text style={styles.loremIpsum12}>30 Days Maximum</Text>
           <TouchableOpacity>
-            <EntypoIcon name="circle-with-plus" style={styles.icon3}></EntypoIcon>
+            <EntypoIcon
+              name="circle-with-plus"
+              style={styles.icon3}></EntypoIcon>
           </TouchableOpacity>
         </View>
       </View>
@@ -235,11 +330,17 @@ function SpaceAvailable({ navigation }) {
         Which booking process do you prefer?
       </Text>
       <View style={styles.icon5Row}>
-        <RadioButton checked={instantBooking} style={styles.materialRadio2} onPress={() => setInstantBooking(true)}></RadioButton>
+        <RadioButton
+          checked={instantBooking}
+          style={styles.materialRadio2}
+          onPress={() => setInstantBooking(true)}></RadioButton>
         <Text style={styles.instantBooking}>Instant Booking</Text>
       </View>
       <View style={styles.icon6Row}>
-        <RadioButton checked={!instantBooking} style={styles.materialRadio2} onPress={() => setInstantBooking(false)}></RadioButton>
+        <RadioButton
+          checked={!instantBooking}
+          style={styles.materialRadio2}
+          onPress={() => setInstantBooking(false)}></RadioButton>
         <Text style={styles.approvalIsRequired}>Approval is required</Text>
       </View>
       <MaterialButtonPrimary
@@ -254,7 +355,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: '#fff',
-    padding: 20
+    padding: 20,
   },
   spaceAvailable: {
     fontFamily: 'roboto-500',
@@ -275,7 +376,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#d6d6d6',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   monday: {
     fontFamily: 'roboto-regular',
@@ -284,9 +385,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginTop: 12,
   },
-  switch: {
-
-  },
+  switch: {},
   text: {
     fontFamily: 'roboto-regular',
     color: '#121212',
@@ -308,7 +407,7 @@ const styles = StyleSheet.create({
     height: 30,
     flexDirection: 'row',
     marginTop: 20,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button2: {
     width: 142,
@@ -322,7 +421,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 9,
     // marginLeft: 28,
-
   },
   button3: {
     width: 142,
@@ -359,7 +457,7 @@ const styles = StyleSheet.create({
     height: 30,
     flexDirection: 'row',
     marginTop: 28,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rect9: {
     width: 238,
@@ -378,13 +476,12 @@ const styles = StyleSheet.create({
     marginLeft: 27,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   loremIpsum4: {
     fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
-
   },
   loremIpsum5: {
     fontFamily: 'roboto-500',
@@ -394,7 +491,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    height: 46,
+    // height: 46,
     borderBottomWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 17,
@@ -422,7 +519,7 @@ const styles = StyleSheet.create({
   },
   button4: {
     width: '100%',
-    height: 46,
+    // height: 46,
     borderBottomWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 16,
@@ -569,9 +666,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 36,
     marginVertical: 67,
-    alignSelf: 'center'
+    alignSelf: 'center',
     // marginLeft: 136,
   },
 });
 
-export default SpaceAvailable;
+SpaceAvailable.propTypes = {
+  addListingSpaceAvailable: PropTypes.func.isRequired,
+};
+
+export default connect(null, {addListingSpaceAvailable})(SpaceAvailable);

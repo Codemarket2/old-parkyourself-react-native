@@ -7,17 +7,20 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  Alert,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import RadioButton from '../../components/RadioButton';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import VehicleSizesModal from '../../components/SpaceOwner/VehicleSizesModal';
+import {addListingSpaceDetails} from '../../actions/listing';
+import {connect} from 'react-redux';
 
-function AddListingSpaceDetails({navigation}) {
-  const [isTandem, setIsTandem] = useState(false);
-  const [isSideBySide, setIsSideBySide] = useState(false);
+function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
+  const [parkingSpaceType, setParkingSpaceType] = useState(1);
   const [qtyOfSpaces, setQtyOfSpaces] = useState('');
   const [vehicleHeightLimit, setVehicleHeightLimit] = useState('');
   const [sameSizeSpaces, setSameSizeSpaces] = useState(false);
@@ -35,6 +38,45 @@ function AddListingSpaceDetails({navigation}) {
   const [aboutSpace, setAboutSpace] = useState('');
   const [accessInstructions, setAccessInstructions] = useState('');
 
+  const onSubmitHandler = () => {
+    try {
+      if (
+        parkingSpaceType &&
+        qtyOfSpaces &&
+        (motorcycle || compact || midSized || large || oversized) &&
+        aboutSpace &&
+        accessInstructions
+      ) {
+        let spaceDetails = {
+          spaceType: parkingSpaceType == 1 ? 'Tandem' : 'SideBySide',
+          qtyOfSpaces,
+          sameSizeSpaces,
+          vehicleHeightLimit,
+          vehicleSizes: {
+            motorcycle: motorcycle,
+            compact: compact,
+            midSized: midSized,
+            large: large,
+            oversized: oversized,
+          },
+          motorcycleSpaces,
+          compactSpaces,
+          midsizedSpaces,
+          largeSpaces,
+          oversizedSpaces,
+          aboutSpace,
+          accessInstructions,
+        };
+        addListingSpaceDetails(spaceDetails);
+        navigation.navigate('SpaceAvailable');
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went wrong!', 'Unable to add space details');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addAListing1}>Add a Listing</Text>
@@ -43,33 +85,40 @@ function AddListingSpaceDetails({navigation}) {
       <View style={styles.rect5}>
         <View style={styles.rect4Row}>
           <TouchableOpacity
-            style={isTandem ? styles.activeBtn : styles.inactiveBtn}
+            style={
+              parkingSpaceType == 1 ? styles.activeBtn : styles.inactiveBtn
+            }
             onPress={() => {
-              setIsTandem(true);
-              setIsSideBySide(false);
+              setParkingSpaceType(1);
             }}>
             <IoniconsIcon
               name="ios-car"
               style={
-                isTandem ? styles.activeIcon : styles.inactiveIcon
+                parkingSpaceType == 1 ? styles.activeIcon : styles.inactiveIcon
               }></IoniconsIcon>
-            <Text style={isTandem ? styles.activeText : styles.inactiveText}>
+            <Text
+              style={
+                parkingSpaceType == 1 ? styles.activeText : styles.inactiveText
+              }>
               Tandem
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={isSideBySide ? styles.activeBtn : styles.inactiveBtn}
+            style={
+              parkingSpaceType == 2 ? styles.activeBtn : styles.inactiveBtn
+            }
             onPress={() => {
-              setIsTandem(false);
-              setIsSideBySide(true);
+              setParkingSpaceType(2);
             }}>
             <MaterialCommunityIconsIcon
               name="garage"
               style={
-                isSideBySide ? styles.activeIcon : styles.inactiveIcon
+                parkingSpaceType == 2 ? styles.activeIcon : styles.inactiveIcon
               }></MaterialCommunityIconsIcon>
             <Text
-              style={isSideBySide ? styles.activeText : styles.inactiveText}>
+              style={
+                parkingSpaceType == 2 ? styles.activeText : styles.inactiveText
+              }>
               Side by Side
             </Text>
           </TouchableOpacity>
@@ -339,9 +388,7 @@ function AddListingSpaceDetails({navigation}) {
       <MaterialButtonPrimary
         caption="NEXT"
         style={styles.materialButtonPrimary1}
-        onPress={() => {
-          navigation.navigate('SpaceAvailable');
-        }}></MaterialButtonPrimary>
+        onPress={onSubmitHandler}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -918,4 +965,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddListingSpaceDetails;
+AddListingSpaceDetails.propTypes = {
+  addListingSpaceDetails: PropTypes.func.isRequired,
+};
+
+export default connect(null, {addListingSpaceDetails})(AddListingSpaceDetails);
