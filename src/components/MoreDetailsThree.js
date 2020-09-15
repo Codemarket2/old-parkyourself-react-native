@@ -1,10 +1,17 @@
-import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, {Component, Fragment} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function MoreDetailsThree() {
+export default function MoreDetailsThree({spaceDetails}) {
+  const {
+    vehicleHeightLimit,
+    vehicleSizes: {motorcycle, compact, midSized, large, oversized},
+    aboutSpace,
+    accessInstructions,
+    spaceType,
+  } = spaceDetails;
   return (
     <Fragment>
       <View style={styles.rect}>
@@ -15,7 +22,48 @@ export default function MoreDetailsThree() {
           </TouchableOpacity>
         </View>
         <View style={styles.rect2Row}>
-          <View style={styles.rect2}>
+          {motorcycle && (
+            <View style={styles.rect2}>
+              <FontAwesomeIcon
+                name="automobile"
+                style={styles.icon}></FontAwesomeIcon>
+              <Text style={styles.compact}>Motorcycle</Text>
+            </View>
+          )}
+          {compact && (
+            <View style={styles.rect2}>
+              <FontAwesomeIcon
+                name="automobile"
+                style={styles.icon}></FontAwesomeIcon>
+              <Text style={styles.compact}>Compact</Text>
+            </View>
+          )}
+          {midSized && (
+            <View style={styles.rect2}>
+              <FontAwesomeIcon
+                name="automobile"
+                style={styles.icon}></FontAwesomeIcon>
+              <Text style={styles.compact}>Mid Sized</Text>
+            </View>
+          )}
+          {large && (
+            <View style={styles.rect2}>
+              <FontAwesomeIcon
+                name="automobile"
+                style={styles.icon}></FontAwesomeIcon>
+              <Text style={styles.compact}>Large</Text>
+            </View>
+          )}
+          {oversized && (
+            <View style={styles.rect2}>
+              <FontAwesomeIcon
+                name="automobile"
+                style={styles.icon}></FontAwesomeIcon>
+              <Text style={styles.compact}>Oversized</Text>
+            </View>
+          )}
+
+          {/* <View style={styles.rect2}>
             <FontAwesomeIcon
               name='automobile'
               style={styles.icon}
@@ -28,31 +76,35 @@ export default function MoreDetailsThree() {
               style={styles.icon1}
             ></FontAwesomeIcon>
             <Text style={styles.midSized}>Mid Sized</Text>
-          </View>
+          </View> */}
         </View>
         <Text style={styles.loremIpsum3}>
-          This parking space is a residential and side by side parking type.
+          This parking space is a residential and {spaceType} parking type.
         </Text>
-        <Text style={styles.loremIpsum4}>
-          This parking has a lorem ipsum height limit.
-        </Text>
+        {vehicleHeightLimit && (
+          <Text style={styles.loremIpsum4}>
+            This parking has a {vehicleHeightLimit} height limit.
+          </Text>
+        )}
       </View>
       <View style={styles.rect4}>
         <Text style={styles.loremIpsum5}>Things you should know</Text>
         <Text style={styles.loremIpsum6}>
-          In/out Privileges are only allowed for overnight guests at this
-          location
+          {/* In/out Privileges are only allowed for overnight guests at this
+          location */}
+          {aboutSpace}
         </Text>
-        <Text style={styles.loremIpsum7}>
+        {/* <Text style={styles.loremIpsum7}>
           ParkYouself reservation are not accepted for guests of the Loews hotel
-        </Text>
+        </Text> */}
       </View>
       <View style={styles.rect5}>
         <Text style={styles.gettingHere}>Getting here</Text>
         <Text style={styles.loremIpsum8}>
-          Enter this location at 1755 N Highland Ave you must pull up to the
+          {/* Enter this location at 1755 N Highland Ave you must pull up to the
           front of the hotel to valet your vehicle. This is Loews Hotel valet
-          garage, operated by Towne Park.
+          garage, operated by Towne Park. */}
+          {accessInstructions}
         </Text>
       </View>
       <View style={styles.rect6}>
@@ -65,9 +117,8 @@ export default function MoreDetailsThree() {
           </View>
           <MaterialButtonPrimary
             // caption='BUTTON'
-            caption='SCHEDULE BOOKING'
-            style={styles.materialButtonPrimary1}
-          ></MaterialButtonPrimary>
+            caption="SCHEDULE BOOKING"
+            style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
         </View>
       </View>
     </Fragment>
@@ -106,6 +157,7 @@ const styles = StyleSheet.create({
     width: 89,
     height: 81,
     backgroundColor: 'rgba(39,170,225,0.2)',
+    marginRight: 10,
   },
   icon: {
     color: 'rgba(39,170,225,1)',
@@ -142,11 +194,12 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   rect2Row: {
-    height: 81,
+    width: '100%',
+    // height: 81,
     flexDirection: 'row',
+    flexWrap: 'wrap',
     marginTop: 20,
     marginLeft: 15,
-    marginRight: 144,
   },
   loremIpsum3: {
     fontFamily: 'roboto-regular',

@@ -6,7 +6,7 @@ import MoreDetailsThree from '../components/MoreDetailsThree';
 
 function MoreDetails({route}) {
   const listingDetail = route.params.item;
-  const {locationDetails, spaceAvailable} = listingDetail;
+  const {locationDetails, spaceAvailable, spaceDetails} = listingDetail;
   const {startDate, endDate} = spaceAvailable;
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -19,7 +19,7 @@ function MoreDetails({route}) {
         locationDetails={locationDetails}
         spaceAvailable={spaceAvailable}
       />
-      <MoreDetailsThree />
+      <MoreDetailsThree spaceDetails={spaceDetails} />
     </ScrollView>
   );
 }

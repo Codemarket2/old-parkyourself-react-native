@@ -198,10 +198,12 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
       <View style={styles.rect2}>
         <Text style={styles.hours}>Hours</Text>
         <Text style={styles.loremIpsum2}>
-          This facility is open 24/7 on {monday && 'Monday'},
-          {tuesday && 'Tuesday'},{wednesday && 'Wednesday'},
-          {thursday && 'Thursday'},{friday && 'Friday'},{saturday && 'Saturday'}
-          ,{sunday && 'Sunday'}.
+          This facility is open 24/7 on {monday && 'Monday'}
+          {tuesday && ', Tuesday'}
+          {wednesday && ', Wednesday'}
+          {thursday && ', Thursday'},{friday && ', Friday'}
+          {saturday && ', Saturday'}
+          {sunday && ', Sunday'}.
         </Text>
       </View>
     </Fragment>
