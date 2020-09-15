@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,13 +8,13 @@ import {
   Share,
 } from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import Svg, { Ellipse } from 'react-native-svg';
+import Svg, {Ellipse} from 'react-native-svg';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Modal from '../components/Modal';
 
-function SuccessfullyBooked({ navigation }) {
+function SuccessfullyBooked({navigation}) {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -42,33 +42,31 @@ function SuccessfullyBooked({ navigation }) {
         <View style={styles.rect}>
           <Text style={styles.loremIpsum2}>123</Text>
         </View>
-        <IoniconsIcon name='md-star-half' style={styles.icon}></IoniconsIcon>
-        <IoniconsIcon name='md-star' style={styles.icon2}></IoniconsIcon>
-        <IoniconsIcon name='md-star' style={styles.icon3}></IoniconsIcon>
-        <IoniconsIcon name='md-star' style={styles.icon4}></IoniconsIcon>
-        <IoniconsIcon name='md-star' style={styles.icon5}></IoniconsIcon>
+        <IoniconsIcon name="md-star-half" style={styles.icon}></IoniconsIcon>
+        <IoniconsIcon name="md-star" style={styles.icon2}></IoniconsIcon>
+        <IoniconsIcon name="md-star" style={styles.icon3}></IoniconsIcon>
+        <IoniconsIcon name="md-star" style={styles.icon4}></IoniconsIcon>
+        <IoniconsIcon name="md-star" style={styles.icon5}></IoniconsIcon>
       </View>
       <Modal
-        title='Good Job!'
-        subtitle='Your parking area has been successfully booked'
+        title="Good Job!"
+        subtitle="Your parking area has been successfully booked"
       />
       <MaterialButtonPrimary
-        caption='VIEW CODE'
+        caption="VIEW CODE"
         style={styles.materialButtonPrimary4}
         onPress={() => {
           navigation.navigate('CodeScreen');
-        }}
-      ></MaterialButtonPrimary>
+        }}></MaterialButtonPrimary>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           navigation.navigate('FindParkingScreen');
-        }}
-      >
+        }}>
         <Text style={styles.goToHome}>GO TO HOME</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.rect2} onPress={onShare}>
-        <FeatherIcon name='gift' style={styles.icon7}></FeatherIcon>
+        <FeatherIcon name="gift" style={styles.icon7}></FeatherIcon>
         <Text style={styles.sendGift}>SEND GIFT</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -82,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
     // marginTop: 74,
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     opacity: 0.68,
     marginTop: 7,
@@ -165,14 +163,14 @@ const styles = StyleSheet.create({
     marginLeft: 106,
   },
   goodJob: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 30,
     marginTop: 33,
     marginLeft: 121,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     opacity: 0.5,
     fontSize: 20,
@@ -217,7 +215,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   goToHome: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     // marginTop: 12,
     // marginLeft: 14,
@@ -252,7 +250,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   sendGift: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
     marginLeft: 15,

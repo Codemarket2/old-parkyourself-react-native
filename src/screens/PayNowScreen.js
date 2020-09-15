@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,13 +7,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import Svg, { Ellipse } from 'react-native-svg';
+import Svg, {Ellipse} from 'react-native-svg';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import LocationHeader from '../components/LocationHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function PayNowScreen({ navigation }) {
+function PayNowScreen({navigation}) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -73,21 +73,21 @@ function PayNowScreen({ navigation }) {
         </View>
         {showStart && (
           <DateTimePicker
-            testID='dateTimePicker'
+            testID="dateTimePicker"
             value={startDate}
             mode={mode}
             is24Hour={true}
-            display='default'
+            display="default"
             onChange={onStartDateChange}
           />
         )}
         {showEnd && (
           <DateTimePicker
-            testID='dateTimePicker'
+            testID="dateTimePicker"
             value={endDate}
             mode={mode}
             is24Hour={true}
-            display='default'
+            display="default"
             onChange={onEndDateChange}
           />
         )}
@@ -99,16 +99,15 @@ function PayNowScreen({ navigation }) {
           <Text style={styles.vehicle}>Vehicle</Text>
           <Text style={styles.loremIpsum6}>2019 BMW X6</Text>
           <TouchableOpacity style={styles.ellipseStack}>
-            <Svg viewBox='0 0 23.02 19.27' style={styles.ellipse}>
+            <Svg viewBox="0 0 23.02 19.27" style={styles.ellipse}>
               <Ellipse
-                stroke='rgba(230, 230, 230,1)'
+                stroke="rgba(230, 230, 230,1)"
                 strokeWidth={0}
-                fill='rgba(39,170,225,1)'
+                fill="rgba(39,170,225,1)"
                 cx={12}
                 cy={10}
                 rx={12}
-                ry={10}
-              ></Ellipse>
+                ry={10}></Ellipse>
             </Svg>
             <Text style={styles.loremIpsum7}>+</Text>
           </TouchableOpacity>
@@ -131,32 +130,29 @@ function PayNowScreen({ navigation }) {
         <View style={styles.listItem}>
           <Text style={styles.cardNumber}>Card Number</Text>
           <FontAwesomeIcon
-            name='cc-visa'
-            style={styles.icon5}
-          ></FontAwesomeIcon>
+            name="cc-visa"
+            style={styles.icon5}></FontAwesomeIcon>
           <Text style={styles.xxxXxxxXxxx0147}>xxx-xxxx-xxxx-0147</Text>
           <TouchableOpacity style={styles.ellipse1Stack}>
-            <Svg viewBox='0 0 23.02 19.27' style={styles.ellipse1}>
+            <Svg viewBox="0 0 23.02 19.27" style={styles.ellipse1}>
               <Ellipse
-                stroke='rgba(230, 230, 230,1)'
+                stroke="rgba(230, 230, 230,1)"
                 strokeWidth={0}
-                fill='rgba(39,170,225,1)'
+                fill="rgba(39,170,225,1)"
                 cx={12}
                 cy={10}
                 rx={12}
-                ry={10}
-              ></Ellipse>
+                ry={10}></Ellipse>
             </Svg>
             <Text style={styles.loremIpsum9}>+</Text>
           </TouchableOpacity>
         </View>
         <MaterialButtonPrimary
-          caption='PAY $3.20'
+          caption="PAY $3.20"
           style={styles.materialButtonPrimary3}
           onPress={() => {
             navigation.navigate('SuccessfullyBooked');
-          }}
-        ></MaterialButtonPrimary>
+          }}></MaterialButtonPrimary>
         <Text style={styles.loremIpsum10}>
           By Making payment you indicate your acceptance of our Terms &amp;
           Conditions and Privacy Policy.
@@ -190,12 +186,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   arriving: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginLeft: 80,
@@ -203,31 +199,31 @@ const styles = StyleSheet.create({
     width: 170,
   },
   change: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginLeft: 5,
     marginTop: 6,
   },
   duration: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginLeft: 133,
   },
   vehicle: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
     marginTop: 4,
   },
   loremIpsum6: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: 'rgba(39,170,225,1)',
     fontSize: 15,
     marginLeft: 134,
@@ -244,7 +240,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 5,
     // position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 20,
   },
@@ -254,18 +250,18 @@ const styles = StyleSheet.create({
     // marginLeft: 13,
   },
   payment: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
   },
   loremIpsum8: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 16,
     marginLeft: 210,
   },
   cardNumber: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
     marginTop: 5,
@@ -279,7 +275,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   xxxXxxxXxxx0147: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginLeft: 6,
@@ -296,7 +292,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 5,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 20,
   },
@@ -314,12 +310,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   leaving: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginLeft: 80,
@@ -327,14 +323,14 @@ const styles = StyleSheet.create({
     width: 170,
   },
   change2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginLeft: 5,
     marginTop: 4,
   },
   profileCategory: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(179,177,177,1)',
     fontSize: 16,
     marginTop: 8,
@@ -354,14 +350,14 @@ const styles = StyleSheet.create({
     borderRadius: 57,
   },
   business: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 9,
     marginTop: 6,
     marginLeft: 9,
   },
   personal: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 9,
     marginLeft: 7,
@@ -379,7 +375,7 @@ const styles = StyleSheet.create({
     // top: 412,
     // left: 15,
     // position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     textAlign: 'center',
     marginVertical: 30,

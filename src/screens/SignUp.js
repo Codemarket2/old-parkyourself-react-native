@@ -16,10 +16,16 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
+import {
+  AccessToken,
+  LoginManager,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 
 function SignUp({navigation}) {
-  const [user, setUser] = useState(null);
-  const [visible, setVisible] = useState(false);
+  // const [user, setUser] = useState(null);
+  // const [visible, setVisible] = useState(false);
 
   //google sign in
   GoogleSignin.configure({
@@ -28,7 +34,8 @@ function SignUp({navigation}) {
       '24758434460-eeahus85qnrjs25grp4ukag1evs8m0tq.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
     androidClientId:
       '24758434460-mtkoleq0oodi10tu8c3ee54ouhns4gnf.apps.googleusercontent.com',
-      iosClientId:'24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com',
+    iosClientId:
+      '24758434460-tvj5bfite2s545k6s81cpdfjln15v95s.apps.googleusercontent.com',
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     hostedDomain: '', // specifies a hosted domain restriction
     loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
@@ -62,31 +69,37 @@ function SignUp({navigation}) {
 
   //facebook login
   async function facebookLogIn() {
-    // try {
-    //   await Facebook.initializeAsync('441063166853184');
-    //   const {
-    //     type,
-    //     token,
-    //     expires,
-    //     permissions,
-    //     declinedPermissions,
-    //   } = await Facebook.logInWithReadPermissionsAsync({
-    //     permissions: ['public_profile'],
-    //   });
-    //   if (type === 'success') {
-    //     // Get the user's name using Facebook's Graph API
-    //     const response = await fetch(
-    //       `https://graph.facebook.com/me?access_token=${token}`
-    //     );
-    //     Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-    //     navigation.navigate('Tabs');
-    //   } else {
-    //     Alert.alert('Facebook Login Failed');
-    //   }
-    // } catch ({ message }) {
-    //   Alert.alert('Facebook Login Failed', message);
-    // }
+    LoginManager.logInWithPermissions(['public_profile']).then(
+      function (result) {
+        if (result.isCancelled) {
+          Alert.alert('Something went wrong', 'Process was cancelled abruptly');
+        } else {
+          AccessToken.getCurrentAccessToken().then((data) => {
+            const infoRequest = new GraphRequest(
+              '/me?fields=first_name,last_name,name,email,friends,picture',
+              null,
+              _responseInfoCallback,
+            );
+            // Start the graph request.
+            new GraphRequestManager().addRequest(infoRequest).start();
+          });
+        }
+      },
+      function (error) {
+        Alert.alert('Something went wrong', error.toString());
+      },
+    );
   }
+
+  const _responseInfoCallback = (error, result) => {
+    if (error) {
+      Alert.alert('Something went wrong', error.toString());
+    } else {
+      Alert.alert('Logged In! ', `Welcome, ${result.name}`);
+      navigation.navigate('Tabs');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <AppLogo />
@@ -129,39 +142,6 @@ function SignUp({navigation}) {
           ParkYouself Terms &amp; Conditions and Privacy Policy
         </Text>
       </View>
-      {/* user data modal */}
-      <Modal animationType="slide" transparent={true} visible={visible}>
-        <View style={styles.centeredView}>
-          {user && (
-            <View style={styles.modalView}>
-              <Text style={styles.head}>User Details</Text>
-              <Text style={styles.modalText}>
-                Name : {user.user.name ? user.user.name : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Email : {user.user.email ? user.user.email : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Family Name : {user.user.familyName ? user.user.familyName : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Id : {user.user.id ? user.user.id : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Photo Url : {user.user.photo ? user.user.photo : ''}
-              </Text>
-
-              <TouchableOpacity
-                style={{...styles.openButton, backgroundColor: '#2196F3'}}
-                onPress={() => {
-                  setVisible(!visible);
-                }}>
-                <Text style={styles.textStyle}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      </Modal>
     </ScrollView>
   );
 }

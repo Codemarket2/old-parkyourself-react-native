@@ -176,10 +176,7 @@ const styles = StyleSheet.create({
     marginTop: 11,
   },
   loremIpsum: {
-    // top: 18,
-    // left: 27,
-    // position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
   },
   rect3: {
@@ -220,7 +217,7 @@ const styles = StyleSheet.create({
     marginLeft: -1,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginLeft: 5,
@@ -253,12 +250,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loremIpsum2: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 26,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(171,170,170,1)',
     fontSize: 13,
     // marginLeft: 8,
@@ -280,11 +277,11 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   carPark: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
   },
   loremIpsum5: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 13,
     marginLeft: 3,
@@ -322,7 +319,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   valet: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     fontSize: 10,
     // marginTop: 6,
@@ -339,7 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   covered: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     fontSize: 10,
     // marginTop: 6,
@@ -356,7 +353,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   onSiteStaff: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     fontSize: 10,
     // marginTop: 7,
@@ -374,7 +371,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   accessible: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     fontSize: 10,
     // marginTop: 7,
@@ -410,7 +407,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   moreDetails: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(32,133,175,1)',
     textDecorationLine: 'underline',
     fontSize: 13,
@@ -459,7 +456,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   loremIpsum6: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(160,156,156,1)',
     fontSize: 13,
     marginLeft: 4,

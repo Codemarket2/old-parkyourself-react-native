@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, {useState, Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,7 +13,7 @@ import AppLogo from '../components/AppLogo';
 
 const OTP = '123456';
 
-function OTPScreen({ navigation }) {
+function OTPScreen({navigation}) {
   const [otp, setOtp] = useState('');
 
   const onSubmitHandler = () => {
@@ -40,14 +40,13 @@ function OTPScreen({ navigation }) {
           <View style={styles.enterCodeRow}>
             <Text style={styles.enterCode}>ENTER CODE :</Text>
             <TextInput
-              placeholder='XXXXXX'
-              placeholderTextColor='rgba(237,235,235,0.62)'
+              placeholder="XXXXXX"
+              placeholderTextColor="rgba(237,235,235,0.62)"
               style={styles.xxxxxx}
               maxLength={6}
               value={otp}
               onChangeText={(input) => setOtp(input)}
-              keyboardType='numeric'
-            ></TextInput>
+              keyboardType="numeric"></TextInput>
           </View>
         </View>
         <TouchableOpacity>
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loremIpsum3: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(246,246,246,1)',
     fontSize: 24,
     marginTop: 59,
@@ -95,13 +94,13 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
   },
   enterCode: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(237,235,235,1)',
     fontSize: 22,
     opacity: 0.62,
   },
   xxxxxx: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(250,248,248,1)',
     height: 26,
     width: 94,
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   resendOtp: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(231,229,229,1)',
     textDecorationLine: 'underline',
     marginTop: 13,
@@ -140,14 +139,14 @@ const styles = StyleSheet.create({
     // marginLeft: 30,
   },
   enter: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 18,
     marginLeft: 138,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(245,245,245,1)',
     textAlign: 'center',
     fontSize: 15,

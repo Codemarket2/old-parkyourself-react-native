@@ -338,11 +338,8 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   button: {
-    // top: 184,
-    // left: 324,
     width: 39,
     height: 35,
-    // position: 'absolute',
     backgroundColor: 'rgba(252,252,252,1)',
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
@@ -359,8 +356,6 @@ const styles = StyleSheet.create({
     marginLeft: 9,
   },
   cardList: {
-    // alignSelf: 'center',
-    // flex: 1,
     minHeight: 300,
     width: '100%',
     zIndex: 100,

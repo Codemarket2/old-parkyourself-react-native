@@ -70,18 +70,14 @@ export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
 
 const styles = StyleSheet.create({
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
-    // marginTop: 72,
-    // marginLeft: 18,
-    // marginRight: -18,
   },
   ownerBusinessName: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(155,155,155,1)',
     marginTop: 10,
-    // marginLeft: 16,
   },
   rect: {
     top: 0,
@@ -119,7 +115,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(130,130,130,1)',
     marginLeft: 10,
     marginTop: 5,
@@ -143,37 +139,33 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 32,
     marginTop: 9,
-    // marginLeft: 17,
   },
   image: {
     width: '100%',
     height: 161,
     marginTop: 9,
-    // marginLeft: 16,
   },
   rect2: {
     width: '100%',
-    // height: 183,
     backgroundColor: 'rgba(255,255,255,1)',
     marginTop: 25,
     paddingHorizontal: 7,
     paddingVertical: 10,
-    // marginLeft: 10,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 16,
     // marginTop: 16,
     marginLeft: 8,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
   },
   why: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginLeft: 6,
@@ -187,8 +179,6 @@ const styles = StyleSheet.create({
     marginRight: 21,
   },
   rect3: {
-    // width: 76,
-    // height: 31,
     borderRadius: 19,
     borderWidth: 1,
     borderColor: 'rgba(196,195,195,1)',
@@ -199,10 +189,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   valet: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
-    // marginTop: 5,
-    // marginLeft: 18,
   },
   rect4: {
     width: 91,
@@ -213,7 +201,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   covered: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     marginTop: 5,
     marginLeft: 15,
@@ -227,7 +215,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   onSiteStaff: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     marginTop: 5,
     marginLeft: 16,
@@ -251,7 +239,7 @@ const styles = StyleSheet.create({
     marginLeft: 11,
   },
   accessible: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(196,195,195,1)',
     marginTop: 5,
     marginLeft: 20,

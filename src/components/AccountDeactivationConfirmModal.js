@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   accountDeactivation: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginTop: 6,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     marginLeft: 29,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     textAlign: 'center',
     lineHeight: 21,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginLeft: 34,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 15,
     textAlign: 'center',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     shadowRadius: 30,
   },
   yes: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     marginTop: 12,
     marginLeft: 49,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginLeft: 21,
   },
   no: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     marginTop: 12,
     marginLeft: 52,

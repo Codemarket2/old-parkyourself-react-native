@@ -358,12 +358,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   spaceAvailable: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
   loremIpsum: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginVertical: 21,
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   monday: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 20,
     marginLeft: 2,
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
   },
   switch: {},
   text: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 20,
     marginTop: 37,
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginLeft: 10,
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
   },
   startTime: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     marginLeft: 38,
   },
   endTime: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginLeft: 10,
@@ -479,12 +479,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loremIpsum4: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 48,
@@ -497,21 +497,21 @@ const styles = StyleSheet.create({
     marginTop: 17,
   },
   hour: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(0,0,0,1)',
     fontSize: 16,
     marginTop: 15,
     // marginLeft: 13,
   },
   loremIpsum6: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     lineHeight: 20,
     marginTop: 25,
     // marginLeft: 28,
   },
   loremIpsum7: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 31,
@@ -526,21 +526,21 @@ const styles = StyleSheet.create({
     // marginLeft: 26,
   },
   loremIpsum8: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 15,
     // marginLeft: 11,
   },
   loremIpsum9: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     lineHeight: 20,
     marginTop: 24,
     // marginLeft: 29,
   },
   loremIpsum10: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 24,
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
     width: 22,
   },
   loremIpsum11: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     marginLeft: 20,
     marginTop: 5,
@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
     width: 22,
   },
   loremIpsum12: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     marginLeft: 15,
     marginTop: 4,
@@ -615,7 +615,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   loremIpsum13: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     width: 310,
     lineHeight: 20,
@@ -624,7 +624,7 @@ const styles = StyleSheet.create({
     // marginLeft: 29,
   },
   loremIpsum14: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 24,
@@ -635,7 +635,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   instantBooking: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     marginLeft: 11,
   },
@@ -651,7 +651,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   approvalIsRequired: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     marginLeft: 12,
   },

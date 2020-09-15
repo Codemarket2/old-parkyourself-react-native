@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 23,
     marginTop: 60,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   allTopics: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 18,
     marginTop: 16,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   drivers: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 10,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   findParking: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 23,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,1)',
   },
   checkingInEarly: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 23,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   spaceOwner: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 11,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   addAListing: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 23,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,0.66)',
   },
   withdrawFunds: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 23,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   parkingAttendant: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 10,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,0.66)',
   },
   loggingIn: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 22,

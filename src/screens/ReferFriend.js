@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   referAFriend: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
     // marginTop: 59,
@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 22,
     marginTop: 6,
     marginLeft: 46,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     fontSize: 16,
     textAlign: 'center',
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   promotionalCode: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 66,
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
     marginLeft: 46,
   },
   absaw56: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 20,
   },
   copy: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 16,
     marginLeft: 124,

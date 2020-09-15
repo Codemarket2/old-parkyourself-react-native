@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import Svg, { Ellipse } from 'react-native-svg';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import Svg, {Ellipse} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/Entypo';
 
-function MapMarker({ title, onPress }) {
+function MapMarker({title, onPress}) {
   return (
     <TouchableOpacity style={styles.rectStack} onPress={onPress}>
       <View style={styles.rect}>
         <View style={styles.ellipseStack}>
-          <Svg viewBox='0 0 45.63 42.12' style={styles.ellipse}>
+          <Svg viewBox="0 0 45.63 42.12" style={styles.ellipse}>
             <Ellipse
-              stroke='rgba(230, 230, 230,1)'
+              stroke="rgba(230, 230, 230,1)"
               strokeWidth={0}
               cx={23}
               cy={21}
               rx={23}
               ry={21}
-              fill='rgba(251,251,251,1)'
-            ></Ellipse>
+              fill="rgba(251,251,251,1)"></Ellipse>
           </Svg>
           <Text style={styles.loremIpsum}>{title}</Text>
         </View>
       </View>
-      <Icon name='location-pin' style={styles.icon}></Icon>
+      <Icon name="location-pin" style={styles.icon}></Icon>
     </TouchableOpacity>
   );
 }
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     top: 12,
     left: 3,
     position: 'absolute',
-    fontFamily: 'roboto-900',
+    // fontFamily: 'roboto-900',
     color: '#121212',
     fontSize: 12,
   },

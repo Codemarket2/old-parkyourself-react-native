@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
     marginLeft: 18,
   },
   additionTimeAdded: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 22,
     marginTop: 16,
     marginLeft: 18,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     lineHeight: 26,

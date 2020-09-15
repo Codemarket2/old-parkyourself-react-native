@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 
-function CodeScreen({ navigation }) {
+function CodeScreen({navigation}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.parkingTicket}>Parking Ticket</Text>
@@ -21,7 +21,7 @@ function CodeScreen({ navigation }) {
             <Text style={styles.loremIpsum3}>9:00 PM</Text>
             <Text style={styles.tueJuly1}>Tue, July 1</Text>
           </View>
-          <FeatherIcon name='arrow-right' style={styles.icon}></FeatherIcon>
+          <FeatherIcon name="arrow-right" style={styles.icon}></FeatherIcon>
           <View style={styles.rect3}>
             <Text style={styles.exitBefore}>Exit Before</Text>
             <Text style={styles.loremIpsum4}>6:00 PM</Text>
@@ -34,17 +34,15 @@ function CodeScreen({ navigation }) {
           Show this QR code to enter the Parking area
         </Text>
         <MaterialCommunityIconsIcon
-          name='qrcode'
-          style={styles.icon2}
-        ></MaterialCommunityIconsIcon>
+          name="qrcode"
+          style={styles.icon2}></MaterialCommunityIconsIcon>
       </View>
       <MaterialButtonPrimary
-        caption='DONE'
+        caption="DONE"
         style={styles.materialButtonPrimary5}
         onPress={() => {
           navigation.navigate('FindParkingScreen');
-        }}
-      ></MaterialButtonPrimary>
+        }}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   parkingTicket: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 26,
     // marginTop: 69,
@@ -80,14 +78,14 @@ const styles = StyleSheet.create({
     // marginLeft: 15,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 19,
     marginLeft: 18,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 13,
     marginTop: 16,
@@ -98,21 +96,21 @@ const styles = StyleSheet.create({
     height: 78,
   },
   arriveAfter: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 13,
     marginTop: 7,
     marginLeft: 15,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 6,
     marginLeft: 14,
   },
   tueJuly1: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 11,
     marginTop: 5,
@@ -132,21 +130,21 @@ const styles = StyleSheet.create({
     marginLeft: 11,
   },
   exitBefore: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 13,
     marginTop: 6,
     marginLeft: 14,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 6,
     marginLeft: 13,
   },
   wedJuly2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 11,
     marginTop: 7,
@@ -177,7 +175,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     alignSelf: 'center',

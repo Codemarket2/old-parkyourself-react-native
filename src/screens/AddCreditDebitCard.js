@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginLeft: 26,
   },
   platinum: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(255,255,255,1)',
     fontSize: 18,
     letterSpacing: 2,
@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 18,
     marginTop: 64,
     marginLeft: 26,
   },
   placeholder: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 51,
     width: '100%',
@@ -134,14 +134,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   mmYy: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(214,214,214,1)',
     fontSize: 18,
     marginTop: 12,
     marginLeft: 19,
   },
   nameOnCard: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 45,
     width: '70%',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     height: 51,
   },
   setAsDefault: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 20,
     marginTop: 14,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   profileCategory: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 48,
     width: 341,

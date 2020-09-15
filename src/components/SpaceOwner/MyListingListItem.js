@@ -83,13 +83,13 @@ const styles = StyleSheet.create({
     width: '65%',
   },
   location: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     fontWeight: '700',
   },
   bookings: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     fontWeight: '500',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tagText: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 9,
     backgroundColor: 'rgba(39,170,225,0.2)',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   login: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modify: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
   },

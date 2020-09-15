@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   payments: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     marginLeft: 19,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     // width: 30,
   },
   addPaymentMethod: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 18,
     marginLeft: 23,
@@ -172,18 +172,18 @@ const styles = StyleSheet.create({
     marginTop: 33,
   },
   riderProfile: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 18,
     marginLeft: 1,
     marginBottom: 10,
   },
   profile: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(179,179,179,1)',
   },
   email: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 6,
@@ -193,13 +193,13 @@ const styles = StyleSheet.create({
     marginLeft: 18,
   },
   promotions: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 18,
     marginBottom: 10,
   },
   addPromoCode: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 18,
     marginLeft: 18,

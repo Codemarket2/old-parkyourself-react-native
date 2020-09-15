@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   dashboard: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
   },
@@ -289,12 +289,12 @@ const styles = StyleSheet.create({
     height: 27,
   },
   profile: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: '#121212',
     fontSize: 13,
   },
   email: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 4,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     top: 20,
     left: 259,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 11,
     textDecorationLine: 'underline',
@@ -333,13 +333,13 @@ const styles = StyleSheet.create({
     height: 47,
   },
   moreInformation: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 41,
   },
   btnText: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginLeft: 24,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     // marginTop: 11,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     marginLeft: 14,
     // marginTop: 15,
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     width: 19,
   },
   logOut: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(255,255,255,1)',
     marginLeft: 13,
     marginTop: 6,

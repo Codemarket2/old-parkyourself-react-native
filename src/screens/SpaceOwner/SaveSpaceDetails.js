@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   addASpace: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     lineHeight: 22,

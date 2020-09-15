@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, ScrollView} from 'react-native';
 import ReviewItem from '../components/ReviewItem';
 
 function Reviews(props) {
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   reviews: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
     marginTop: 30,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 19,
     opacity: 0.75,

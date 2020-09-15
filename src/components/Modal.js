@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import Svg, { Ellipse } from 'react-native-svg';
+import React, {Component} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import Svg, {Ellipse} from 'react-native-svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Modal = ({ title, subtitle }) => {
+const Modal = ({title, subtitle}) => {
   return (
     <View style={styles.rect}>
       <View style={styles.ellipseStack}>
-        <Svg viewBox='0 0 165.5 157.58' style={styles.ellipse}>
+        <Svg viewBox="0 0 165.5 157.58" style={styles.ellipse}>
           <Ellipse
-            stroke='rgba(39,170,225,0.47)'
+            stroke="rgba(39,170,225,0.47)"
             strokeWidth={20}
-            fill='rgba(39,170,225,1)'
+            fill="rgba(39,170,225,1)"
             cx={83}
             cy={79}
             rx={73}
-            ry={69}
-          ></Ellipse>
+            ry={69}></Ellipse>
         </Svg>
-        <Icon name='thumbs-up' style={styles.icon}></Icon>
+        <Icon name="thumbs-up" style={styles.icon}></Icon>
       </View>
       <Text style={styles.wellDone}>{title}</Text>
       <Text style={styles.loremIpsum}>{subtitle}</Text>
@@ -33,12 +32,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,1)',
   },
   ellipse: {
-    // top: 0,
     width: 181,
     height: 168,
-    // position: 'absolute',
     opacity: 0.82,
-    // left: 0,
     alignSelf: 'center',
   },
   icon: {
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   wellDone: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(14,67,149,1)',
     fontSize: 28,
     marginTop: 50,
@@ -68,7 +64,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 20,
     textAlign: 'center',

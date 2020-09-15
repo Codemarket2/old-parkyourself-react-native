@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   myBookings: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 26,
     marginTop: 10,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   tab: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 14,
     opacity: 0.8,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   loremIpsum: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginTop: 1,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   rebook: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 10,
     marginTop: 5,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     marginLeft: 1,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginTop: 8,
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     marginLeft: 13,
   },
   cancelBooking: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 13,
     marginTop: 11,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     width: 26,
   },
   visa6094320: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 10,
     marginLeft: 10,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   moreDetails: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 10,
     textDecorationLine: 'underline',
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(114,113,113,1)',
     fontSize: 10,
     marginLeft: 9,

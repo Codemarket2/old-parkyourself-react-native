@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   gabrielaPepe: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
   loremIpsum: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginTop: 8,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,1)',
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 15,
     lineHeight: 22,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginLeft: 13,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(214,214,214,1)',
     fontSize: 13,
     marginTop: 4,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     top: 64,
     left: 169,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 13,
   },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     top: 14,
     left: 13,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     lineHeight: 22,
     fontSize: 15,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,1)',
   },
   loremIpsum7: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 15,
     lineHeight: 22,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: 14,
   },
   loremIpsum6: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(214,214,214,1)',
     fontSize: 13,
     marginTop: 3,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     marginLeft: 9,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     lineHeight: 22,
     fontSize: 15,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     marginLeft: 14,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 13,
     marginTop: 6,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     marginTop: 17,
   },
   typeAComment: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 57,
     width: 224,

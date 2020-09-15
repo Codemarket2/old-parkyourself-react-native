@@ -220,11 +220,6 @@ export default function FindParkingForm({setShowMarkers}) {
 const styles = StyleSheet.create({
   rect: {
     width: '100%',
-    // top: 0,
-    // left: 0,
-    // width: 375,
-    // height: 169,
-    // position: 'absolute',
     backgroundColor: 'rgba(255,255,255,1)',
     shadowColor: 'rgba(0,0,0,1)',
     shadowOffset: {
@@ -246,9 +241,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: 6,
     opacity: 0.6,
-    // borderBottomLeftRadius:10,
-    // borderBottomLeftRadius:10,
-    // borderRadius: 10,
   },
   active: {
     borderBottomColor: '#27aae1',
@@ -262,7 +254,7 @@ const styles = StyleSheet.create({
     width: 23,
   },
   daily: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginLeft: 9,
@@ -295,7 +287,7 @@ const styles = StyleSheet.create({
     width: 23,
   },
   monthly: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     opacity: 0.84,
@@ -344,7 +336,7 @@ const styles = StyleSheet.create({
     width: '6%',
   },
   placeholder: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 28,
     width: '83%',
@@ -379,7 +371,7 @@ const styles = StyleSheet.create({
     // marginTop: 10,
   },
   startDateTime: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(158,158,158,1)',
     // marginTop: 7,
     // marginLeft: 14,
@@ -396,7 +388,7 @@ const styles = StyleSheet.create({
     // marginTop: -10,
   },
   endDateTime: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(158,158,158,1)',
     // marginTop: 9,
     // marginLeft: 14,

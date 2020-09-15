@@ -220,12 +220,12 @@ const styles = StyleSheet.create({
     // marginLeft: 15,
   },
   locationOnMap: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 18,
   },
   viewInGoogleApp: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     textDecorationLine: 'underline',
     marginLeft: 67,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     // marginLeft: 14,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(0,0,0,1)',
     fontSize: 16,
     marginTop: 19,
@@ -259,14 +259,14 @@ const styles = StyleSheet.create({
     // marginLeft: 15,
   },
   hours: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 15,
     marginLeft: 15,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 14,

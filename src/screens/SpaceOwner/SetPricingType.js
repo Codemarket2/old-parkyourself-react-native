@@ -79,12 +79,12 @@ const styles = StyleSheet.create({
     minHeight: Dimensions.get('window').height,
   },
   setPricing: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 15,
     marginVertical: 20,
@@ -97,12 +97,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   variableRate: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 13,
     marginTop: 7,

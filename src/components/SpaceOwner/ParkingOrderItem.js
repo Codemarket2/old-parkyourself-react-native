@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     marginTop: 84,
     marginLeft: 89,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   moreDetails: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginTop: 13,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,0.2)',
   },
   manager1: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 9,
     marginTop: 5,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     top: 1,
     left: 0,
     position: 'absolute',
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
   },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginLeft: 88,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginTop: 9,

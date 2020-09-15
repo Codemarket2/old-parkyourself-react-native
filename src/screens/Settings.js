@@ -74,11 +74,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   settings: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
-    // marginTop: 59,
-    // marginLeft: 18,
   },
   rect: {
     width: '100%',
@@ -95,11 +93,10 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(214,214,214,1)',
     flexDirection: 'row',
     marginTop: 26,
-    // marginLeft: 18,
     backgroundColor: '#fff',
   },
   pushNotifications: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginLeft: 15,
@@ -123,11 +120,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 17,
-    // marginLeft: 18,
     backgroundColor: '#fff',
   },
   dataPreferences: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 23,
@@ -152,7 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   termsConditions: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
   },
@@ -190,7 +186,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   privacyPolicy: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
   },
@@ -235,7 +231,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 11,
     marginLeft: 5,
@@ -274,7 +270,7 @@ const styles = StyleSheet.create({
     width: 16,
   },
   logout: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
     marginLeft: 10,
@@ -306,7 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   deactivateAccount: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
     marginTop: 13,

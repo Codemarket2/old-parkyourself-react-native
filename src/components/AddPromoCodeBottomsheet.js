@@ -31,14 +31,14 @@ const styles = StyleSheet.create({
     marginTop: 323,
   },
   addPromoCode: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 22,
     marginTop: 18,
     marginLeft: 22,
   },
   textInput: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 50,
     width: 331,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
   },
   cancel: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     marginTop: 12,
     marginLeft: 44,

@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
     // marginLeft: 16,
   },
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     textDecorationLine: 'underline',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginLeft: 27,
   },
   compact: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     marginTop: 10,
     marginLeft: 15,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     marginLeft: 28,
   },
   midSized: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     marginTop: 10,
     marginLeft: 15,
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     marginTop: 26,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     marginTop: 11,
@@ -224,14 +224,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   loremIpsum5: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 17,
     marginLeft: 18,
   },
   loremIpsum6: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     lineHeight: 21,
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   loremIpsum7: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     lineHeight: 21,
@@ -256,14 +256,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   gettingHere: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
     marginTop: 18,
     marginLeft: 17,
   },
   loremIpsum8: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     lineHeight: 22,
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   loremIpsum9: {
-    fontFamily: 'roboto-900',
+    // fontFamily: 'roboto-900',
     color: 'rgba(11,64,148,1)',
     fontSize: 26,
     marginTop: 6,
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     top: 15,
     left: 79,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     opacity: 0.53,
   },

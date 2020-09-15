@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment } from 'react';
+import React, {Component, useState, Fragment} from 'react';
 import {
   StyleSheet,
   View,
@@ -18,87 +18,77 @@ function Filter(props) {
       <TouchableOpacity
         onPress={() => {
           setVisible(!visible);
-        }}
-      >
+        }}>
         <Text style={styles.filterButtonText}>Filter</Text>
       </TouchableOpacity>
       {visible && (
         <View style={styles.container}>
           <Modal
-            animationType='slide'
+            animationType="slide"
             transparent={true}
             visible={visible}
             onRequestClose={() => {
               Alert.alert('Modal has been closed.');
-            }}
-          >
+            }}>
             <ScrollView style={styles.rect}>
               <View style={styles.iconRow}>
                 <View style={styles.header}>
-                  <Icon name='filter-variant' style={styles.icon}></Icon>
+                  <Icon name="filter-variant" style={styles.icon}></Icon>
                   <Text style={styles.filterBy}>FILTER BY</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
                     setVisible(!visible);
-                  }}
-                >
-                  <FontAwesome5Icon name='times' size={30} color='#999' />
+                  }}>
+                  <FontAwesome5Icon name="times" size={30} color="#999" />
                 </TouchableOpacity>
               </View>
               <View style={styles.rect2}>
                 <View style={styles.materialCheckboxRow}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.all}>All</Text>
                 </View>
               </View>
               <View style={styles.rect6}>
                 <View style={styles.materialCheckbox1Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.price}>Price</Text>
                 </View>
               </View>
               <View style={styles.rect4}>
                 <View style={styles.materialCheckbox3Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.compact}>Compact</Text>
                 </View>
               </View>
               <View style={styles.rect5}>
                 <View style={styles.materialCheckbox2Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.distance}>Distance</Text>
                 </View>
               </View>
               <View style={styles.rect3}>
                 <View style={styles.materialCheckbox4Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.midSized}>Mid Sized</Text>
                 </View>
               </View>
               <View style={styles.rect8}>
                 <View style={styles.materialCheckbox5Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.largeSized}>Large Sized</Text>
                 </View>
               </View>
               <View style={styles.rect7}>
                 <View style={styles.materialCheckbox6Row}>
                   <MaterialCheckbox
-                    style={styles.materialCheckbox}
-                  ></MaterialCheckbox>
+                    style={styles.materialCheckbox}></MaterialCheckbox>
                   <Text style={styles.overSized}>Over Sized</Text>
                 </View>
               </View>
@@ -157,7 +147,7 @@ const styles = StyleSheet.create({
     width: 45,
   },
   filterBy: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(93,92,92,1)',
     fontSize: 22,
     marginLeft: 11,
@@ -183,7 +173,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   all: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -210,7 +200,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   price: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -240,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   compact: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -261,7 +251,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   distance: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -295,7 +285,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   midSized: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -317,7 +307,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   largeSized: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(118,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -346,7 +336,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   overSized: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(117,117,117,1)',
     fontSize: 22,
     marginLeft: 20,
@@ -365,7 +355,7 @@ const styles = StyleSheet.create({
     height: 180,
   },
   features: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 22,
     opacity: 0.79,
@@ -382,7 +372,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   guarded: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 18,
   },
@@ -397,7 +387,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gated: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
   },
@@ -419,7 +409,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cctv: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
   },
@@ -433,7 +423,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sheltered: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 18,
   },
@@ -455,7 +445,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   disabledAccess: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 18,
   },

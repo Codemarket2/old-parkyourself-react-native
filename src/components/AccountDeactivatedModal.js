@@ -35,14 +35,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   accountDeactivated: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginTop: 8,
     marginLeft: 87,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     textAlign: 'center',
     lineHeight: 21,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 38,

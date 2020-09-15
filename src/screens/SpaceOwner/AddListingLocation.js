@@ -514,19 +514,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   addAListing: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
   location: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginTop: 17,
     // marginLeft: 23,
   },
   listingType: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 19,
@@ -568,7 +568,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   activeText: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 13,
     textAlign: 'center',
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   inactiveText: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
     textAlign: 'center',
@@ -616,7 +616,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   textInput: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 41,
     width: '100%',
@@ -626,14 +626,14 @@ const styles = StyleSheet.create({
     // marginLeft: 24,
   },
   listingAddress: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 16,
     // marginLeft: 24,
   },
   placeholder: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     height: 45,
     width: '100%',
@@ -648,7 +648,7 @@ const styles = StyleSheet.create({
     marginTop: 41,
   },
   propertyType: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 29,
@@ -678,7 +678,7 @@ const styles = StyleSheet.create({
     top: 62,
     left: 0,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
   },
@@ -706,7 +706,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,0.2)',
   },
   residentialGarage: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     textAlign: 'center',
     fontSize: 11,
@@ -740,7 +740,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(39,170,225,0.2)',
   },
   openAirLot: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
     marginTop: 74,
@@ -769,7 +769,7 @@ const styles = StyleSheet.create({
     top: 62,
     left: 0,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 11,
     textAlign: 'center',
@@ -786,7 +786,7 @@ const styles = StyleSheet.create({
     marginTop: 11,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 31,
@@ -818,7 +818,7 @@ const styles = StyleSheet.create({
     // marginLeft: 25,
   },
   streetView: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 10,
     marginTop: 3,
@@ -843,7 +843,7 @@ const styles = StyleSheet.create({
     // marginLeft: 27,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 10,
     textAlign: 'center',
@@ -877,7 +877,7 @@ const styles = StyleSheet.create({
     // marginLeft: 27,
   },
   parkingSpaceStal: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 10,
     textAlign: 'center',
@@ -890,7 +890,7 @@ const styles = StyleSheet.create({
     // marginLeft: 19,
   },
   listingFeatures: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 50,
@@ -911,7 +911,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loremIpsum4: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -925,7 +925,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   carWash: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -940,7 +940,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   covered: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
   },
@@ -955,7 +955,7 @@ const styles = StyleSheet.create({
     top: 10,
     left: 24,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -972,7 +972,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   eyCharging: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
   },
@@ -991,7 +991,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   fenced: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
     // marginTop: 10,
@@ -1008,7 +1008,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   mobilePass: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
     // marginTop: 10,
@@ -1025,7 +1025,7 @@ const styles = StyleSheet.create({
     top: 10,
     left: 24,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -1041,7 +1041,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   paved: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -1060,7 +1060,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   security: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
   },
@@ -1075,7 +1075,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   staffOnsite: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
     // marginTop: 10,
@@ -1092,7 +1092,7 @@ const styles = StyleSheet.create({
     top: 10,
     left: 24,
     position: 'absolute',
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -1109,7 +1109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tandem: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
   },
@@ -1127,7 +1127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   unpaved: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 11,
   },
@@ -1142,7 +1142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   valet: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 11,
   },

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   spaceOwner: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
   },
@@ -177,13 +177,13 @@ const styles = StyleSheet.create({
     // marginTop: 7,
   },
   spaceOwnerProfile: {
-    fontFamily: 'roboto-300',
+    // fontFamily: 'roboto-300',
     color: '#121212',
     fontSize: 12,
     marginLeft: 1,
   },
   exampleGmailCom1: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 4,
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   btnText: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginLeft: 24,
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   myListings: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 20,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   addAListing: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginTop: 1,
@@ -369,14 +369,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 16,
     marginLeft: 16,
     marginTop: 5,
   },
   dashboard: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 18,
     marginTop: 30,
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     width: 19,
   },
   logOut1: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(255,255,255,1)',
     marginLeft: 8,
     marginTop: 6,
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   switchToDriver: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     fontSize: 15,
     marginLeft: 17,

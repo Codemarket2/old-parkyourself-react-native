@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   customSchedule: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
     // marginTop: 56,
@@ -90,19 +90,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   calendar: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(214,214,214,1)',
     fontSize: 24,
   },
   setCustomTimings: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 17,
     marginTop: 38,
     // marginLeft: 21,
   },
   date8January: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 16,
     opacity: 0.8,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(182,182,182,1)',
   },
   startTime1: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   endTime1: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(182,182,182,1)',
     fontSize: 18,
     marginTop: 9,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginRight: 26,
   },
   loremIpsum: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     textDecorationLine: 'underline',
     marginTop: 15,

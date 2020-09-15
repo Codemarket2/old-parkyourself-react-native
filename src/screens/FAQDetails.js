@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loremIpsum1: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 23,
     marginTop: 60,
@@ -103,14 +103,14 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   spaceOwner: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 18,
     marginTop: 15,
     marginLeft: 12,
   },
   addAListing: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 18,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loremIpsum2: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     marginTop: 1,
   },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 23,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     lineHeight: 22,
     marginTop: 16,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     top: 24,
     left: 12,
     position: 'absolute',
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
   },
   icon1StackStack: {
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loremIpsum6: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     marginTop: 1,
   },
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   loremIpsum8: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     marginTop: 1,
   },
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     top: 24,
     left: 12,
     position: 'absolute',
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
   },
   icon4: {
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     top: 152,
     left: 12,
     position: 'absolute',
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
   },
   icon2StackStack: {

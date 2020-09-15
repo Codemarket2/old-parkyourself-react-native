@@ -1,26 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import Svg, { Ellipse } from 'react-native-svg';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import Svg, {Ellipse} from 'react-native-svg';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-export default function ReviewItem({ username, text, date }) {
+export default function ReviewItem({username, text, date}) {
   return (
     <View style={styles.rect}>
       <View style={styles.rect2Stack}>
         <View style={styles.rect2}>
           <View style={styles.rect3Row}>
             <View style={styles.rect3}>
-              <Svg viewBox='0 0 52.64 50.89' style={styles.ellipse}>
+              <Svg viewBox="0 0 52.64 50.89" style={styles.ellipse}>
                 <Ellipse
-                  stroke='rgba(230, 230, 230,1)'
+                  stroke="rgba(230, 230, 230,1)"
                   strokeWidth={0}
-                  fill='rgba(194,194,194,1)'
+                  fill="rgba(194,194,194,1)"
                   cx={26}
                   cy={25}
                   rx={26}
-                  ry={25}
-                ></Ellipse>
+                  ry={25}></Ellipse>
               </Svg>
             </View>
             <View style={styles.andrewRowColumn}>
@@ -31,30 +30,25 @@ export default function ReviewItem({ username, text, date }) {
               <View style={styles.rect4Stack}>
                 <View style={styles.rect4}></View>
                 <IoniconsIcon
-                  name='ios-star'
-                  style={styles.icon2}
-                ></IoniconsIcon>
+                  name="ios-star"
+                  style={styles.icon2}></IoniconsIcon>
                 <IoniconsIcon
-                  name='ios-star'
-                  style={styles.icon3}
-                ></IoniconsIcon>
+                  name="ios-star"
+                  style={styles.icon3}></IoniconsIcon>
                 <IoniconsIcon
-                  name='ios-star'
-                  style={styles.icon4}
-                ></IoniconsIcon>
+                  name="ios-star"
+                  style={styles.icon4}></IoniconsIcon>
                 <IoniconsIcon
-                  name='ios-star'
-                  style={styles.icon5}
-                ></IoniconsIcon>
+                  name="ios-star"
+                  style={styles.icon5}></IoniconsIcon>
                 <IoniconsIcon
-                  name='ios-star'
-                  style={styles.icon6}
-                ></IoniconsIcon>
+                  name="ios-star"
+                  style={styles.icon6}></IoniconsIcon>
               </View>
             </View>
           </View>
         </View>
-        <EntypoIcon name='user' style={styles.icon}></EntypoIcon>
+        <EntypoIcon name="user" style={styles.icon}></EntypoIcon>
       </View>
       <Text style={styles.loremIpsum2}>{text}</Text>
     </View>
@@ -89,12 +83,12 @@ const styles = StyleSheet.create({
     marginLeft: 11,
   },
   andrew: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 17,
   },
   may302019: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     opacity: 0.52,
     marginLeft: 14,
@@ -188,7 +182,7 @@ const styles = StyleSheet.create({
     marginLeft: 22,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: '#121212',
     fontSize: 15,
     opacity: 0.71,

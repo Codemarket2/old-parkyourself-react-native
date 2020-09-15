@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './src/reducers';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {persistStore, persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {};
 
@@ -11,7 +11,7 @@ const middleware = [thunk];
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

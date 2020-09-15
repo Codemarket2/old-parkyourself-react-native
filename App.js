@@ -5,16 +5,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import MainStack from './src/components/MainStack';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './store';
-// import CreateSpaceOwnerProfile from './src/screens/SpaceOwner/CreateSpaceOwnerProfile';
-// import MyListings from './src/screens/SpaceOwner/MyListings';
-// import AddListingLocation from './src/screens/SpaceOwner/AddListingLocation';
-// import AddListingSpaceDetails from './src/screens/SpaceOwner/AddListingSpaceDetails';
-// import CustomSchedule from './src/screens/SpaceOwner/CustomSchedule';
-// import SpaceAvailable from './src/screens/SpaceOwner/SpaceAvailable';
-// import SetPricingType from './src/screens/SpaceOwner/SetPricingType';
-// import FlatBillingType from './src/screens/SpaceOwner/FlatBillingType';
-// import VariableBillingType from './src/screens/SpaceOwner/VariableBillingType';
-// import SaveSpaceDetails from './src/screens/SpaceOwner/SaveSpaceDetails';
 
 const App = () => {
   return (
@@ -22,16 +12,6 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <MainStack />
-          {/* <CreateSpaceOwnerProfile /> */}
-          {/* <MyListings /> */}
-          {/* <AddListingLocation /> */}
-          {/* <AddListingSpaceDetails /> */}
-          {/* <CustomSchedule /> */}
-          {/* <SpaceAvailable /> */}
-          {/* <SetPricingType /> */}
-          {/* <FlatBillingType /> */}
-          {/* <VariableBillingType /> */}
-          {/* <SaveSpaceDetails /> */}
         </NavigationContainer>
       </PersistGate>
     </Provider>

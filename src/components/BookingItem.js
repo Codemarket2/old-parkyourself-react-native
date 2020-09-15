@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import MaterialButtonPrimary from './MaterialButtonPrimary';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -14,9 +14,8 @@ export default function BookingItem() {
           <View style={styles.rect4}>
             <Image
               source={require('../assets/images/cars.jpg')}
-              resizeMode='stretch'
-              style={styles.image}
-            ></Image>
+              resizeMode="stretch"
+              style={styles.image}></Image>
           </View>
           <View style={styles.loremIpsumRowColumn}>
             <View style={styles.loremIpsumRow}>
@@ -38,9 +37,8 @@ export default function BookingItem() {
           <View style={styles.button}>
             <View style={styles.iconRow}>
               <FontAwesomeIcon
-                name='cc-visa'
-                style={styles.icon}
-              ></FontAwesomeIcon>
+                name="cc-visa"
+                style={styles.icon}></FontAwesomeIcon>
               <Text style={styles.visa6094320}>VISA *6094 | $3.20</Text>
             </View>
           </View>
@@ -49,30 +47,28 @@ export default function BookingItem() {
           </TouchableOpacity>
           <View style={styles.rect8}>
             <TouchableOpacity style={styles.icon2Row} onPress={() => {}}>
-              <IoniconsIcon name='ios-star' style={styles.icon2}></IoniconsIcon>
-              <IoniconsIcon name='ios-star' style={styles.icon3}></IoniconsIcon>
-              <IoniconsIcon name='ios-star' style={styles.icon4}></IoniconsIcon>
-              <IoniconsIcon name='ios-star' style={styles.icon5}></IoniconsIcon>
+              <IoniconsIcon name="ios-star" style={styles.icon2}></IoniconsIcon>
+              <IoniconsIcon name="ios-star" style={styles.icon3}></IoniconsIcon>
+              <IoniconsIcon name="ios-star" style={styles.icon4}></IoniconsIcon>
+              <IoniconsIcon name="ios-star" style={styles.icon5}></IoniconsIcon>
               <Text style={styles.loremIpsum3}>123</Text>
-              <SimpleLineIcon name='arrow-right' size={9} />
+              <SimpleLineIcon name="arrow-right" size={9} />
             </TouchableOpacity>
           </View>
         </View>
       </View>
       <View style={styles.materialButtonPrimary2Row}>
         <MaterialButtonPrimary
-          caption='EARLY CHECK-IN'
-          style={styles.materialButtonPrimary2}
-        ></MaterialButtonPrimary>
+          caption="EARLY CHECK-IN"
+          style={styles.materialButtonPrimary2}></MaterialButtonPrimary>
         <TouchableOpacity style={styles.rect9}>
           <Text style={styles.cancelBooking}>CANCEL BOOKING</Text>
         </TouchableOpacity>
         <View style={styles.rect10Stack}>
           <View style={styles.rect10}></View>
           <MaterialCommunityIconsIcon
-            name='qrcode'
-            style={styles.icon6}
-          ></MaterialCommunityIconsIcon>
+            name="qrcode"
+            style={styles.icon6}></MaterialCommunityIconsIcon>
         </View>
       </View>
     </View>
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   loremIpsum: {
-    fontFamily: 'roboto-700',
+    // fontFamily: 'roboto-700',
     color: '#121212',
     fontSize: 15,
     marginTop: 1,
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rebook: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 10,
     // marginTop: 5,
@@ -139,7 +135,7 @@ const styles = StyleSheet.create({
     marginLeft: 1,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     marginTop: 8,
@@ -170,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cancelBooking: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(39,170,225,1)',
     fontSize: 12,
     // marginTop: 11,
@@ -233,7 +229,7 @@ const styles = StyleSheet.create({
     width: 26,
   },
   visa6094320: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 10,
     marginLeft: 10,
@@ -248,7 +244,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   moreDetails: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 10,
     textDecorationLine: 'underline',
@@ -292,7 +288,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   loremIpsum3: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(114,113,113,1)',
     fontSize: 10,
     marginLeft: 9,

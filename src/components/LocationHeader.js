@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 
 export default function LocationHeader() {
@@ -9,35 +9,30 @@ export default function LocationHeader() {
       <View style={styles.rectStack}>
         <View style={styles.rect}>
           <View style={styles.icon1Row}>
-            <IoniconsIcon name='ios-star' style={styles.icon1}></IoniconsIcon>
-            <IoniconsIcon name='ios-star' style={styles.icon2}></IoniconsIcon>
-            <IoniconsIcon name='ios-star' style={styles.icon3}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon1}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon2}></IoniconsIcon>
+            <IoniconsIcon name="ios-star" style={styles.icon3}></IoniconsIcon>
             <IoniconsIcon
-              name='ios-star-half'
-              style={styles.icon4}
-            ></IoniconsIcon>
+              name="ios-star-half"
+              style={styles.icon4}></IoniconsIcon>
             <Text style={styles.loremIpsum2}>656</Text>
           </View>
         </View>
-        <IoniconsIcon name='ios-star' style={styles.icon}></IoniconsIcon>
+        <IoniconsIcon name="ios-star" style={styles.icon}></IoniconsIcon>
       </View>
       <Image
         source={require('../assets/images/parking.jpg')}
-        resizeMode='stretch'
-        style={styles.image}
-      ></Image>
+        resizeMode="stretch"
+        style={styles.image}></Image>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   loremIpsum: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 28,
-    // marginTop: 72,
-    // marginLeft: 18,
-    // marginRight: 17,
   },
   rect: {
     top: 0,
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   loremIpsum2: {
-    fontFamily: 'roboto-regular',
+    // fontFamily: 'roboto-regular',
     color: 'rgba(130,130,130,1)',
     marginLeft: 10,
     marginTop: 5,

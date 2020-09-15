@@ -143,40 +143,6 @@ function SignIn({navigation}) {
           ParkYouself Terms &amp; Conditions and Privacy Policy
         </Text>
       </View>
-
-      {/* user data modal */}
-      {/* <Modal animationType="slide" transparent={true} visible={visible}>
-        <View style={styles.centeredView}>
-          {user && (
-            <View style={styles.modalView}>
-              <Text style={styles.head}>User Details</Text>
-              <Text style={styles.modalText}>
-                Name : {user.user.name ? user.user.name : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Email : {user.user.email ? user.user.email : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Family Name : {user.user.familyName ? user.user.familyName : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Id : {user.user.id ? user.user.id : ''}
-              </Text>
-              <Text style={styles.modalText}>
-                Photo Url : {user.user.photo ? user.user.photo : ''}
-              </Text>
-
-              <TouchableOpacity
-                style={{...styles.openButton, backgroundColor: '#2196F3'}}
-                onPress={() => {
-                  setVisible(!visible);
-                }}>
-                <Text style={styles.textStyle}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      </Modal> */}
     </ScrollView>
   );
 }

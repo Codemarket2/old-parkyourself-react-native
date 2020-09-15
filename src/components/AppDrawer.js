@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
@@ -11,7 +11,7 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import Svg, { Ellipse } from 'react-native-svg';
+import Svg, {Ellipse} from 'react-native-svg';
 
 function AppDrawer(props) {
   return (
@@ -19,118 +19,103 @@ function AppDrawer(props) {
       <View style={styles.rect}>
         <Image
           source={require('../assets/images/headerlogo.jpg')}
-          resizeMode='contain'
-          style={styles.image}
-        ></Image>
+          resizeMode="contain"
+          style={styles.image}></Image>
         <TouchableOpacity style={styles.icon5StackStack}>
           <MaterialCommunityIconsIcon
-            name='chevron-right'
-            style={styles.icon5}
-          ></MaterialCommunityIconsIcon>
+            name="chevron-right"
+            style={styles.icon5}></MaterialCommunityIconsIcon>
           <View style={styles.rect3}>
             <Text style={styles.bookAParking}>Book a Parking</Text>
           </View>
           <MaterialCommunityIconsIcon
-            name='calendar-clock'
-            style={styles.icon11}
-          ></MaterialCommunityIconsIcon>
+            name="calendar-clock"
+            style={styles.icon11}></MaterialCommunityIconsIcon>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect4}>
           <View style={styles.icon12Row}>
-            <FontAwesomeIcon name='car' style={styles.icon12}></FontAwesomeIcon>
+            <FontAwesomeIcon name="car" style={styles.icon12}></FontAwesomeIcon>
             <Text style={styles.myBookings}>My Bookings</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon4}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon4}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect5}>
           <View style={styles.icon13Row}>
             <FontAwesomeIcon
-              name='credit-card'
-              style={styles.icon13}
-            ></FontAwesomeIcon>
+              name="credit-card"
+              style={styles.icon13}></FontAwesomeIcon>
             <Text style={styles.onGoingParkings}>On-Going Parkings</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon3}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon3}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect6}>
           <View style={styles.icon14Row}>
-            <FeatherIcon name='mail' style={styles.icon14}></FeatherIcon>
+            <FeatherIcon name="mail" style={styles.icon14}></FeatherIcon>
             <Text style={styles.messages}>Messages</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon8}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon8}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect7}>
           <View style={styles.icon15Row}>
             <MaterialCommunityIconsIcon
-              name='cash'
-              style={styles.icon15}
-            ></MaterialCommunityIconsIcon>
+              name="cash"
+              style={styles.icon15}></MaterialCommunityIconsIcon>
             <Text style={styles.rentYourSpace}>Rent your Space</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon7}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon7}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect8}>
           <View style={styles.icon16Row}>
             <MaterialCommunityIconsIcon
-              name='gift'
-              style={styles.icon16}
-            ></MaterialCommunityIconsIcon>
+              name="gift"
+              style={styles.icon16}></MaterialCommunityIconsIcon>
             <Text style={styles.sendAGift}>Send a Gift</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon6}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon6}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect9}>
           <View style={styles.icon17Row}>
-            <EntypoIcon name='add-user' style={styles.icon17}></EntypoIcon>
+            <EntypoIcon name="add-user" style={styles.icon17}></EntypoIcon>
             <Text style={styles.referAFriend}>Refer a Friend</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon2}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon2}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.rect10}>
           <View style={styles.icon18Row}>
             <FontAwesomeIcon
-              name='question-circle-o'
-              style={styles.icon18}
-            ></FontAwesomeIcon>
+              name="question-circle-o"
+              style={styles.icon18}></FontAwesomeIcon>
             <Text style={styles.faQs}>FAQ&#39;s</Text>
             <MaterialCommunityIconsIcon
-              name='chevron-right'
-              style={styles.icon9}
-            ></MaterialCommunityIconsIcon>
+              name="chevron-right"
+              style={styles.icon9}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
         <View style={styles.ellipseStackRow}>
           <View style={styles.ellipseStack}>
-            <Svg viewBox='0 0 43.54 42.25' style={styles.ellipse}>
+            <Svg viewBox="0 0 43.54 42.25" style={styles.ellipse}>
               <Ellipse
-                stroke='rgba(230, 230, 230,1)'
+                stroke="rgba(230, 230, 230,1)"
                 strokeWidth={0}
-                fill='rgba(85,111,152,1)'
+                fill="rgba(85,111,152,1)"
                 cx={22}
                 cy={21}
                 rx={22}
-                ry={21}
-              ></Ellipse>
+                ry={21}></Ellipse>
             </Svg>
-            <EntypoIcon name='user' style={styles.icon19}></EntypoIcon>
+            <EntypoIcon name="user" style={styles.icon19}></EntypoIcon>
           </View>
           <Text style={styles.mark}>Mark</Text>
         </View>
@@ -172,7 +157,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   bookAParking: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginTop: 18,
@@ -229,7 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   myBookings: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 18,
@@ -275,7 +260,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   onGoingParkings: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 16,
@@ -321,7 +306,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   messages: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 19,
@@ -367,7 +352,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   rentYourSpace: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 19,
@@ -413,7 +398,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   sendAGift: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 19,
@@ -459,7 +444,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   referAFriend: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 19,
@@ -505,7 +490,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   faQs: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
     marginLeft: 23,
@@ -547,7 +532,7 @@ const styles = StyleSheet.create({
     height: 44,
   },
   mark: {
-    fontFamily: 'roboto-500',
+    // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 18,
     textDecorationLine: 'underline',
