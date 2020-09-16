@@ -7,19 +7,26 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Dimensions,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import {addListingLocation} from '../../actions/listing';
 import {connect} from 'react-redux';
+import {Picker} from '@react-native-community/picker';
+import ImagePicker from 'react-native-image-picker';
+import RadioButton from '../../components/RadioButton';
 
 function AddListingLocation({navigation, addListingLocation}) {
-  const [listingType, setListingType] = useState(1);
-  const [propertyType, setPropertyType] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(1);
+
+  const [listingType, setListingType] = useState('Business');
+  const [propertyType, setPropertyType] = useState('Driveway');
   const [propertyName, setPropertyName] = useState('');
   const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
@@ -27,37 +34,144 @@ function AddListingLocation({navigation, addListingLocation}) {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [countryCodes, setCountryCodes] = useState([
+    {code: '+93', country: 'Afghanistan'},
+    {code: '+358', country: 'Aland Islands'},
+    {code: '+355', country: 'Albania'},
+    {code: '+213', country: 'Algeria'},
+    {code: '+54', country: 'Argentina'},
+    {code: '+61', country: 'Australia'},
+    {code: '+43', country: 'Austria'},
+    {code: '+973', country: 'Bahrain'},
+    {code: '+880', country: 'Bangladesh'},
+    {code: '+375', country: 'Belarus'},
+    {code: '+32', country: 'Belgium'},
+    {code: '+55', country: 'Brazil'},
+    {code: '+359', country: 'Bulgaria'},
+    {code: '+855', country: 'Cambodia'},
+    {code: '+1', country: 'Canada'},
+    {code: '+236', country: 'Central African Republic'},
+    {code: '+56', country: 'Chile'},
+    {code: '+86', country: 'China'},
+    {code: '+506', country: 'Costa Rica'},
+    {code: '+53', country: 'Cuba'},
+    {code: '+20', country: 'Egypt'},
+    {code: '+33', country: 'France'},
+    {code: '+49', country: 'Germany'},
+    {code: '+30', country: 'Greece'},
+    {code: '+852', country: 'Hong Kong'},
+    {code: '+91', country: 'India'},
+    {code: '+98', country: 'Iran'},
+    {code: '+964', country: 'Iraq'},
+    {code: '+39', country: 'Italy'},
+    {code: '+81', country: 'Japan'},
+    {code: '+60', country: 'Malaysia'},
+    {code: '+230', country: 'Mauritius'},
+    {code: '+95', country: 'Myanmar'},
+    {code: '+64', country: 'New Zealand'},
+    {code: '+92', country: 'Pakistan'},
+    {code: '+351', country: 'Portugal'},
+    {code: '+7', country: 'Russia'},
+    {code: '+966', country: 'Saudi Arabia'},
+    {code: '+65', country: 'Singapore'},
+    {code: '+27', country: 'South Africa'},
+    {code: '+34', country: 'Spain'},
+    {code: '+66', country: 'Thailand'},
+    {code: '+90', country: 'Turkey'},
+    {code: '+44', country: 'United Kingdom'},
+    {code: '+84', country: 'United States'},
+    {code: '+263', country: 'Zimbabwe'},
+  ]);
+  const [code, setCode] = useState(countryCodes[0].code);
   const [phone, setPhone] = useState('');
-  const [features, setFeatures] = useState([
+
+  const [marker, setMarker] = useState({
+    latitude: 37.78825,
+    longitude: -122.4324,
+  });
+
+  const [images, setImages] = useState([]);
+
+  const [featureList, setFeatureList] = useState([
     '24/7 access',
     'Car Wash',
+    'Covered',
+    'EY Charging',
+    'Fenced',
+    'Mobile Pass',
     'Paved',
+    'Security',
+    'Staff onsite',
+    'Tandem',
     'Unpaved',
+    'Valet',
   ]);
+  const [features, setFeatures] = useState([]);
+
+  const toggleFeatures = (feature) => {
+    if (features.includes(feature)) {
+      setFeatures(features.filter((item) => item != feature));
+    } else {
+      setFeatures([...features, feature]);
+    }
+  };
+
+  const options = {
+    title: 'Select Photo',
+    // customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+
+  const imagePickerHandler = () => {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+
+        setImages([...images, source]);
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      }
+    });
+  };
+
+  const backButtonHandler = () => {
+    if (activeIndex != 1) {
+      setActiveIndex(activeIndex - 1);
+    }
+  };
 
   const onSubmitHandler = () => {
     try {
-      if (
-        listingType &&
-        propertyType &&
-        propertyName &&
-        country &&
-        address &&
-        unitNum &&
-        city &&
-        state &&
-        postalCode &&
-        phone
-      ) {
-        let locationData = {
-          listingType:
-            listingType == 1
-              ? 'Business'
-              : listingType == 2
-              ? 'Residential'
-              : 'Others',
-          propertyName: propertyName,
-          listingAddress: {
+      if (activeIndex != 6) {
+        setActiveIndex(activeIndex + 1);
+      } else {
+        if (
+          listingType &&
+          propertyType &&
+          propertyName &&
+          country &&
+          address &&
+          unitNum &&
+          city &&
+          state &&
+          postalCode &&
+          phone
+        ) {
+          let locationData = {
+            listingType,
+            propertyName: propertyName,
             country,
             address,
             unitNum,
@@ -65,444 +179,561 @@ function AddListingLocation({navigation, addListingLocation}) {
             state,
             postalCode,
             phone,
-          },
-          propertyType:
-            propertyType == 1
-              ? 'Driveway'
-              : propertyType == 2
-              ? 'Residential Garage'
-              : propertyType == 3
-              ? 'Open Air Lot'
-              : 'Commercial Parking Structure',
-          features: features,
-        };
+            latlng: marker,
+            propertyType,
+            images,
+            features,
+          };
 
-        addListingLocation(locationData);
+          addListingLocation(locationData);
 
-        navigation.navigate('AddListingSpaceDetails');
-      } else {
-        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+          navigation.navigate('AddListingSpaceDetails');
+        } else {
+          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        }
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to add location data');
     }
   };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addAListing}>Add a Listing</Text>
       <Text style={styles.location}>Location</Text>
-      <Text style={styles.listingType}>Listing Type</Text>
-      <View style={styles.rect}>
-        <View style={styles.rect2Row}>
-          <TouchableOpacity
-            style={listingType == 1 ? styles.activeTab : styles.inactiveTab}
-            onPress={() => {
-              setListingType(1);
-            }}>
-            <Text
-              style={
-                listingType == 1 ? styles.activeText : styles.inactiveText
-              }>
-              Business
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={listingType == 2 ? styles.activeTab : styles.inactiveTab}
-            onPress={() => {
-              setListingType(2);
-            }}>
-            <Text
-              style={
-                listingType == 2 ? styles.activeText : styles.inactiveText
-              }>
-              Residential
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={listingType == 3 ? styles.activeTab : styles.inactiveTab}
-            onPress={() => {
-              setListingType(3);
-            }}>
-            <Text
-              style={
-                listingType == 3 ? styles.activeText : styles.inactiveText
-              }>
-              Others
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <TextInput
-        placeholder="Business/Property Name"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.textInput}
-        value={propertyName}
-        onChangeText={(input) => setPropertyName(input)}></TextInput>
-      <Text style={styles.listingAddress}>Listing Address</Text>
-      <TextInput
-        placeholder="Country"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={country}
-        onChangeText={(input) => setCountry(input)}></TextInput>
-      <TextInput
-        placeholder="Address"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={address}
-        onChangeText={(input) => setAddress(input)}></TextInput>
-      <TextInput
-        placeholder="Unit #"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={unitNum}
-        onChangeText={(input) => setUnitNum(input)}></TextInput>
-      <TextInput
-        placeholder="City/Town"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={city}
-        onChangeText={(input) => setCity(input)}></TextInput>
-      <TextInput
-        placeholder="State/Province"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={state}
-        onChangeText={(input) => setState(input)}></TextInput>
-      <TextInput
-        placeholder="Postal Code"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={postalCode}
-        onChangeText={(input) => setPostalCode(input)}></TextInput>
-      <TextInput
-        placeholder="Phone Number"
-        placeholderTextColor="rgba(182,182,182,1)"
-        style={styles.placeholder}
-        value={phone}
-        onChangeText={(input) => setPhone(input)}></TextInput>
-      <MapView
-        provider={MapView.PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        customMapStyle={[
-          {
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#f5f5f5',
-              },
-            ],
-          },
-          {
-            elementType: 'labels.icon',
-            stylers: [
-              {
-                visibility: 'off',
-              },
-            ],
-          },
-          {
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#616161',
-              },
-            ],
-          },
-          {
-            elementType: 'labels.text.stroke',
-            stylers: [
-              {
-                color: '#f5f5f5',
-              },
-            ],
-          },
-          {
-            featureType: 'administrative.land_parcel',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#bdbdbd',
-              },
-            ],
-          },
-          {
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#eeeeee',
-              },
-            ],
-          },
-          {
-            featureType: 'poi',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#757575',
-              },
-            ],
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#e5e5e5',
-              },
-            ],
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#9e9e9e',
-              },
-            ],
-          },
-          {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#ffffff',
-              },
-            ],
-          },
-          {
-            featureType: 'road.arterial',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#757575',
-              },
-            ],
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#dadada',
-              },
-            ],
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#616161',
-              },
-            ],
-          },
-          {
-            featureType: 'road.local',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#9e9e9e',
-              },
-            ],
-          },
-          {
-            featureType: 'transit.line',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#e5e5e5',
-              },
-            ],
-          },
-          {
-            featureType: 'transit.station',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#eeeeee',
-              },
-            ],
-          },
-          {
-            featureType: 'water',
-            elementType: 'geometry',
-            stylers: [
-              {
-                color: '#c9c9c9',
-              },
-            ],
-          },
-          {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [
-              {
-                color: '#9e9e9e',
-              },
-            ],
-          },
-        ]}
-        style={styles.mapView}></MapView>
-      <Text style={styles.propertyType}>Property Type</Text>
-      <View style={styles.rect5}>
-        <View style={styles.rect6Row}>
-          <TouchableOpacity
-            style={propertyType == 1 ? styles.activeBtn : styles.inactiveBtn}
-            onPress={() => {
-              setPropertyType(1);
-            }}>
-            <IoniconsIcon
-              name="ios-car"
-              style={
-                propertyType == 1 ? styles.activeIcon : styles.inactiveIcon
-              }></IoniconsIcon>
-            <Text
-              style={
-                propertyType == 1 ? styles.activeText : styles.inactiveText
-              }>
-              Driveway
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={propertyType == 2 ? styles.activeBtn : styles.inactiveBtn}
-            onPress={() => {
-              setPropertyType(2);
-            }}>
-            <MaterialCommunityIconsIcon
-              name="garage"
-              style={
-                propertyType == 2 ? styles.activeIcon : styles.inactiveIcon
-              }></MaterialCommunityIconsIcon>
-
-            <Text
-              style={
-                propertyType == 2 ? styles.activeText : styles.inactiveText
-              }>
-              Residential Garage
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.icon2StackRow}>
-          <TouchableOpacity
-            style={propertyType == 3 ? styles.activeBtn : styles.inactiveBtn}
-            onPress={() => {
-              setPropertyType(3);
-            }}>
-            <IoniconsIcon
-              name="ios-car"
-              style={
-                propertyType == 3 ? styles.activeIcon : styles.inactiveIcon
-              }></IoniconsIcon>
-
-            <Text
-              style={
-                propertyType == 3 ? styles.activeText : styles.inactiveText
-              }>
-              Open Air Lot
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={propertyType == 4 ? styles.activeBtn : styles.inactiveBtn}
-            onPress={() => {
-              setPropertyType(4);
-            }}>
-            <MaterialCommunityIconsIcon
-              name="garage"
-              style={
-                propertyType == 4 ? styles.activeIcon : styles.inactiveIcon
-              }></MaterialCommunityIconsIcon>
-            <Text
-              style={
-                propertyType == 4 ? styles.activeText : styles.inactiveText
-              }>
-              Commercial Parking Structure
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Text style={styles.loremIpsum2}>Add Images of this Listing</Text>
-      <View style={styles.rect10Stack}>
-        <View style={styles.rect10}>
-          <View style={styles.rect11Row}>
-            <TouchableOpacity style={styles.rect11}>
-              <EntypoIcon name="image" style={styles.icon4}></EntypoIcon>
-              <Text style={styles.streetView}>Street View</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.rect12}>
-              <EntypoIcon name="image" style={styles.icon5}></EntypoIcon>
-              <Text style={styles.loremIpsum3}>Parking Area Entrance</Text>
-            </TouchableOpacity>
+      {activeIndex == 1 && (
+        <>
+          <Text style={styles.listingType}>Listing Type</Text>
+          {/* <View style={styles.rect}>
+            <View style={styles.rect2Row}>
+              <TouchableOpacity
+                style={listingType == 1 ? styles.activeTab : styles.inactiveTab}
+                onPress={() => {
+                  setListingType(1);
+                }}>
+                <Text
+                  style={
+                    listingType == 1 ? styles.activeText : styles.inactiveText
+                  }>
+                  Business
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={listingType == 2 ? styles.activeTab : styles.inactiveTab}
+                onPress={() => {
+                  setListingType(2);
+                }}>
+                <Text
+                  style={
+                    listingType == 2 ? styles.activeText : styles.inactiveText
+                  }>
+                  Residential
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={listingType == 3 ? styles.activeTab : styles.inactiveTab}
+                onPress={() => {
+                  setListingType(3);
+                }}>
+                <Text
+                  style={
+                    listingType == 3 ? styles.activeText : styles.inactiveText
+                  }>
+                  Others
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View> */}
+          <Picker
+            selectedValue={listingType}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) => setListingType(itemValue)}>
+            <Picker.Item label="Business" value="Business" />
+            <Picker.Item label="Residential" value="Residential" />
+            <Picker.Item label="Others" value="Others" />
+          </Picker>
+          <TextInput
+            placeholder="Business/Property Name"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.textInput}
+            value={propertyName}
+            onChangeText={(input) => setPropertyName(input)}></TextInput>
+        </>
+      )}
+      {activeIndex == 2 && (
+        <>
+          <Text style={styles.listingAddress}>Listing Address</Text>
+          <TextInput
+            placeholder="Country"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={country}
+            onChangeText={(input) => setCountry(input)}></TextInput>
+          <TextInput
+            placeholder="Address"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={address}
+            onChangeText={(input) => setAddress(input)}></TextInput>
+          <TextInput
+            placeholder="Unit #"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={unitNum}
+            onChangeText={(input) => setUnitNum(input)}></TextInput>
+          <TextInput
+            placeholder="City/Town"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={city}
+            onChangeText={(input) => setCity(input)}></TextInput>
+          <TextInput
+            placeholder="State/Province"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={state}
+            onChangeText={(input) => setState(input)}></TextInput>
+          <TextInput
+            placeholder="Postal Code"
+            placeholderTextColor="rgba(182,182,182,1)"
+            style={styles.placeholder}
+            value={postalCode}
+            onChangeText={(input) => setPostalCode(input)}></TextInput>
+          <View style={styles.phone}>
+            <Picker
+              selectedValue={code}
+              style={{width: 120, marginTop: 20}}
+              onValueChange={(itemValue, itemIndex) => setCode(itemValue)}>
+              {countryCodes.map((item) => (
+                <Picker.Item
+                  key={item}
+                  label={`${item.code}  ${item.country}`}
+                  value={item.code}
+                />
+              ))}
+            </Picker>
+            <TextInput
+              placeholder="Phone Number"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={phone}
+              onChangeText={(input) => setPhone(input)}></TextInput>
           </View>
-        </View>
-        <View style={styles.rect13}>
-          <EntypoIcon name="image" style={styles.icon6}></EntypoIcon>
-          <Text style={styles.parkingSpaceStal}>Parking Space/Stal</Text>
-        </View>
+        </>
+      )}
+      {activeIndex == 3 && (
+        <>
+          <Text style={styles.listingAddress}>
+            Mark your location on the map
+          </Text>
+
+          <MapView
+            provider={MapView.PROVIDER_GOOGLE}
+            initialRegion={{
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            onPress={(event) => {
+              console.log(event.nativeEvent);
+              setMarker({
+                latitude: event.nativeEvent.coordinate.latitude,
+                longitude: event.nativeEvent.coordinate.longitude,
+              });
+            }}
+            customMapStyle={[
+              {
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#f5f5f5',
+                  },
+                ],
+              },
+              {
+                elementType: 'labels.icon',
+                stylers: [
+                  {
+                    visibility: 'off',
+                  },
+                ],
+              },
+              {
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#616161',
+                  },
+                ],
+              },
+              {
+                elementType: 'labels.text.stroke',
+                stylers: [
+                  {
+                    color: '#f5f5f5',
+                  },
+                ],
+              },
+              {
+                featureType: 'administrative.land_parcel',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#bdbdbd',
+                  },
+                ],
+              },
+              {
+                featureType: 'poi',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#eeeeee',
+                  },
+                ],
+              },
+              {
+                featureType: 'poi',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#757575',
+                  },
+                ],
+              },
+              {
+                featureType: 'poi.park',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#e5e5e5',
+                  },
+                ],
+              },
+              {
+                featureType: 'poi.park',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#9e9e9e',
+                  },
+                ],
+              },
+              {
+                featureType: 'road',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#ffffff',
+                  },
+                ],
+              },
+              {
+                featureType: 'road.arterial',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#757575',
+                  },
+                ],
+              },
+              {
+                featureType: 'road.highway',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#dadada',
+                  },
+                ],
+              },
+              {
+                featureType: 'road.highway',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#616161',
+                  },
+                ],
+              },
+              {
+                featureType: 'road.local',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#9e9e9e',
+                  },
+                ],
+              },
+              {
+                featureType: 'transit.line',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#e5e5e5',
+                  },
+                ],
+              },
+              {
+                featureType: 'transit.station',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#eeeeee',
+                  },
+                ],
+              },
+              {
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [
+                  {
+                    color: '#c9c9c9',
+                  },
+                ],
+              },
+              {
+                featureType: 'water',
+                elementType: 'labels.text.fill',
+                stylers: [
+                  {
+                    color: '#9e9e9e',
+                  },
+                ],
+              },
+            ]}
+            style={styles.mapView}>
+            <Marker coordinate={marker}></Marker>
+          </MapView>
+        </>
+      )}
+
+      {activeIndex == 4 && (
+        <>
+          <Text style={styles.propertyType}>Property Type</Text>
+          <Picker
+            selectedValue={propertyType}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) =>
+              setPropertyType(itemValue)
+            }>
+            <Picker.Item label="Driveway" value="Driveway" />
+            <Picker.Item
+              label="Residential Garage"
+              value="Residential Garage"
+            />
+            <Picker.Item label="Open Air Lot" value="Open Air Lot" />
+            <Picker.Item
+              label="Commercial Parking Structure"
+              value="Commercial Parking Structure"
+            />
+          </Picker>
+          {/* <View style={styles.rect5}>
+            <View style={styles.rect6Row}>
+              <TouchableOpacity
+                style={
+                  propertyType == 1 ? styles.activeBtn : styles.inactiveBtn
+                }
+                onPress={() => {
+                  setPropertyType(1);
+                }}>
+                <IoniconsIcon
+                  name="ios-car"
+                  style={
+                    propertyType == 1 ? styles.activeIcon : styles.inactiveIcon
+                  }></IoniconsIcon>
+                <Text
+                  style={
+                    propertyType == 1 ? styles.activeText : styles.inactiveText
+                  }>
+                  Driveway
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  propertyType == 2 ? styles.activeBtn : styles.inactiveBtn
+                }
+                onPress={() => {
+                  setPropertyType(2);
+                }}>
+                <MaterialCommunityIconsIcon
+                  name="garage"
+                  style={
+                    propertyType == 2 ? styles.activeIcon : styles.inactiveIcon
+                  }></MaterialCommunityIconsIcon>
+
+                <Text
+                  style={
+                    propertyType == 2 ? styles.activeText : styles.inactiveText
+                  }>
+                  Residential Garage
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.icon2StackRow}>
+              <TouchableOpacity
+                style={
+                  propertyType == 3 ? styles.activeBtn : styles.inactiveBtn
+                }
+                onPress={() => {
+                  setPropertyType(3);
+                }}>
+                <IoniconsIcon
+                  name="ios-car"
+                  style={
+                    propertyType == 3 ? styles.activeIcon : styles.inactiveIcon
+                  }></IoniconsIcon>
+
+                <Text
+                  style={
+                    propertyType == 3 ? styles.activeText : styles.inactiveText
+                  }>
+                  Open Air Lot
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  propertyType == 4 ? styles.activeBtn : styles.inactiveBtn
+                }
+                onPress={() => {
+                  setPropertyType(4);
+                }}>
+                <MaterialCommunityIconsIcon
+                  name="garage"
+                  style={
+                    propertyType == 4 ? styles.activeIcon : styles.inactiveIcon
+                  }></MaterialCommunityIconsIcon>
+                <Text
+                  style={
+                    propertyType == 4 ? styles.activeText : styles.inactiveText
+                  }>
+                  Commercial Parking Structure
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View> */}
+        </>
+      )}
+
+      {activeIndex == 5 && (
+        <>
+          <Text style={styles.loremIpsum2}>Add photos of this Listing</Text>
+          <TouchableOpacity
+            style={styles.addPhotoBtn}
+            onPress={imagePickerHandler}>
+            <Text style={styles.addPhotoBtnText}>Add Photos</Text>
+          </TouchableOpacity>
+
+          <View style={styles.imageList}>
+            {images.map((item) => (
+              <Image key={item.uri} source={item} style={styles.image} />
+            ))}
+          </View>
+
+          {/* <View style={styles.rect10Stack}>
+            <View style={styles.rect10}>
+              <View style={styles.rect11Row}>
+                <TouchableOpacity style={styles.rect11}>
+                  <EntypoIcon name="image" style={styles.icon4}></EntypoIcon>
+                  <Text style={styles.streetView}>Street View</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.rect12}>
+                  <EntypoIcon name="image" style={styles.icon5}></EntypoIcon>
+                  <Text style={styles.loremIpsum3}>Parking Area Entrance</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.rect13}>
+              <EntypoIcon name="image" style={styles.icon6}></EntypoIcon>
+              <Text style={styles.parkingSpaceStal}>Parking Space/Stal</Text>
+            </View>
+          </View> */}
+        </>
+      )}
+
+      {activeIndex == 6 && (
+        <>
+          <Text style={styles.listingFeatures}>Listing Features</Text>
+          <View style={styles.features}>
+            {featureList.map((item) => (
+              <View style={styles.feature} key={item}>
+                <Text style={styles.featureText}>{item}</Text>
+                <RadioButton
+                  checked={features.includes(item)}
+                  onPress={() => {
+                    toggleFeatures(item);
+                  }}
+                />
+              </View>
+            ))}
+          </View>
+          {/* <View style={styles.rect14}>
+            <View style={styles.rect15Row}>
+              <View style={styles.rect15}>
+                <Text style={styles.loremIpsum4}>24/7 access</Text>
+              </View>
+              <View style={styles.rect16}>
+                <Text style={styles.carWash}>Car Wash</Text>
+              </View>
+              <View style={styles.rect17}>
+                <Text style={styles.covered}>Covered</Text>
+              </View>
+            </View>
+            <View style={styles.loremIpsum5StackRow}>
+              <View style={styles.loremIpsum5Stack}>
+                <View style={styles.rect20}>
+                  <Text style={styles.eyCharging}>EY Charging</Text>
+                </View>
+              </View>
+              <View style={styles.rect19}>
+                <Text style={styles.fenced}>Fenced</Text>
+              </View>
+              <View style={styles.rect18}>
+                <Text style={styles.mobilePass}>Mobile Pass</Text>
+              </View>
+            </View>
+            <View style={styles.loremIpsum6StackRow}>
+              <View style={styles.loremIpsum6Stack}>
+                <View style={styles.rect23}>
+                  <Text style={styles.paved}>Paved</Text>
+                </View>
+              </View>
+              <View style={styles.rect22}>
+                <Text style={styles.security}>Security</Text>
+              </View>
+              <View style={styles.rect21}>
+                <Text style={styles.staffOnsite}>Staff onsite</Text>
+              </View>
+            </View>
+            <View style={styles.loremIpsum7StackRow}>
+              <View style={styles.loremIpsum7Stack}>
+                <View style={styles.rect26}>
+                  <Text style={styles.tandem}>Tandem</Text>
+                </View>
+              </View>
+              <View style={styles.rect25}>
+                <Text style={styles.unpaved}>Unpaved</Text>
+              </View>
+              <View style={styles.rect24}>
+                <Text style={styles.valet}>Valet</Text>
+              </View>
+            </View>
+          </View> */}
+        </>
+      )}
+
+      <View style={styles.btnRow}>
+        {activeIndex != 1 && (
+          <TouchableOpacity onPress={backButtonHandler}>
+            <Text style={styles.backBtnText}>Back</Text>
+          </TouchableOpacity>
+        )}
+
+        <MaterialButtonPrimary
+          onPress={onSubmitHandler}
+          caption="NEXT"
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
       </View>
-      <Text style={styles.listingFeatures}>Listing Features</Text>
-      <View style={styles.rect14}>
-        <View style={styles.rect15Row}>
-          <TouchableOpacity style={styles.rect15}>
-            <Text style={styles.loremIpsum4}>24/7 access</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect16}>
-            <Text style={styles.carWash}>Car Wash</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect17}>
-            <Text style={styles.covered}>Covered</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.loremIpsum5StackRow}>
-          <TouchableOpacity style={styles.loremIpsum5Stack}>
-            <View style={styles.rect20}>
-              <Text style={styles.eyCharging}>EY Charging</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect19}>
-            <Text style={styles.fenced}>Fenced</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect18}>
-            <Text style={styles.mobilePass}>Mobile Pass</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.loremIpsum6StackRow}>
-          <TouchableOpacity style={styles.loremIpsum6Stack}>
-            <View style={styles.rect23}>
-              <Text style={styles.paved}>Paved</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect22}>
-            <Text style={styles.security}>Security</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect21}>
-            <Text style={styles.staffOnsite}>Staff onsite</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.loremIpsum7StackRow}>
-          <TouchableOpacity style={styles.loremIpsum7Stack}>
-            <View style={styles.rect26}>
-              <Text style={styles.tandem}>Tandem</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect25}>
-            <Text style={styles.unpaved}>Unpaved</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.rect24}>
-            <Text style={styles.valet}>Valet</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <MaterialButtonPrimary
-        onPress={onSubmitHandler}
-        caption="NEXT"
-        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -512,6 +743,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    minHeight: Dimensions.get('window').height,
   },
   addAListing: {
     // fontFamily: 'roboto-500',
@@ -524,6 +756,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 17,
     // marginLeft: 23,
+  },
+  picker: {
+    width: '100%',
+    marginVertical: 10,
   },
   listingType: {
     // fontFamily: 'roboto-500',
@@ -641,6 +877,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#d6d6d6',
     borderBottomWidth: 1,
     // marginLeft: 23,
+  },
+  phone: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   mapView: {
     height: 290,
@@ -792,6 +1032,31 @@ const styles = StyleSheet.create({
     marginTop: 31,
     // marginLeft: 19,
   },
+  addPhotoBtn: {
+    borderColor: '#0b4094',
+    borderWidth: 2,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    elevation: 6,
+    width: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  addPhotoBtnText: {
+    color: '#0b4094',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  imageList: {},
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginVertical: 10,
+  },
   rect10: {
     top: 0,
     left: 0,
@@ -893,8 +1158,21 @@ const styles = StyleSheet.create({
     // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 16,
-    marginTop: 50,
+    marginVertical: 20,
     // marginLeft: 20,
+  },
+  features: {},
+  feature: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d6d6d6',
+    paddingVertical: 5,
+  },
+  featureText: {
+    fontSize: 18,
   },
   rect14: {
     width: 340,
@@ -1152,6 +1430,15 @@ const styles = StyleSheet.create({
     marginTop: 11,
     marginLeft: 1,
     marginRight: 1,
+  },
+  btnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  backBtnText: {
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   materialButtonPrimary: {
     width: 100,

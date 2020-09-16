@@ -16,41 +16,56 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MapMarker from '../components/MapMarker';
 import CardListItem from '../components/CardListItem';
 import FindParkingForm from '../components/FindParkingForm';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-function FindParking({navigation}) {
+function FindParking({navigation, listings}) {
   //dummy locations
-  const [markers, setMarkers] = useState([
-    {
-      id: '1',
-      price: '$3.20',
-      latlng: {latitude: 37.78825, longitude: -122.4324},
-      location: '906 Peg Shop St.Franklyn, NY',
-    },
-    {
-      id: '2',
-      price: '$2.90',
-      latlng: {latitude: 37.795, longitude: -122.4424},
-      location: '88C Martin Road St.Franklyn, NY',
-    },
-    {
-      id: '3',
-      price: 'FREE',
-      latlng: {latitude: 37.78925, longitude: -122.469},
-      location: '906 Amsterdam Avenue, NY',
-    },
-    {
-      id: '4',
-      price: '$1.30',
-      latlng: {latitude: 37.765, longitude: -122.4614},
-      location: '711-2880 Nulla St. Mankato Mississippi',
-    },
-    {
-      id: '5',
-      price: '$0.90',
-      latlng: {latitude: 37.772, longitude: -122.4214},
-      location: '3279 Viverra. Avenue Latrobe DE',
-    },
-  ]);
+
+  // const [markers, setMarkers] = useState([
+  //   {
+  //     id: '1',
+  //     price: '$3.20',
+  //     latlng: {latitude: 37.78825, longitude: -122.4324},
+  //     location: '906 Peg Shop St.Franklyn, NY',
+  //   },
+  //   {
+  //     id: '2',
+  //     price: '$2.90',
+  //     latlng: {latitude: 37.795, longitude: -122.4424},
+  //     location: '88C Martin Road St.Franklyn, NY',
+  //   },
+  //   {
+  //     id: '3',
+  //     price: 'FREE',
+  //     latlng: {latitude: 37.78925, longitude: -122.469},
+  //     location: '906 Amsterdam Avenue, NY',
+  //   },
+  //   {
+  //     id: '4',
+  //     price: '$1.30',
+  //     latlng: {latitude: 37.765, longitude: -122.4614},
+  //     location: '711-2880 Nulla St. Mankato Mississippi',
+  //   },
+  //   {
+  //     id: '5',
+  //     price: '$0.90',
+  //     latlng: {latitude: 37.772, longitude: -122.4214},
+  //     location: '3279 Viverra. Avenue Latrobe DE',
+  //   },
+  // ]);
+
+  const [markers, setMarkers] = useState(
+    listings.map((index, item) => ({
+      id: item.id,
+      price:
+        item.pricingDetails.pricingType == 'Flat'
+          ? item.pricingDetails.pricingRates.dailyMax
+          : item.pricingDetails.pricingRates.perDayRate,
+      latlng: {latitude: 37.78 + index / 100, longitude: -122.43 + index / 100},
+      location: `${item.locationDetails.address}, ${item.locationDetails.city}, ${item.locationDetails.state}, ${item.locationDetails.postalCode}`,
+    })),
+  );
 
   const [showCardList, setShowCardList] = useState(false);
   const [cardList, setCardList] = useState(false);
@@ -263,22 +278,22 @@ function FindParking({navigation}) {
           ))}
       </MapView>
       <FindParkingForm setShowMarkers={setShowMarkers} />
-      {true && (
-        <View style={styles.controlBtns}>
-          <TouchableOpacity
-            style={styles.button2}
-            onPress={() => {
-              showSpecificCard(1);
-            }}>
-            <EntypoIcon name="location-pin" style={styles.icon5}></EntypoIcon>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={showCardListHandler}>
-            <FontAwesomeIcon
-              name="th-list"
-              style={styles.icon6}></FontAwesomeIcon>
-          </TouchableOpacity>
-        </View>
-      )}
+      {/* {true && ( */}
+      <View style={styles.controlBtns}>
+        <TouchableOpacity
+          style={styles.button2}
+          onPress={() => {
+            showSpecificCard(markers[0].id);
+          }}>
+          <EntypoIcon name="location-pin" style={styles.icon5}></EntypoIcon>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={showCardListHandler}>
+          <FontAwesomeIcon
+            name="th-list"
+            style={styles.icon6}></FontAwesomeIcon>
+        </TouchableOpacity>
+      </View>
+      {/* )} */}
 
       {showCardList && (
         <ScrollView
@@ -364,4 +379,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FindParking;
+FindParkingForm.propTypes = {
+  listings: PropTypes.array.isRequired,
+};
+
+const mapStateTopProps = (state) => ({
+  listings: state.user.listings,
+});
+
+export default connect(mapStateTopProps, null)(FindParking);

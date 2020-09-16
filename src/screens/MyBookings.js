@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import {connect} from 'react-redux';
 import BookingItem from '../components/BookingItem';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import PropTypes from 'prop-types';
 
-function MyBookings(props) {
+function MyBookings({bookings}) {
   const [activeIndex, setActiveIndex] = useState(1);
   return (
     <View style={styles.container}>
@@ -55,13 +63,22 @@ function MyBookings(props) {
       {/* <View style={styles.scrollAreaStack}> */}
       {/* <View style={styles.scrollArea}> */}
       {activeIndex == 1 ? (
-        <ScrollView
-          horizontal={false}
-          contentContainerStyle={styles.scrollArea_contentContainerStyle}>
-          <BookingItem />
-          <BookingItem />
-          <BookingItem />
-        </ScrollView>
+        // <ScrollView
+        //   horizontal={false}
+        //   contentContainerStyle={styles.scrollArea_contentContainerStyle}>
+        //   <BookingItem />
+        //   <BookingItem />
+        //   <BookingItem />
+        // </ScrollView>
+        <View style={styles.scrollArea_contentContainerStyle}>
+          <FlatList
+            data={bookings}
+            renderItem={({item}) => (
+              <BookingItem item={item} navigation={navigation} />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
       ) : (
         <View style={styles.noItemsFound}>
           <Text style={styles.notFoundText}>No items found</Text>
@@ -365,4 +382,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyBookings;
+MyBookings.propTypes = {
+  bookings: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  bookings: state.user.bookings,
+});
+
+export default connect(mapStateToProps, null)(MyBookings);

@@ -1,8 +1,13 @@
-const {TOGGLE_USER_TYPE, ADD_LISTING} = require('../actions/types');
+const {
+  TOGGLE_USER_TYPE,
+  ADD_LISTING,
+  ADD_BOOKING,
+} = require('../actions/types');
 
 const initialState = {
   isSpaceOwner: false,
   listings: [],
+  bookings: [],
 };
 
 export default function (state = initialState, action) {
@@ -15,11 +20,20 @@ export default function (state = initialState, action) {
         isSpaceOwner: !state.isSpaceOwner,
       };
     case ADD_LISTING: {
-      console.log('In user reducer add listing');
-      console.log(payload);
       return {
         ...state,
         listings: [...state.listings, payload],
+      };
+    }
+    case ADD_BOOKING: {
+      return {
+        ...state,
+        listings: state.listings.map((item) =>
+          payload.listingId == item.id
+            ? {...item, bookings: [...item.bookings, payload]}
+            : item,
+        ),
+        bookings: [...state.bookings, payload],
       };
     }
     default:

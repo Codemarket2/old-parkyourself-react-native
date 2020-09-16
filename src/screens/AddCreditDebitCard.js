@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   CheckBox,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
@@ -16,7 +17,26 @@ function AddCreditDebitCard({navigation}) {
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [name, setName] = useState('');
-  const [defaultValue, setDefaultValue] = useState(false);
+  const [isDefault, setIsDefault] = useState(false);
+
+  const onSubmitHandler = () => {
+    try {
+      if (cardNumber && expiry && name && defaultValue) {
+        let card = {
+          cardNumber,
+          expiry,
+          name,
+          isDefault,
+        };
+        navigation.goBack({card: card});
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something went wrong!', 'Please try again');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.loremIpsum}>Add Credit/Debit card</Text>
@@ -51,8 +71,9 @@ function AddCreditDebitCard({navigation}) {
       </View>
       <View style={styles.rect2Stack}>
         <CheckBox
+          onValueChange={() => setIsDefault(!isDefault)}
           style={styles.materialCheckbox1}
-          value={defaultValue}></CheckBox>
+          value={isDefault}></CheckBox>
         <View style={styles.rect2}>
           <Text style={styles.setAsDefault}>Set as Default</Text>
         </View>
@@ -62,6 +83,7 @@ function AddCreditDebitCard({navigation}) {
         placeholderTextColor="rgba(214,214,214,1)"
         style={styles.profileCategory}></TextInput>
       <MaterialButtonPrimary
+        onPress={onSubmitHandler}
         caption="ADD CARD"
         style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </ScrollView>

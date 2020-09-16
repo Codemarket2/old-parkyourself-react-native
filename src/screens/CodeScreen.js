@@ -3,29 +3,38 @@ import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
+import moment from 'moment';
 
-function CodeScreen({navigation}) {
+function CodeScreen({navigation, bookingData}) {
+  const {vehicle, startDate, endDate, location} = bookingData;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.parkingTicket}>Parking Ticket</Text>
       <View style={styles.rect}>
-        <Text style={styles.loremIpsum}>
-          906 Peg Shop St. Franklyn, NY 11209
-        </Text>
+        <Text style={styles.loremIpsum}>{location}</Text>
         <Text style={styles.loremIpsum2}>
-          Car: Toyota Corolla 2018 - License Plate: DA 93600
+          Car: {vehicle.model} {vehicle.year} - License Plate:{' '}
+          {vehicle.licensePlate}
         </Text>
         <View style={styles.rect2Row}>
           <View style={styles.rect2}>
             <Text style={styles.arriveAfter}>Arrive After</Text>
-            <Text style={styles.loremIpsum3}>9:00 PM</Text>
-            <Text style={styles.tueJuly1}>Tue, July 1</Text>
+            <Text style={styles.loremIpsum3}>
+              {moment(startDate).format('LT')}
+            </Text>
+            <Text style={styles.tueJuly1}>
+              {moment(startDate).format('MMM Do YY')}
+            </Text>
           </View>
           <FeatherIcon name="arrow-right" style={styles.icon}></FeatherIcon>
           <View style={styles.rect3}>
             <Text style={styles.exitBefore}>Exit Before</Text>
-            <Text style={styles.loremIpsum4}>6:00 PM</Text>
-            <Text style={styles.wedJuly2}>Wed, July 2</Text>
+            <Text style={styles.loremIpsum4}>
+              {moment(endDate).format('LT')}
+            </Text>
+            <Text style={styles.wedJuly2}>
+              {moment(endDate).format('MMM Do YY')}
+            </Text>
           </View>
         </View>
       </View>

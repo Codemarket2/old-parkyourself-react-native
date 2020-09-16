@@ -1,16 +1,55 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 
 function AddVehicle({navigation}) {
+  const [licensePlate, setLicensePlate] = useState('');
+  const [type, setType] = useState('');
+  const [make, setMake] = useState('');
+  const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
+  const [size, setSize] = useState(1);
+  const [color, setColor] = useState('');
+
+  const onSubmitHandler = () => {
+    try {
+      if (licensePlate && type && make && model && year && size) {
+        let vehicle = {
+          licensePlate,
+          type,
+          make,
+          model,
+          year,
+          size:
+            size == 1
+              ? 'Motorcycle'
+              : size == 2
+              ? 'Compact'
+              : size == 3
+              ? 'Mid Sized'
+              : size == 4
+              ? 'Large'
+              : 'Oversized',
+          color,
+        };
+        navigation.goBack({vehicle: vehicle});
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went Wrong!', 'Please try again');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.addAVehicle}>Add a Vehicle</Text>
@@ -23,25 +62,114 @@ function AddVehicle({navigation}) {
       <TextInput
         placeholder="License Plate"
         placeholderTextColor="rgba(214,214,214,1)"
+        value={licensePlate}
+        onChangeText={(input) => setLicensePlate(input)}
         style={styles.licensePlate}></TextInput>
-      <TouchableOpacity style={styles.button2}>
-        <Text style={styles.vehicleType}>Vehicle Type</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button3}>
-        <Text style={styles.make}>Make</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button4}>
-        <Text style={styles.model}>Model</Text>
-      </TouchableOpacity>
+      <View style={styles.button2}>
+        <TextInput
+          style={styles.vehicleType}
+          placeholder="Vehicle Type"
+          value={type}
+          onChangeText={(input) => setType(input)}></TextInput>
+      </View>
+      <View style={styles.button3}>
+        <TextInput
+          style={styles.make}
+          placeholder="Make"
+          value={make}
+          onChangeText={(input) => setMake(input)}></TextInput>
+      </View>
+      <View style={styles.button4}>
+        <TextInput
+          style={styles.model}
+          placeholder="Model"
+          value={model}
+          onChangeText={(input) => setModel(input)}></TextInput>
+      </View>
       <TextInput
         placeholder="Year"
         placeholderTextColor="rgba(214,214,214,1)"
-        style={styles.placeholder}></TextInput>
+        style={styles.placeholder}
+        value={year}
+        onChangeText={(input) => setYear(input)}></TextInput>
       <View style={styles.vehicleSizeRow}>
         <Text style={styles.vehicleSize}>Vehicle Size</Text>
-        <Text style={styles.loremIpsum}>Vehicle size description</Text>
+        <TouchableOpacity onPress={() => setVisible(true)}>
+          <Text style={styles.loremIpsum}>Vehicle size description</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.rectStack}>
+      <Modal visible={visible}>
+        <VehicleSizesModal onPress={() => setVisible(false)} />
+      </Modal>
+      <View style={styles.rect6Stack}>
+        <View style={styles.rect6}>
+          <View style={styles.motorcycle1StackStackRow}>
+            <TouchableOpacity
+              style={size == 1 ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setSize(1)}>
+              <FontAwesomeIcon
+                name="motorcycle"
+                style={
+                  size == 1 ? styles.activeIcon : styles.inactiveIcon
+                }></FontAwesomeIcon>
+              <Text style={size == 1 ? styles.activeText : styles.inactiveText}>
+                Motorcycle
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={size == 2 ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setSize(2)}>
+              <MaterialCommunityIconsIcon
+                name="car-sports"
+                style={
+                  size == 2 ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={size == 2 ? styles.activeText : styles.inactiveText}>
+                Compact
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={size == 3 ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setSize(3)}>
+              <MaterialCommunityIconsIcon
+                name="car-side"
+                style={
+                  size == 3 ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={size == 3 ? styles.activeText : styles.inactiveText}>
+                Mid Sized
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.oversized1StackStack}>
+            <TouchableOpacity
+              style={size == 4 ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setSize(4)}>
+              <MaterialCommunityIconsIcon
+                name="car-estate"
+                style={
+                  size == 4 ? styles.activeIcon : styles.inactiveIcon
+                }></MaterialCommunityIconsIcon>
+              <Text style={size == 4 ? styles.activeText : styles.inactiveText}>
+                Large
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={size == 5 ? styles.activeBtn : styles.inactiveBtn}
+              onPress={() => setSize(5)}>
+              <FontAwesomeIcon
+                name="truck"
+                style={
+                  size == 5 ? styles.activeIcon : styles.inactiveIcon
+                }></FontAwesomeIcon>
+              <Text style={size == 5 ? styles.activeText : styles.inactiveText}>
+                Oversized
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+      {/* <View style={styles.rectStack}>
         <View style={styles.rect}>
           <View style={styles.button5Row}>
             <TouchableOpacity style={styles.button5}>
@@ -82,12 +210,15 @@ function AddVehicle({navigation}) {
             <Text style={styles.large}>Large</Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <TextInput
         placeholder="Color"
         placeholderTextColor="rgba(214,214,214,1)"
+        value={color}
+        onChangeText={(input) => setColor(input)}
         style={styles.placeholder2}></TextInput>
       <MaterialButtonPrimary
+        onPress={onSubmitHandler}
         caption="ADD VEHICLE"
         style={styles.materialButtonPrimary}></MaterialButtonPrimary>
     </View>
@@ -381,6 +512,66 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     marginTop: 26,
     marginLeft: 121,
+  },
+  rect6Stack: {
+    width: '100%',
+    // height: 201,
+    marginTop: 28,
+    // marginLeft: 25,
+  },
+  rect6: {
+    width: '100%',
+    // height: 201,
+    // position: 'absolute',
+  },
+  motorcycle1StackStackRow: {
+    height: 96,
+    flexDirection: 'row',
+  },
+  oversized1StackStack: {
+    width: 103,
+    height: 96,
+    marginTop: 25,
+    flexDirection: 'row',
+  },
+  activeBtn: {
+    width: 120,
+    height: 110,
+    backgroundColor: 'rgba(39,170,225,1)',
+    // marginLeft: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  activeText: {
+    // fontFamily: 'roboto-regular',
+    color: 'rgba(255,255,255,1)',
+    fontSize: 13,
+  },
+  activeIcon: {
+    color: 'rgba(255,255,255,1)',
+    fontSize: 58,
+    // height: 63,
+    // width: 58,
+  },
+  inactiveBtn: {
+    width: 120,
+    height: 110,
+    backgroundColor: 'rgba(39,170,225,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  inactiveText: {
+    // fontFamily: 'roboto-regular',
+    color: '#121212',
+    fontSize: 11,
+  },
+  inactiveIcon: {
+    color: 'rgba(39,170,225,1)',
+    fontSize: 60,
+    // height: 65,
+    // width: 49,
   },
 });
 

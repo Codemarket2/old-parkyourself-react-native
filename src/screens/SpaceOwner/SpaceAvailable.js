@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -19,6 +20,8 @@ import {TextInput} from 'react-native-gesture-handler';
 import {addListingSpaceAvailable} from '../../actions/listing';
 
 function SpaceAvailable({navigation, addListingSpaceAvailable}) {
+  const [activeIndex, setActiveIndex] = useState(1);
+
   const [monday, setMonday] = useState(false);
   const [tuesday, setTuesday] = useState(false);
   const [wednesday, setWednesday] = useState(false);
@@ -28,7 +31,9 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
   const [sunday, setSunday] = useState(false);
   const [scheduleType, setScheduleType] = useState(1);
   const [noticeTime, setNoticeTime] = useState('1 Hour');
-  const [advanceBookingTime, setAdvanceBookingTime] = useState('');
+  const [advanceBookingTime, setAdvanceBookingTime] = useState('3 Hours');
+  const [minTime, setMinTime] = useState(1);
+  const [maxTime, setMaxTime] = useState(30);
   const [instantBooking, setInstantBooking] = useState(true);
 
   // date picker
@@ -68,44 +73,56 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
     showMode('time', item);
   };
 
+  const backButtonHandler = () => {
+    if (activeIndex != 1) {
+      setActiveIndex(activeIndex - 1);
+    }
+  };
+
   const onSubmitHandler = () => {
     try {
-      if (
-        (monday ||
-          tuesday ||
-          wednesday ||
-          thursday ||
-          friday ||
-          saturday ||
-          sunday) &&
-        scheduleType &&
-        noticeTime &&
-        advanceBookingTime &&
-        instantBooking
-      ) {
-        let spaceAvailableData = {
-          activeDays: {
-            monday: monday,
-            tuesday: tuesday,
-            wednesday: wednesday,
-            thursday: thursday,
-            friday: friday,
-            saturday: saturday,
-            sunday: sunday,
-          },
-          scheduleType: scheduleType == 1 ? 'daily' : 'custom',
-          startDate: startDate,
-          endDate: endDate,
-          noticeTime,
-          advanceBookingTime,
-          bookingProcessType: instantBooking
-            ? 'Instant Booking'
-            : 'Approval is Required',
-        };
-        addListingSpaceAvailable(spaceAvailableData);
-        navigation.navigate('SetPricingType');
+      if (activeIndex != 6) {
+        setActiveIndex(activeIndex + 1);
       } else {
-        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        if (
+          (monday ||
+            tuesday ||
+            wednesday ||
+            thursday ||
+            friday ||
+            saturday ||
+            sunday) &&
+          scheduleType &&
+          noticeTime &&
+          minTime &&
+          maxTime &&
+          advanceBookingTime &&
+          instantBooking
+        ) {
+          let spaceAvailableData = {
+            activeDays: {
+              monday: monday,
+              tuesday: tuesday,
+              wednesday: wednesday,
+              thursday: thursday,
+              friday: friday,
+              saturday: saturday,
+              sunday: sunday,
+            },
+            scheduleType: scheduleType == 1 ? 'daily' : 'custom',
+            startDate: startDate,
+            endDate: endDate,
+            noticeTime,
+            advanceBookingTime,
+            bookingProcessType: instantBooking
+              ? 'Instant Booking'
+              : 'Approval is Required',
+          };
+          addListingSpaceAvailable(spaceAvailableData);
+          navigation.navigate('SetPricingType');
+        } else {
+          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        }
       }
     } catch (error) {
       Alert.alert(
@@ -118,235 +135,293 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.spaceAvailable}>Space Available</Text>
-      <Text style={styles.loremIpsum}>
-        What days can drivers park at your listing?
-      </Text>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Monday</Text>
-        <Switch
-          value={monday}
-          onValueChange={() => setMonday(!monday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Tuesday</Text>
-        <Switch
-          value={tuesday}
-          onValueChange={() => setTuesday(!tuesday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Wednesday</Text>
-        <Switch
-          value={wednesday}
-          onValueChange={() => setWednesday(!wednesday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Thursday</Text>
-        <Switch
-          value={thursday}
-          onValueChange={() => setThursday(!thursday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Friday</Text>
-        <Switch
-          value={friday}
-          onValueChange={() => setFriday(!friday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Saturday</Text>
-        <Switch
-          value={saturday}
-          onValueChange={() => setSaturday(!saturday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
-      <View style={styles.rect}>
-        <Text style={styles.monday}>Sunday</Text>
-        <Switch
-          value={sunday}
-          onValueChange={() => setSunday(!sunday)}
-          trackColor={{
-            true: 'rgba(39,170,225,1)',
-            false: 'rgba(230, 230, 230,1)',
-          }}
-          style={styles.switch}></Switch>
-      </View>
 
-      <Text style={styles.text}>
-        Set a daily schedule or set it to 24 hours a day
-      </Text>
-      <View style={styles.materialRadio1Row}>
-        <RadioButton
-          checked={scheduleType == 1}
-          style={styles.materialRadio1}
-          onPress={() => setScheduleType(1)}></RadioButton>
-        <Text style={styles.loremIpsum2}>Set to a daily schedule</Text>
-      </View>
-      <View style={styles.button2Row}>
-        <TouchableOpacity
-          style={styles.button2}
-          onPress={() => showDatepicker('start')}>
-          <Text style={styles.startTime} numberOfLines={1}>
-            {startDate ? startDate.toString() : 'Start Time'}
+      {activeIndex == 1 && (
+        <>
+          <Text style={styles.loremIpsum}>
+            What days can drivers park at your listing?
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button3}
-          onPress={() => showDatepicker('end')}>
-          <Text style={styles.endTime} numberOfLines={1}>
-            {endDate ? endDate.toString() : 'End Time'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {showStart && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={startDate ? startDate : new Date()}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onStartDateChange}
-        />
-      )}
-      {showEnd && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={endDate ? endDate : new Date()}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onEndDateChange}
-        />
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Monday</Text>
+            <Switch
+              value={monday}
+              onValueChange={() => setMonday(!monday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Tuesday</Text>
+            <Switch
+              value={tuesday}
+              onValueChange={() => setTuesday(!tuesday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Wednesday</Text>
+            <Switch
+              value={wednesday}
+              onValueChange={() => setWednesday(!wednesday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Thursday</Text>
+            <Switch
+              value={thursday}
+              onValueChange={() => setThursday(!thursday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Friday</Text>
+            <Switch
+              value={friday}
+              onValueChange={() => setFriday(!friday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Saturday</Text>
+            <Switch
+              value={saturday}
+              onValueChange={() => setSaturday(!saturday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+          <View style={styles.rect}>
+            <Text style={styles.monday}>Sunday</Text>
+            <Switch
+              value={sunday}
+              onValueChange={() => setSunday(!sunday)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
+          </View>
+        </>
       )}
 
-      <View style={styles.materialRadio2Row}>
-        <RadioButton
-          checked={scheduleType == 2}
-          style={styles.materialRadio2}
-          onPress={() => setScheduleType(2)}></RadioButton>
-        <Text style={styles.loremIpsum3}>Set to 24 hours a day</Text>
-      </View>
-      <TouchableOpacity
-        style={styles.rect9}
-        onPress={() => {
-          navigation.navigate('CustomSchedule');
-        }}>
-        <Text style={styles.loremIpsum4}>SET A CUSTOM SCHEDULE</Text>
-      </TouchableOpacity>
-      <Text style={styles.loremIpsum5}>
-        How much notice do you need before a Guest arrives?
-      </Text>
-      <View style={styles.button}>
-        <TextInput
-          style={styles.hour}
-          value={noticeTime}
-          onChangeText={(input) => {
-            setNoticeTime(input);
-          }}></TextInput>
-      </View>
-      <Text style={styles.loremIpsum6}>
-        Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
-        arrival, but you might miss out last minute trips.
-      </Text>
-      <Text style={styles.loremIpsum7}>
-        How far in advance can guests book?
-      </Text>
-      <View style={styles.button4}>
-        <TextInput
-          style={styles.loremIpsum8}
-          value={advanceBookingTime}
-          onChangeText={(input) => {
-            setAdvanceBookingTime(input);
-          }}></TextInput>
-      </View>
-      <Text style={styles.loremIpsum9}>
-        Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
-        arrival, but you might miss out last minute trips.
-      </Text>
-      <Text style={styles.loremIpsum10}>How long can guests stay?</Text>
-      <View style={styles.rect10}>
-        <View style={styles.iconRow}>
-          <TouchableOpacity>
-            <EntypoIcon
-              name="circle-with-minus"
-              style={styles.icon}></EntypoIcon>
+      {activeIndex == 2 && (
+        <>
+          <Text style={styles.text}>
+            Set a daily schedule or set it to 24 hours a day
+          </Text>
+          <View style={styles.materialRadio1Row}>
+            <RadioButton
+              checked={scheduleType == 1}
+              style={styles.materialRadio1}
+              onPress={() => setScheduleType(1)}></RadioButton>
+            <Text style={styles.loremIpsum2}>Set to a daily schedule</Text>
+          </View>
+          <View style={styles.button2Row}>
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={() => showDatepicker('start')}>
+              <Text style={styles.startTime} numberOfLines={1}>
+                {startDate ? startDate.toString() : 'Start Time'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button3}
+              onPress={() => showDatepicker('end')}>
+              <Text style={styles.endTime} numberOfLines={1}>
+                {endDate ? endDate.toString() : 'End Time'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {showStart && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={startDate ? startDate : new Date()}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onStartDateChange}
+            />
+          )}
+          {showEnd && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={endDate ? endDate : new Date()}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onEndDateChange}
+            />
+          )}
+
+          <View style={styles.materialRadio2Row}>
+            <RadioButton
+              checked={scheduleType == 2}
+              style={styles.materialRadio2}
+              onPress={() => setScheduleType(2)}></RadioButton>
+            <Text style={styles.loremIpsum3}>Set to 24 hours a day</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.rect9}
+            onPress={() => {
+              navigation.navigate('CustomSchedule');
+            }}>
+            <Text style={styles.loremIpsum4}>SET A CUSTOM SCHEDULE</Text>
           </TouchableOpacity>
-          <Text style={styles.loremIpsum11}>1 hour Minimum</Text>
-          <TouchableOpacity>
-            <EntypoIcon
-              name="circle-with-plus"
-              style={styles.icon2}></EntypoIcon>
+        </>
+      )}
+
+      {activeIndex == 3 && (
+        <>
+          <Text style={styles.loremIpsum5}>
+            How much notice do you need before a Guest arrives?
+          </Text>
+          <View style={styles.button}>
+            <TextInput
+              style={styles.hour}
+              value={noticeTime}
+              onChangeText={(input) => {
+                setNoticeTime(input);
+              }}></TextInput>
+          </View>
+          <Text style={styles.loremIpsum6}>
+            Tip : At least 2 days&#39; notice can help you plan for a
+            guest&#39;s arrival, but you might miss out last minute trips.
+          </Text>
+        </>
+      )}
+
+      {activeIndex == 4 && (
+        <>
+          <Text style={styles.loremIpsum7}>
+            How far in advance can guests book?
+          </Text>
+          <View style={styles.button4}>
+            <TextInput
+              style={styles.loremIpsum8}
+              value={advanceBookingTime}
+              onChangeText={(input) => {
+                setAdvanceBookingTime(input);
+              }}></TextInput>
+          </View>
+          <Text style={styles.loremIpsum9}>
+            Tip : At least 2 days&#39; notice can help you plan for a
+            guest&#39;s arrival, but you might miss out last minute trips.
+          </Text>
+        </>
+      )}
+
+      {activeIndex == 5 && (
+        <>
+          <Text style={styles.loremIpsum10}>How long can guests stay?</Text>
+          <View style={styles.rect10}>
+            <View style={styles.iconRow}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (minTime != 1) {
+                    setMinTime(minTime - 1);
+                  }
+                }}>
+                <EntypoIcon
+                  name="circle-with-minus"
+                  style={styles.icon}></EntypoIcon>
+              </TouchableOpacity>
+              <Text style={styles.loremIpsum11}>
+                {minTime} {minTime == 1 ? 'Hour' : 'Hours'} Minimum
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setMinTime(minTime + 1);
+                }}>
+                <EntypoIcon
+                  name="circle-with-plus"
+                  style={styles.icon2}></EntypoIcon>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.rect11}>
+            <View style={styles.icon4Row}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (maxTime != 0) {
+                    setMaxTime(maxTime - 1);
+                  }
+                }}>
+                <EntypoIcon
+                  name="circle-with-minus"
+                  style={styles.icon4}></EntypoIcon>
+              </TouchableOpacity>
+              <Text style={styles.loremIpsum12}>
+                {maxTime} {maxTime <= 1 ? 'Day' : 'Days'} Maximum
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (maxTime != 30) {
+                    setMaxTime(maxTime + 1);
+                  }
+                }}>
+                <EntypoIcon
+                  name="circle-with-plus"
+                  style={styles.icon3}></EntypoIcon>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text style={styles.loremIpsum13}>
+            Tip : At least 2 days&#39; notice can help you plan for a
+            guest&#39;s arrival, but you might miss out last minute trips.
+          </Text>
+        </>
+      )}
+
+      {activeIndex == 6 && (
+        <>
+          <Text style={styles.loremIpsum14}>
+            Which booking process do you prefer?
+          </Text>
+          <View style={styles.icon5Row}>
+            <RadioButton
+              checked={instantBooking}
+              style={styles.materialRadio2}
+              onPress={() => setInstantBooking(true)}></RadioButton>
+            <Text style={styles.instantBooking}>Instant Booking</Text>
+          </View>
+          <View style={styles.icon6Row}>
+            <RadioButton
+              checked={!instantBooking}
+              style={styles.materialRadio2}
+              onPress={() => setInstantBooking(false)}></RadioButton>
+            <Text style={styles.approvalIsRequired}>Approval is required</Text>
+          </View>
+        </>
+      )}
+      <View style={styles.btnRow}>
+        {activeIndex != 1 && (
+          <TouchableOpacity onPress={backButtonHandler}>
+            <Text style={styles.backBtnText}>Back</Text>
           </TouchableOpacity>
-        </View>
+        )}
+        <MaterialButtonPrimary
+          onPress={onSubmitHandler}
+          caption="NEXT"
+          style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
       </View>
-      <View style={styles.rect11}>
-        <View style={styles.icon4Row}>
-          <TouchableOpacity>
-            <EntypoIcon
-              name="circle-with-minus"
-              style={styles.icon4}></EntypoIcon>
-          </TouchableOpacity>
-          <Text style={styles.loremIpsum12}>30 Days Maximum</Text>
-          <TouchableOpacity>
-            <EntypoIcon
-              name="circle-with-plus"
-              style={styles.icon3}></EntypoIcon>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Text style={styles.loremIpsum13}>
-        Tip : At least 2 days&#39; notice can help you plan for a guest&#39;s
-        arrival, but you might miss out last minute trips.
-      </Text>
-      <Text style={styles.loremIpsum14}>
-        Which booking process do you prefer?
-      </Text>
-      <View style={styles.icon5Row}>
-        <RadioButton
-          checked={instantBooking}
-          style={styles.materialRadio2}
-          onPress={() => setInstantBooking(true)}></RadioButton>
-        <Text style={styles.instantBooking}>Instant Booking</Text>
-      </View>
-      <View style={styles.icon6Row}>
-        <RadioButton
-          checked={!instantBooking}
-          style={styles.materialRadio2}
-          onPress={() => setInstantBooking(false)}></RadioButton>
-        <Text style={styles.approvalIsRequired}>Approval is required</Text>
-      </View>
-      <MaterialButtonPrimary
-        onPress={onSubmitHandler}
-        caption="NEXT"
-        style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -356,6 +431,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    minHeight: Dimensions.get('window').height,
   },
   spaceAvailable: {
     // fontFamily: 'roboto-500',
@@ -487,7 +563,7 @@ const styles = StyleSheet.create({
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
-    marginTop: 48,
+    marginTop: 30,
   },
   button: {
     width: '100%',
@@ -561,9 +637,11 @@ const styles = StyleSheet.create({
   },
   loremIpsum11: {
     // fontFamily: 'roboto-regular',
+    width: 120,
     color: '#121212',
     marginLeft: 20,
-    marginTop: 5,
+    // marginTop: 5,
+    textAlign: 'center',
   },
   icon2: {
     color: 'rgba(11,64,148,1)',
@@ -595,16 +673,18 @@ const styles = StyleSheet.create({
   },
   loremIpsum12: {
     // fontFamily: 'roboto-regular',
+    width: 120,
     color: '#121212',
-    marginLeft: 15,
-    marginTop: 4,
+    marginLeft: 20,
+    // marginTop: 5,
+    textAlign: 'center',
   },
   icon3: {
     color: 'rgba(11,64,148,1)',
     fontSize: 22,
     height: 24,
     width: 22,
-    marginLeft: 12,
+    marginLeft: 20,
   },
   icon4Row: {
     height: 24,
@@ -652,7 +732,7 @@ const styles = StyleSheet.create({
   },
   approvalIsRequired: {
     // fontFamily: 'roboto-regular',
-    color: 'rgba(182,182,182,1)',
+    color: '#0b4094',
     marginLeft: 12,
   },
   icon6Row: {
@@ -661,6 +741,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 28,
     marginRight: 195,
+  },
+  btnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  backBtnText: {
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   materialButtonPrimary1: {
     width: 100,

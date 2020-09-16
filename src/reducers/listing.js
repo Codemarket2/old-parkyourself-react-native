@@ -12,6 +12,7 @@ const initialState = {
   spaceDetails: {},
   spaceAvailable: {},
   pricingDetails: {},
+  bookings: [],
 };
 
 export default function (state = initialState, action) {

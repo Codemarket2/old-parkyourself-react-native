@@ -5,8 +5,10 @@ import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommun
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
+import moment from 'moment';
 
-export default function BookingItem() {
+export default function BookingItem({item, navigation}) {
+  const {location, card, startDate, endDate, listingId, price} = item;
   return (
     <View style={styles.bookingItem}>
       <View style={styles.rect3}>
@@ -19,15 +21,14 @@ export default function BookingItem() {
           </View>
           <View style={styles.loremIpsumRowColumn}>
             <View style={styles.loremIpsumRow}>
-              <Text style={styles.loremIpsum}>
-                906 Peg Shop St. Franklyn, NY, 11209
-              </Text>
+              <Text style={styles.loremIpsum}>{location}</Text>
               <View style={styles.rect5}>
                 <Text style={styles.rebook}>Rebook</Text>
               </View>
             </View>
             <Text style={styles.loremIpsum2}>
-              July 1 2019, 9:00pm to July 2 2019, 6:00am
+              {moment(startDate).format('lll')} to{' '}
+              {moment(endDate).format('lll')}
             </Text>
           </View>
         </View>
@@ -39,14 +40,28 @@ export default function BookingItem() {
               <FontAwesomeIcon
                 name="cc-visa"
                 style={styles.icon}></FontAwesomeIcon>
-              <Text style={styles.visa6094320}>VISA *6094 | $3.20</Text>
+              <Text style={styles.visa6094320}>
+                VISA *
+                {card.cardNumber.subString(
+                  cardNumber.length - 4,
+                  cardNumber.length,
+                )}{' '}
+                | {price}
+              </Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('MoreDetails', {id: listingId});
+            }}>
             <Text style={styles.moreDetails}>More Details</Text>
           </TouchableOpacity>
           <View style={styles.rect8}>
-            <TouchableOpacity style={styles.icon2Row} onPress={() => {}}>
+            <TouchableOpacity
+              style={styles.icon2Row}
+              onPress={() => {
+                navigation.navigate('Reviews');
+              }}>
               <IoniconsIcon name="ios-star" style={styles.icon2}></IoniconsIcon>
               <IoniconsIcon name="ios-star" style={styles.icon3}></IoniconsIcon>
               <IoniconsIcon name="ios-star" style={styles.icon4}></IoniconsIcon>

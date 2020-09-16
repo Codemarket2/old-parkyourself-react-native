@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 
-export default function LocationHeader() {
+export default function LocationHeader({location}) {
   return (
     <View>
-      <Text style={styles.loremIpsum}>906 Peg Shop St. Franklyn, NY 11209</Text>
+      <Text style={styles.loremIpsum}>{location}</Text>
       <View style={styles.rectStack}>
         <View style={styles.rect}>
           <View style={styles.icon1Row}>

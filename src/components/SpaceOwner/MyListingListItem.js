@@ -11,7 +11,7 @@ export default function MyListingListItem({item, navigation}) {
     postalCode,
   } = item.locationDetails.listingAddress;
   const viewDetailsHandler = () => {
-    navigation.navigate('DetailsScreen', {item: item});
+    navigation.navigate('DetailsScreen', {id: item.id});
   };
   return (
     <View style={styles.container}>
@@ -26,7 +26,9 @@ export default function MyListingListItem({item, navigation}) {
           <Text style={styles.location}>
             {address}, {city}, {state}, {postalCode}
           </Text>
-          <Text style={styles.bookings}>No Upcoming Bookings</Text>
+          <Text style={styles.bookings}>
+            {item.bookings.length} Upcoming Bookings
+          </Text>
         </View>
         <View style={styles.tag}>
           <Text style={styles.tagText}>Manager</Text>

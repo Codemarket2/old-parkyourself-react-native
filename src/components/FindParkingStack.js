@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {TouchableOpacity, Text} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import FindParking from '../screens/FindParking';
 import MoreDetails from '../screens/MoreDetails';
 import Reviews from '../screens/Reviews';
@@ -10,10 +10,12 @@ import HeaderLogo from './HeaderLogo';
 import MenuButton from './MenuButton';
 import Filter from './Filter';
 import PayNowScreen from '../screens/PayNowScreen';
+import AddVehicle from '../screens/AddVehicle';
+import AddCreditDebitCard from '../screens/AddCreditDebitCard';
 
 const Stack = createStackNavigator();
 
-export default function FindParkingStack({ navigation }) {
+export default function FindParkingStack({navigation}) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -22,12 +24,11 @@ export default function FindParkingStack({ navigation }) {
           elevation: 0,
           shadowOpacity: 0,
         },
-      }}
-    >
+      }}>
       <Stack.Screen
-        name='FindParkingScreen'
+        name="FindParkingScreen"
         component={FindParking}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           //   headerStyle: {
           //     // paddingHorizontal: 10,
           //   },
@@ -37,11 +38,13 @@ export default function FindParkingStack({ navigation }) {
           headerTitleAlign: 'center',
         })}
       />
-      <Stack.Screen name='PayNow' component={PayNowScreen} />
-      <Stack.Screen name='MoreDetails' component={MoreDetails} />
-      <Stack.Screen name='Reviews' component={Reviews} />
-      <Stack.Screen name='SuccessfullyBooked' component={SuccessfullyBooked} />
-      <Stack.Screen name='CodeScreen' component={CodeScreen} />
+      <Stack.Screen name="PayNow" component={PayNowScreen} />
+      <Stack.Screen name="AddVehicle" component={AddVehicle} />
+      <Stack.Screen name="AddCreditDebitCard" component={AddCreditDebitCard} />
+      <Stack.Screen name="MoreDetails" component={MoreDetails} />
+      <Stack.Screen name="Reviews" component={Reviews} />
+      <Stack.Screen name="SuccessfullyBooked" component={SuccessfullyBooked} />
+      <Stack.Screen name="CodeScreen" component={CodeScreen} />
     </Stack.Navigator>
   );
 }

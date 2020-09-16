@@ -13,7 +13,7 @@ import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function FindParkingForm({setShowMarkers}) {
+function FindParkingForm({setShowMarkers}) {
   const [activeIndex, setActiveIndex] = useState(0);
   //Dummy locations
   const [locations, setLocations] = useState([
@@ -26,6 +26,7 @@ export default function FindParkingForm({setShowMarkers}) {
     '5587 Nunc. Avenue Erie Rhode Island',
     '3279 Viverra. Avenue Latrobe DE',
   ]);
+  // const [locations,setLocations] = useState(listings);
   const [search, setSearch] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -441,3 +442,5 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+export default FindParkingForm;

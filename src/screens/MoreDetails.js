@@ -3,9 +3,11 @@ import {StyleSheet, ScrollView} from 'react-native';
 import MoreDetailsOne from '../components/MoreDetailsOne';
 import MoreDetailsTwo from '../components/MoreDetailsTwo';
 import MoreDetailsThree from '../components/MoreDetailsThree';
+import {connect} from 'react-redux';
 
-function MoreDetails({route}) {
-  const listingDetail = route.params.item;
+function MoreDetails({route, listings}) {
+  const id = route.params.id;
+  const listingDetail = listings.filter((item) => item.id == id)[0];
   const {locationDetails, spaceAvailable, spaceDetails} = listingDetail;
   const {startDate, endDate} = spaceAvailable;
   return (
@@ -33,4 +35,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MoreDetails;
+const mapStateToProps = (state) => ({
+  listings: state.user.listings,
+});
+
+export default connect(mapStateToProps)(MoreDetails);

@@ -8,6 +8,7 @@ import {
   ScrollView,
   Modal,
   Alert,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
@@ -18,9 +19,12 @@ import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import VehicleSizesModal from '../../components/SpaceOwner/VehicleSizesModal';
 import {addListingSpaceDetails} from '../../actions/listing';
 import {connect} from 'react-redux';
+import {Picker} from '@react-native-community/picker';
 
 function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
-  const [parkingSpaceType, setParkingSpaceType] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(1);
+
+  const [parkingSpaceType, setParkingSpaceType] = useState('Tandem');
   const [qtyOfSpaces, setQtyOfSpaces] = useState('');
   const [vehicleHeightLimit, setVehicleHeightLimit] = useState('');
   const [sameSizeSpaces, setSameSizeSpaces] = useState(false);
@@ -35,42 +39,92 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
   const [midsizedSpaces, setMidsizedSpaces] = useState('');
   const [largeSpaces, setLargeSpaces] = useState('');
   const [oversizedSpaces, setOversizedSpaces] = useState('');
+
+  const [isLabelled, setIsLabelled] = useState(true);
+  const [spaceLabels, setSpaceLabels] = useState([]);
+
+  const setParkingSpaceInputs = (qty) => {
+    var num = parseInt(qty);
+    let arr = [];
+    for (let i = 0; i < num; i++) {
+      arr.push({id: num + 1, label: '', largestSize: ''});
+    }
+    setSpaceLabels(arr);
+  };
+
+  const setLabelById = (idx, label) => {
+    setSpaceLabels(
+      spaceLabels.map((item, index) =>
+        index == idx ? {...item, label: label} : {...item},
+      ),
+    );
+    console.log(spaceLabels);
+  };
+
+  const setLargestSizeById = (idx, size) => {
+    setSpaceLabels(
+      spaceLabels.map((item, index) =>
+        index == idx ? {...item, largestSize: size} : {...item},
+      ),
+    );
+    console.log(spaceLabels);
+  };
+
   const [aboutSpace, setAboutSpace] = useState('');
   const [accessInstructions, setAccessInstructions] = useState('');
 
+  const backButtonHandler = () => {
+    if (activeIndex != 1) {
+      setActiveIndex(activeIndex - 1);
+    }
+  };
+
   const onSubmitHandler = () => {
     try {
-      if (
-        parkingSpaceType &&
-        qtyOfSpaces &&
-        (motorcycle || compact || midSized || large || oversized) &&
-        aboutSpace &&
-        accessInstructions
-      ) {
-        let spaceDetails = {
-          spaceType: parkingSpaceType == 1 ? 'Tandem' : 'SideBySide',
-          qtyOfSpaces,
-          sameSizeSpaces,
-          vehicleHeightLimit,
-          vehicleSizes: {
-            motorcycle: motorcycle,
-            compact: compact,
-            midSized: midSized,
-            large: large,
-            oversized: oversized,
-          },
-          motorcycleSpaces,
-          compactSpaces,
-          midsizedSpaces,
-          largeSpaces,
-          oversizedSpaces,
-          aboutSpace,
-          accessInstructions,
-        };
-        addListingSpaceDetails(spaceDetails);
-        navigation.navigate('SpaceAvailable');
+      if (activeIndex != 5) {
+        setActiveIndex(activeIndex + 1);
       } else {
-        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        if (
+          parkingSpaceType &&
+          qtyOfSpaces &&
+          (motorcycle || compact || midSized || large || oversized) &&
+          ((motorcycle && motorcycleSpaces) ||
+            (compact && compactSpaces) ||
+            (midSized && midsizedSpaces) ||
+            (large && largeSpaces) ||
+            (oversized && oversizedSpaces)) &&
+          isLabelled &&
+          spaceLabels.length > 0 &&
+          aboutSpace &&
+          accessInstructions
+        ) {
+          let spaceDetails = {
+            spaceType: parkingSpaceType,
+            qtyOfSpaces,
+            sameSizeSpaces,
+            vehicleHeightLimit,
+            vehicleSizes: {
+              motorcycle: motorcycle,
+              compact: compact,
+              midSized: midSized,
+              large: large,
+              oversized: oversized,
+            },
+            motorcycleSpaces,
+            compactSpaces,
+            midsizedSpaces,
+            largeSpaces,
+            oversizedSpaces,
+            isLabelled,
+            spaceLabels,
+            aboutSpace,
+            accessInstructions,
+          };
+          addListingSpaceDetails(spaceDetails);
+          navigation.navigate('SpaceAvailable');
+        } else {
+          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        }
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to add space details');
@@ -81,8 +135,19 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.addAListing1}>Add a Listing</Text>
       <Text style={styles.spaceDetails}>Space Details</Text>
-      <Text style={styles.parkingSpaceType}>Parking Space Type</Text>
-      <View style={styles.rect5}>
+      {activeIndex == 1 && (
+        <>
+          <Text style={styles.parkingSpaceType}>Parking Space Type</Text>
+          <Picker
+            selectedValue={parkingSpaceType}
+            style={styles.picker}
+            onValueChange={(itemValue, itemIndex) =>
+              setParkingSpaceType(itemValue)
+            }>
+            <Picker.Item label="Tandem" value="Tandem" />
+            <Picker.Item label="Side by Side" value="Side by Side" />
+          </Picker>
+          {/* <View style={styles.rect5}>
         <View style={styles.rect4Row}>
           <TouchableOpacity
             style={
@@ -123,272 +188,310 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <TextInput
-        placeholder="Total Quantity of Parking Spaces"
-        placeholderTextColor="rgba(182,182,182,1)"
-        value={qtyOfSpaces}
-        onChangeText={(input) => setQtyOfSpaces(input)}
-        style={styles.textInput}></TextInput>
-      <Text style={styles.loremIpsum}>
-        Are all parking spaces of same size?
-      </Text>
-      <View style={styles.materialRadioRow}>
-        <View style={styles.option}>
-          <RadioButton
-            checked={sameSizeSpaces}
-            style={styles.materialRadio}
-            onPress={() => setSameSizeSpaces(!sameSizeSpaces)}></RadioButton>
-          <Text style={styles.yes}>Yes</Text>
-        </View>
-        <View style={styles.option}>
-          <RadioButton
-            checked={!sameSizeSpaces}
-            style={styles.materialRadio1}
-            onPress={() => setSameSizeSpaces(!sameSizeSpaces)}></RadioButton>
-          <Text style={styles.loremIpsum2}>No, some are different</Text>
-        </View>
-      </View>
-      <TextInput
-        placeholder="Vehicle Height Limit (if applicable)"
-        placeholderTextColor="rgba(182,182,182,1)"
-        value={vehicleHeightLimit}
-        onChangeText={(input) => setVehicleHeightLimit(input)}
-        style={styles.textInput1}></TextInput>
-      <Text style={styles.vehicleSizes}>Vehicle Sizes</Text>
-      <Text style={styles.loremIpsum3}>
-        Select the largest vehicle size for your parking spaces (choose more
-        than one if you have different sized spaces)
-      </Text>
-      <View style={styles.rect6Stack}>
-        <View style={styles.rect6}>
-          <View style={styles.motorcycle1StackStackRow}>
-            <TouchableOpacity
-              style={motorcycle ? styles.activeBtn : styles.inactiveBtn}
-              onPress={() => setMotorcycle(!motorcycle)}>
-              <FontAwesomeIcon
-                name="motorcycle"
-                style={
-                  motorcycle ? styles.activeIcon : styles.inactiveIcon
-                }></FontAwesomeIcon>
-              <Text
-                style={motorcycle ? styles.activeText : styles.inactiveText}>
-                Motorcycle
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={compact ? styles.activeBtn : styles.inactiveBtn}
-              onPress={() => setCompact(!compact)}>
-              <MaterialCommunityIconsIcon
-                name="car-sports"
-                style={
-                  compact ? styles.activeIcon : styles.inactiveIcon
-                }></MaterialCommunityIconsIcon>
-              <Text style={compact ? styles.activeText : styles.inactiveText}>
-                Compact
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={midSized ? styles.activeBtn : styles.inactiveBtn}
-              onPress={() => setMidSized(!midSized)}>
-              <MaterialCommunityIconsIcon
-                name="car-side"
-                style={
-                  midSized ? styles.activeIcon : styles.inactiveIcon
-                }></MaterialCommunityIconsIcon>
-              <Text style={midSized ? styles.activeText : styles.inactiveText}>
-                Mid Sized
-              </Text>
-            </TouchableOpacity>
+      </View> */}
+          <TextInput
+            placeholder="Total Quantity of Parking Spaces"
+            placeholderTextColor="rgba(182,182,182,1)"
+            value={qtyOfSpaces}
+            keyboardType="number-pad"
+            onChangeText={(input) => {
+              if (input == '0') {
+                Alert.alert(
+                  "Total quantity of spaces can't be zero",
+                  'Please input again',
+                );
+              } else {
+                setQtyOfSpaces(input);
+                setParkingSpaceInputs(input);
+              }
+            }}
+            style={styles.textInput}></TextInput>
+          <Text style={styles.loremIpsum}>
+            Are all parking spaces of same size?
+          </Text>
+          <View style={styles.materialRadioRow}>
+            <View style={styles.option}>
+              <RadioButton
+                checked={sameSizeSpaces}
+                style={styles.materialRadio}
+                onPress={() =>
+                  setSameSizeSpaces(!sameSizeSpaces)
+                }></RadioButton>
+              <Text style={styles.yes}>Yes</Text>
+            </View>
+            <View style={styles.option}>
+              <RadioButton
+                checked={!sameSizeSpaces}
+                style={styles.materialRadio1}
+                onPress={() =>
+                  setSameSizeSpaces(!sameSizeSpaces)
+                }></RadioButton>
+              <Text style={styles.loremIpsum2}>No, some are different</Text>
+            </View>
           </View>
-          <View style={styles.oversized1StackStack}>
-            <TouchableOpacity
-              style={large ? styles.activeBtn : styles.inactiveBtn}
-              onPress={() => setLarged(!large)}>
-              <MaterialCommunityIconsIcon
-                name="car-estate"
-                style={
-                  large ? styles.activeIcon : styles.inactiveIcon
-                }></MaterialCommunityIconsIcon>
-              <Text style={large ? styles.activeText : styles.inactiveText}>
-                Large
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={oversized ? styles.activeBtn : styles.inactiveBtn}
-              onPress={() => setOversized(!oversized)}>
-              <FontAwesomeIcon
-                name="truck"
-                style={
-                  oversized ? styles.activeIcon : styles.inactiveIcon
-                }></FontAwesomeIcon>
-              <Text style={oversized ? styles.activeText : styles.inactiveText}>
-                Oversized
-              </Text>
-            </TouchableOpacity>
+          <TextInput
+            placeholder="Vehicle Height Limit (if applicable)"
+            placeholderTextColor="rgba(182,182,182,1)"
+            value={vehicleHeightLimit}
+            onChangeText={(input) => setVehicleHeightLimit(input)}
+            style={styles.textInput1}></TextInput>
+        </>
+      )}
+
+      {activeIndex == 2 && (
+        <>
+          <Text style={styles.vehicleSizes}>Vehicle Sizes</Text>
+          <Text style={styles.loremIpsum3}>
+            Select the largest vehicle size for your parking spaces (choose more
+            than one if you have different sized spaces)
+          </Text>
+          <View style={styles.rect6Stack}>
+            <View style={styles.rect6}>
+              <View style={styles.motorcycle1StackStackRow}>
+                <TouchableOpacity
+                  style={motorcycle ? styles.activeBtn : styles.inactiveBtn}
+                  onPress={() => setMotorcycle(!motorcycle)}>
+                  <FontAwesomeIcon
+                    name="motorcycle"
+                    style={
+                      motorcycle ? styles.activeIcon : styles.inactiveIcon
+                    }></FontAwesomeIcon>
+                  <Text
+                    style={
+                      motorcycle ? styles.activeText : styles.inactiveText
+                    }>
+                    Motorcycle
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={compact ? styles.activeBtn : styles.inactiveBtn}
+                  onPress={() => setCompact(!compact)}>
+                  <MaterialCommunityIconsIcon
+                    name="car-sports"
+                    style={
+                      compact ? styles.activeIcon : styles.inactiveIcon
+                    }></MaterialCommunityIconsIcon>
+                  <Text
+                    style={compact ? styles.activeText : styles.inactiveText}>
+                    Compact
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={midSized ? styles.activeBtn : styles.inactiveBtn}
+                  onPress={() => setMidSized(!midSized)}>
+                  <MaterialCommunityIconsIcon
+                    name="car-side"
+                    style={
+                      midSized ? styles.activeIcon : styles.inactiveIcon
+                    }></MaterialCommunityIconsIcon>
+                  <Text
+                    style={midSized ? styles.activeText : styles.inactiveText}>
+                    Mid Sized
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.oversized1StackStack}>
+                <TouchableOpacity
+                  style={large ? styles.activeBtn : styles.inactiveBtn}
+                  onPress={() => setLarged(!large)}>
+                  <MaterialCommunityIconsIcon
+                    name="car-estate"
+                    style={
+                      large ? styles.activeIcon : styles.inactiveIcon
+                    }></MaterialCommunityIconsIcon>
+                  <Text style={large ? styles.activeText : styles.inactiveText}>
+                    Large
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={oversized ? styles.activeBtn : styles.inactiveBtn}
+                  onPress={() => setOversized(!oversized)}>
+                  <FontAwesomeIcon
+                    name="truck"
+                    style={
+                      oversized ? styles.activeIcon : styles.inactiveIcon
+                    }></FontAwesomeIcon>
+                  <Text
+                    style={oversized ? styles.activeText : styles.inactiveText}>
+                    Oversized
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-      <TouchableOpacity onPress={() => setVisible(true)}>
-        <Text style={styles.loremIpsum4}>
-          How do I determine my space size?
-        </Text>
-      </TouchableOpacity>
-      <Modal visible={visible}>
-        <VehicleSizesModal onPress={() => setVisible(false)} />
-      </Modal>
+          <TouchableOpacity onPress={() => setVisible(true)}>
+            <Text style={styles.loremIpsum4}>
+              How do I determine my space size?
+            </Text>
+          </TouchableOpacity>
+          <Modal visible={visible}>
+            <VehicleSizesModal onPress={() => setVisible(false)} />
+          </Modal>
 
-      {motorcycle && (
-        <View>
-          <Text style={styles.compactCarSpaces}>Motorcycle Spaces</Text>
-          <TextInput
-            placeholder="Number of Spaces"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.numerOfSpaces}
-            value={motorcycleSpaces}
-            onChangeText={(input) => setMotorcycleSpaces(input)}></TextInput>
-        </View>
+          {motorcycle && (
+            <View>
+              <Text style={styles.compactCarSpaces}>Motorcycle Spaces</Text>
+              <TextInput
+                placeholder="Number of Spaces"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.numerOfSpaces}
+                value={motorcycleSpaces}
+                onChangeText={(input) =>
+                  setMotorcycleSpaces(input)
+                }></TextInput>
+            </View>
+          )}
+          {compact && (
+            <View>
+              <Text style={styles.compactCarSpaces}>Compact Car Spaces</Text>
+              <TextInput
+                placeholder="Number of Spaces"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.numerOfSpaces}
+                value={compactSpaces}
+                onChangeText={(input) => setCompactSpaces(input)}></TextInput>
+            </View>
+          )}
+          {midSized && (
+            <View>
+              <Text style={styles.largeCarSpaces}>Mid-Sized Car Spaces</Text>
+              <TextInput
+                placeholder="Number of Spaces"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.numerOfSpaces1}
+                value={midsizedSpaces}
+                onChangeText={(input) => setMidsizedSpaces(input)}></TextInput>
+            </View>
+          )}
+          {large && (
+            <View>
+              <Text style={styles.largeCarSpaces}>Large Car Spaces</Text>
+              <TextInput
+                placeholder="Number of Spaces"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.numerOfSpaces1}
+                value={largeSpaces}
+                onChangeText={(input) => setLargeSpaces(input)}></TextInput>
+            </View>
+          )}
+          {oversized && (
+            <View>
+              <Text style={styles.largeCarSpaces}>Oversized Car Spaces</Text>
+              <TextInput
+                placeholder="Number of Spaces"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.numerOfSpaces1}
+                value={oversizedSpaces}
+                onChangeText={(input) => setOversizedSpaces(input)}></TextInput>
+            </View>
+          )}
+        </>
       )}
-      {compact && (
-        <View>
-          <Text style={styles.compactCarSpaces}>Compact Car Spaces</Text>
-          <TextInput
-            placeholder="Number of Spaces"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.numerOfSpaces}
-            value={compactSpaces}
-            onChangeText={(input) => setCompactSpaces(input)}></TextInput>
-        </View>
-      )}
-      {midSized && (
-        <View>
-          <Text style={styles.largeCarSpaces}>Mid-Sized Car Spaces</Text>
-          <TextInput
-            placeholder="Number of Spaces"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.numerOfSpaces1}
-            value={midsizedSpaces}
-            onChangeText={(input) => setMidsizedSpaces(input)}></TextInput>
-        </View>
-      )}
-      {large && (
-        <View>
-          <Text style={styles.largeCarSpaces}>Large Car Spaces</Text>
-          <TextInput
-            placeholder="Number of Spaces"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.numerOfSpaces1}
-            value={largeSpaces}
-            onChangeText={(input) => setLargeSpaces(input)}></TextInput>
-        </View>
-      )}
-      {oversized && (
-        <View>
-          <Text style={styles.largeCarSpaces}>Oversized Car Spaces</Text>
-          <TextInput
-            placeholder="Number of Spaces"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.numerOfSpaces1}
-            value={oversizedSpaces}
-            onChangeText={(input) => setOversizedSpaces(input)}></TextInput>
-        </View>
+      {activeIndex == 3 && (
+        <>
+          <Text style={styles.loremIpsum5}>
+            Are the spaces numbered or labelled ?
+          </Text>
+          <View style={styles.materialRadio3Row}>
+            <View style={styles.option}>
+              <RadioButton
+                checked={isLabelled}
+                style={styles.materialRadio3}></RadioButton>
+              <Text style={styles.yes1}>Yes</Text>
+            </View>
+            <View style={styles.option}>
+              <RadioButton
+                checked={!isLabelled}
+                style={styles.materialRadio2}></RadioButton>
+              <Text style={styles.no}>No</Text>
+            </View>
+          </View>
+          {qtyOfSpaces.length > 0 && (
+            <>
+              <Text style={styles.enterSpaceLabels}>Enter Space Labels</Text>
+              {spaceLabels.map((item, index) => (
+                <View style={styles.rect7} key={item.id}>
+                  <TextInput
+                    placeholder="Space Label/Number"
+                    placeholderTextColor="rgba(182,182,182,1)"
+                    onChangeText={(input) => {
+                      setLabelById(index, input);
+                    }}
+                    style={styles.spaceLabelNumber}></TextInput>
+                  {/* <TextInput
+              placeholder="Space Label/Number"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.spaceLabelNumber1}></TextInput> */}
+                  <Picker
+                    selectedValue="Largest Vehicle Size"
+                    style={styles.picker}
+                    onValueChange={(itemValue, itemIndex) => {
+                      setLargestSizeById(index, itemValue);
+                    }}>
+                    {motorcycle && (
+                      <Picker.Item label="Motorcycle" value="Motorcycle" />
+                    )}
+                    {compact && <Picker.Item label="Compact" value="Compact" />}
+                    {midSized && (
+                      <Picker.Item label="Mid Sized" value="Mid Sized" />
+                    )}
+                    {large && <Picker.Item label="Large" value="Large" />}
+                    {oversized && (
+                      <Picker.Item label="Oversized" value="Oversized" />
+                    )}
+                  </Picker>
+                </View>
+              ))}
+            </>
+          )}
+        </>
       )}
 
-      <Text style={styles.loremIpsum5}>
-        Are the spaces numbered or labelled ?
-      </Text>
-      <View style={styles.materialRadio3Row}>
-        <View style={styles.option}>
-          <RadioButton
-            checked={true}
-            style={styles.materialRadio3}></RadioButton>
-          <Text style={styles.yes1}>Yes</Text>
-        </View>
-        <View style={styles.option}>
-          <RadioButton style={styles.materialRadio2}></RadioButton>
-          <Text style={styles.no}>No</Text>
-        </View>
+      {activeIndex == 4 && (
+        <>
+          <Text style={styles.loremIpsum6}>Tell Guests about your space</Text>
+          <TextInput
+            placeholder="What makes your space great? Is it near notable landmarks or destinations?"
+            placeholderTextColor="rgba(182,182,182,1)"
+            numberOfLines={20}
+            inlineImagePadding={10}
+            textAlignVertical="top"
+            maxLength={300}
+            multiline={true}
+            selectTextOnFocus={true}
+            style={styles.placeholder}
+            value={aboutSpace}
+            onChangeText={(input) => setAboutSpace(input)}></TextInput>
+        </>
+      )}
+      {activeIndex == 5 && (
+        <>
+          <Text style={styles.accessInstructions}>Access Instructions</Text>
+          <TextInput
+            placeholder="Tell Guests what to do when they arrive? Provide special instructions (if any)"
+            placeholderTextColor="rgba(182,182,182,1)"
+            numberOfLines={20}
+            inlineImagePadding={10}
+            maxLength={300}
+            textAlignVertical="top"
+            multiline={true}
+            selectTextOnFocus={true}
+            style={styles.placeholder1}
+            value={accessInstructions}
+            onChangeText={(input) => setAccessInstructions(input)}></TextInput>
+        </>
+      )}
+      <View style={styles.btnRow}>
+        {activeIndex != 1 && (
+          <TouchableOpacity onPress={backButtonHandler}>
+            <Text style={styles.backBtnText}>Back</Text>
+          </TouchableOpacity>
+        )}
+        <MaterialButtonPrimary
+          caption="NEXT"
+          style={styles.materialButtonPrimary1}
+          onPress={onSubmitHandler}></MaterialButtonPrimary>
       </View>
-      <Text style={styles.enterSpaceLabels}>Enter Space Labels</Text>
-      <View style={styles.rect7}>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber}></TextInput>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber1}></TextInput>
-      </View>
-      <View style={styles.rect7}>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber}></TextInput>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber1}></TextInput>
-      </View>
-      <View style={styles.rect7}>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber}></TextInput>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber1}></TextInput>
-      </View>
-      <View style={styles.rect7}>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber}></TextInput>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber1}></TextInput>
-      </View>
-      <View style={styles.rect7}>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber}></TextInput>
-        <TextInput
-          placeholder="Space Label/Number"
-          placeholderTextColor="rgba(182,182,182,1)"
-          style={styles.spaceLabelNumber1}></TextInput>
-      </View>
-
-      <Text style={styles.loremIpsum6}>Tell Guests about your space</Text>
-      <TextInput
-        placeholder="What makes your space great? Is it near notable landmarks or destinations?"
-        placeholderTextColor="rgba(182,182,182,1)"
-        numberOfLines={20}
-        inlineImagePadding={10}
-        maxLength={300}
-        multiline={true}
-        selectTextOnFocus={true}
-        style={styles.placeholder}
-        value={aboutSpace}
-        onChangeText={(input) => setAboutSpace(input)}></TextInput>
-      <Text style={styles.accessInstructions}>Access Instructions</Text>
-      <TextInput
-        placeholder="Tell Guests what to do when they arrive? Provide special instructions (if any)"
-        placeholderTextColor="rgba(182,182,182,1)"
-        numberOfLines={20}
-        inlineImagePadding={10}
-        maxLength={300}
-        multiline={true}
-        selectTextOnFocus={true}
-        style={styles.placeholder1}
-        value={accessInstructions}
-        onChangeText={(input) => setAccessInstructions(input)}></TextInput>
-      <MaterialButtonPrimary
-        caption="NEXT"
-        style={styles.materialButtonPrimary1}
-        onPress={onSubmitHandler}></MaterialButtonPrimary>
     </ScrollView>
   );
 }
@@ -398,6 +501,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    minHeight: Dimensions.get('window').height,
   },
   addAListing1: {
     // fontFamily: 'roboto-500',
@@ -453,9 +557,12 @@ const styles = StyleSheet.create({
   textInput: {
     // fontFamily: 'roboto-regular',
     color: '#121212',
-    height: 44,
-    width: 328,
-    marginTop: 22,
+    // height: 44,
+    width: '100%',
+    // marginTop: 22,
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    marginBottom: 20,
   },
   loremIpsum: {
     // fontFamily: 'roboto-regular',
@@ -499,9 +606,12 @@ const styles = StyleSheet.create({
   textInput1: {
     // fontFamily: 'roboto-regular',
     color: '#121212',
-    height: 44,
-    width: 328,
+    // height: 44,
+    width: '100%',
     marginTop: 14,
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    // marginBottom: 20,
     // marginLeft: 24,
   },
   vehicleSizes: {
@@ -642,7 +752,7 @@ const styles = StyleSheet.create({
   loremIpsum5: {
     // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
-    marginTop: 50,
+    marginTop: 20,
     // marginLeft: 26,
   },
   materialRadio3: {
@@ -682,6 +792,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 39,
     // marginLeft: 30,
+  },
+  picker: {
+    width: '100%',
+    marginVertical: 10,
   },
   rect7: {
     width: '100%',
@@ -926,7 +1040,7 @@ const styles = StyleSheet.create({
     // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 16,
-    marginTop: 50,
+    marginTop: 20,
     // marginLeft: 23,
   },
   placeholder: {
@@ -937,13 +1051,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 21,
+    padding: 10,
     // marginLeft: 23,
   },
   accessInstructions: {
     // fontFamily: 'roboto-regular',
     color: 'rgba(11,64,148,1)',
     fontSize: 16,
-    marginTop: 41,
+    marginTop: 20,
     // marginLeft: 26,
   },
   placeholder1: {
@@ -954,7 +1069,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 19,
+    padding: 10,
     // marginLeft: 23,
+  },
+  btnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  backBtnText: {
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   materialButtonPrimary1: {
     width: 100,

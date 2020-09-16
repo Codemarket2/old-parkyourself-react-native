@@ -12,7 +12,7 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 
-function CardListItem({price, location, navigation}) {
+function CardListItem({id, price, location, navigation}) {
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -101,11 +101,11 @@ function CardListItem({price, location, navigation}) {
               caption="BOOK NOW"
               style={styles.materialButtonPrimary}
               onPress={() => {
-                navigation.navigate('PayNow');
+                navigation.navigate('PayNow', {lId: id, price: price});
               }}></MaterialButtonPrimary>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('MoreDetails');
+                navigation.navigate('MoreDetails', {id: id});
               }}>
               <Text style={styles.moreDetails}>More Details</Text>
             </TouchableOpacity>

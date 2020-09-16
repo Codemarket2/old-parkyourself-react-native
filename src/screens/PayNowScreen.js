@@ -6,19 +6,69 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Svg, {Ellipse} from 'react-native-svg';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import LocationHeader from '../components/LocationHeader';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {addBooking} from '../actions/user';
+import {v4 as uuidv4} from 'uuid';
+import moment from 'moment';
 
-function PayNowScreen({navigation}) {
+function PayNowScreen({navigation, route, listings}) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [showStart, setStartShow] = useState(false);
   const [showEnd, setEndShow] = useState(false);
+  const [vehicle, setVehicle] = useState(null);
+  const [card, setCard] = useState(null);
+  const [listingId, setListingId] = useState(route.params.lId);
+  const [price, setPrice] = useState(route.params.price);
+
+  const [listingData] = useState(
+    listings.filter((item) => item.id === listingId)[0],
+  )[0];
+
+  const {address, city, state, postalCode} = listingData.locationDetails;
+
+  if (route.params.vehicle) {
+    console.log('Vehicle data ', vehicle);
+    setVehicle(vehicle);
+  }
+
+  if (route.params.card) {
+    console.log('Card data ', card);
+    setCard(card);
+  }
+
+  const onSubmitHandler = () => {
+    try {
+      if (listingId && startDate && endDate && price && vehicle && card) {
+        let bookingData = {
+          id: uuidv4(),
+          listingId: listingId,
+          location: `${address}, ${city}, ${state}, ${postalCode}`,
+          startDate,
+          endDate,
+          duration: moment.duration(endDate.diff(startDate)).asHours(),
+          vehicle,
+          price,
+          card,
+        };
+        addBooking(bookingData);
+        navigation.navigate('SuccessfullyBooked', {
+          bookingData: bookingData,
+        });
+      } else {
+        Alert.alert('Missing Inputs', 'Please fill all the inputs');
+      }
+    } catch (error) {
+      Alert.alert('Something Went Wrong!', 'Please try again');
+    }
+  };
 
   const onStartDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || startDate;
@@ -51,7 +101,9 @@ function PayNowScreen({navigation}) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <LocationHeader />
+      <LocationHeader
+        location={`${address}, ${city}, ${state}, ${postalCode}`}
+      />
       <View style={styles.rect2Stack}>
         <View style={styles.listItem}>
           <Text style={styles.arriving}>Arriving</Text>
@@ -93,12 +145,18 @@ function PayNowScreen({navigation}) {
         )}
         <View style={styles.listItem}>
           <Text style={styles.duration}>Duration</Text>
-          <Text style={styles.loremIpsum5}>9 hours, 0 minutes</Text>
+          <Text style={styles.loremIpsum5}>
+            {startDate &&
+              endDate &&
+              moment.duration(endDate.diff(startDate)).asHours()}
+          </Text>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.vehicle}>Vehicle</Text>
-          <Text style={styles.loremIpsum6}>2019 BMW X6</Text>
-          <TouchableOpacity style={styles.ellipseStack}>
+          <Text style={styles.loremIpsum6}>{vehicle.model}</Text>
+          <TouchableOpacity
+            style={styles.ellipseStack}
+            onPress={() => navigation.navigate('AddVehicle')}>
             <Svg viewBox="0 0 23.02 19.27" style={styles.ellipse}>
               <Ellipse
                 stroke="rgba(230, 230, 230,1)"
@@ -125,15 +183,17 @@ function PayNowScreen({navigation}) {
         </View>
         <View style={styles.listItem}>
           <Text style={styles.payment}>Payment</Text>
-          <Text style={styles.loremIpsum8}>$3.20</Text>
+          <Text style={styles.loremIpsum8}>{price}</Text>
         </View>
         <View style={styles.listItem}>
           <Text style={styles.cardNumber}>Card Number</Text>
           <FontAwesomeIcon
             name="cc-visa"
             style={styles.icon5}></FontAwesomeIcon>
-          <Text style={styles.xxxXxxxXxxx0147}>xxx-xxxx-xxxx-0147</Text>
-          <TouchableOpacity style={styles.ellipse1Stack}>
+          <Text style={styles.xxxXxxxXxxx0147}>{card.cardNumber}</Text>
+          <TouchableOpacity
+            style={styles.ellipse1Stack}
+            onPress={() => navigation.navigate('AddCreditDebitCard')}>
             <Svg viewBox="0 0 23.02 19.27" style={styles.ellipse1}>
               <Ellipse
                 stroke="rgba(230, 230, 230,1)"
@@ -148,11 +208,9 @@ function PayNowScreen({navigation}) {
           </TouchableOpacity>
         </View>
         <MaterialButtonPrimary
-          caption="PAY $3.20"
+          caption={`PAY ${price}`}
           style={styles.materialButtonPrimary3}
-          onPress={() => {
-            navigation.navigate('SuccessfullyBooked');
-          }}></MaterialButtonPrimary>
+          onPress={onSubmitHandler}></MaterialButtonPrimary>
         <Text style={styles.loremIpsum10}>
           By Making payment you indicate your acceptance of our Terms &amp;
           Conditions and Privacy Policy.
