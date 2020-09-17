@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -22,6 +22,8 @@ import {connect} from 'react-redux';
 import {Picker} from '@react-native-community/picker';
 
 function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
+  const scrollRef = useRef();
+
   const [activeIndex, setActiveIndex] = useState(1);
 
   const [parkingSpaceType, setParkingSpaceType] = useState('Tandem');
@@ -58,7 +60,7 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
         index == idx ? {...item, label: label} : {...item},
       ),
     );
-    console.log(spaceLabels);
+    // console.log(spaceLabels);
   };
 
   const setLargestSizeById = (idx, size) => {
@@ -67,7 +69,7 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
         index == idx ? {...item, largestSize: size} : {...item},
       ),
     );
-    console.log(spaceLabels);
+    // console.log(spaceLabels);
   };
 
   const [aboutSpace, setAboutSpace] = useState('');
@@ -76,6 +78,10 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
   const backButtonHandler = () => {
     if (activeIndex != 1) {
       setActiveIndex(activeIndex - 1);
+      scrollRef.current.scrollTo({
+        y: 0,
+        animated: true,
+      });
     }
   };
 
@@ -83,6 +89,10 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
     try {
       if (activeIndex != 5) {
         setActiveIndex(activeIndex + 1);
+        scrollRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        });
       } else {
         if (
           parkingSpaceType &&
@@ -132,7 +142,7 @@ function AddListingSpaceDetails({navigation, addListingSpaceDetails}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
       <Text style={styles.addAListing1}>Add a Listing</Text>
       <Text style={styles.spaceDetails}>Space Details</Text>
       {activeIndex == 1 && (

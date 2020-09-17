@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -23,6 +23,8 @@ import ImagePicker from 'react-native-image-picker';
 import RadioButton from '../../components/RadioButton';
 
 function AddListingLocation({navigation, addListingLocation}) {
+  const scrollRef = useRef();
+
   const [activeIndex, setActiveIndex] = useState(1);
 
   const [listingType, setListingType] = useState('Business');
@@ -149,6 +151,10 @@ function AddListingLocation({navigation, addListingLocation}) {
   const backButtonHandler = () => {
     if (activeIndex != 1) {
       setActiveIndex(activeIndex - 1);
+      scrollRef.current.scrollTo({
+        y: 0,
+        animated: true,
+      });
     }
   };
 
@@ -156,6 +162,10 @@ function AddListingLocation({navigation, addListingLocation}) {
     try {
       if (activeIndex != 6) {
         setActiveIndex(activeIndex + 1);
+        scrollRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        });
       } else {
         if (
           listingType &&
@@ -178,7 +188,7 @@ function AddListingLocation({navigation, addListingLocation}) {
             city,
             state,
             postalCode,
-            phone,
+            phoneNumber: `${code}${phone}`,
             latlng: marker,
             propertyType,
             images,
@@ -198,7 +208,7 @@ function AddListingLocation({navigation, addListingLocation}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
       <Text style={styles.addAListing}>Add a Listing</Text>
       <Text style={styles.location}>Location</Text>
       {activeIndex == 1 && (

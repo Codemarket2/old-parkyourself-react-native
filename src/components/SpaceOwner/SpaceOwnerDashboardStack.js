@@ -13,6 +13,7 @@ import VariableBillingType from '../../screens/SpaceOwner/VariableBillingType';
 import SaveSpaceDetails from '../../screens/SpaceOwner/SaveSpaceDetails';
 import CustomSchedule from '../../screens/SpaceOwner/CustomSchedule';
 import HeaderLogo from '../HeaderLogo';
+import MenuButton from '../MenuButton';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ const SpaceOwnerDashboardStack = () => {
         component={SpaceOwnerDashboard}
         options={({navigation}) => ({
           headerTitle: () => <HeaderLogo />,
+          headerLeft: () => <MenuButton navigation={navigation} />,
           headerTitleAlign: 'center',
         })}
       />

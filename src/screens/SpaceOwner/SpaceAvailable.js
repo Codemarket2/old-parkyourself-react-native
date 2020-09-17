@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -20,6 +20,8 @@ import {TextInput} from 'react-native-gesture-handler';
 import {addListingSpaceAvailable} from '../../actions/listing';
 
 function SpaceAvailable({navigation, addListingSpaceAvailable}) {
+  const scrollRef = useRef();
+
   const [activeIndex, setActiveIndex] = useState(1);
 
   const [monday, setMonday] = useState(false);
@@ -76,6 +78,10 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
   const backButtonHandler = () => {
     if (activeIndex != 1) {
       setActiveIndex(activeIndex - 1);
+      scrollRef.current.scrollTo({
+        y: 0,
+        animated: true,
+      });
     }
   };
 
@@ -83,6 +89,10 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
     try {
       if (activeIndex != 6) {
         setActiveIndex(activeIndex + 1);
+        scrollRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        });
       } else {
         if (
           (monday ||
@@ -133,7 +143,7 @@ function SpaceAvailable({navigation, addListingSpaceAvailable}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
       <Text style={styles.spaceAvailable}>Space Available</Text>
 
       {activeIndex == 1 && (

@@ -8,17 +8,17 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+// import {connect} from 'react-redux';
+// import PropTypes from 'prop-types';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {toggleUserType} from '../actions/user';
+// import {toggleUserType} from '../actions/user';
 
-function Dashboard({navigation, isSpaceOwner, toggleUserType}) {
+function Dashboard({navigation}) {
   const [showPersonalForm, setShowPersonalForm] = useState(false);
   const [showBusinessForm, setShowBusinessForm] = useState(false);
 
@@ -230,7 +230,7 @@ function Dashboard({navigation, isSpaceOwner, toggleUserType}) {
           name="arrow-right"
           style={styles.icon2}></FontAwesomeIcon>
       </TouchableOpacity>
-      <View style={styles.rect12}>
+      {/* <View style={styles.rect12}>
         <Switch
           value={isSpaceOwner}
           style={styles.switch}
@@ -242,7 +242,7 @@ function Dashboard({navigation, isSpaceOwner, toggleUserType}) {
           <IoniconsIcon name="ios-log-out" style={styles.icon17}></IoniconsIcon>
           <Text style={styles.logOut}>LOG OUT</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScrollView>
   );
 }
@@ -344,86 +344,87 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 24,
   },
-  rect12: {
-    // width: 260,
-    // height: 50,
-    backgroundColor: 'rgba(20,222,113,1)',
-    shadowColor: 'rgba(180,177,177,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 30,
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    flexDirection: 'row',
-    marginTop: 300,
-    // marginLeft: 66,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  switch: {
-    // marginLeft: 19,
-    // marginTop: 11,
-  },
-  loremIpsum2: {
-    // fontFamily: 'roboto-regular',
-    color: 'rgba(255,255,255,1)',
-    marginLeft: 14,
-    // marginTop: 15,
-  },
-  rect13: {
-    width: 150,
-    height: 45,
-    backgroundColor: 'rgba(39,170,225,1)',
-    shadowColor: 'rgba(180,179,179,1)',
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
-    elevation: 30,
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    flexDirection: 'row',
-    marginTop: 16,
-    marginBottom: 80,
-    alignSelf: 'center',
-    // paddingVertical: 10,
-    // paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon17: {
-    color: 'rgba(254,253,253,1)',
-    fontSize: 24,
-    height: 27,
-    width: 19,
-  },
-  logOut: {
-    // fontFamily: 'roboto-500',
-    color: 'rgba(255,255,255,1)',
-    marginLeft: 13,
-    marginTop: 6,
-  },
-  icon17Row: {
-    height: 27,
-    flexDirection: 'row',
-    flex: 1,
-    marginRight: 33,
-    marginLeft: 28,
-    marginTop: 6,
-  },
+  // rect12: {
+  //   // width: 260,
+  //   // height: 50,
+  //   backgroundColor: 'rgba(20,222,113,1)',
+  //   shadowColor: 'rgba(180,177,177,1)',
+  //   shadowOffset: {
+  //     width: 3,
+  //     height: 3,
+  //   },
+  //   elevation: 30,
+  //   shadowOpacity: 1,
+  //   shadowRadius: 10,
+  //   flexDirection: 'row',
+  //   marginTop: 300,
+  //   // marginLeft: 66,
+  //   alignSelf: 'center',
+  //   justifyContent: 'center',
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 20,
+  // },
+  // switch: {
+  //   // marginLeft: 19,
+  //   // marginTop: 11,
+  // },
+  // loremIpsum2: {
+  //   // fontFamily: 'roboto-regular',
+  //   color: 'rgba(255,255,255,1)',
+  //   marginLeft: 14,
+  //   // marginTop: 15,
+  // },
+  // rect13: {
+  //   width: 150,
+  //   height: 45,
+  //   backgroundColor: 'rgba(39,170,225,1)',
+  //   shadowColor: 'rgba(180,179,179,1)',
+  //   shadowOffset: {
+  //     width: 3,
+  //     height: 3,
+  //   },
+  //   elevation: 30,
+  //   shadowOpacity: 1,
+  //   shadowRadius: 10,
+  //   flexDirection: 'row',
+  //   marginTop: 16,
+  //   marginBottom: 80,
+  //   alignSelf: 'center',
+  //   // paddingVertical: 10,
+  //   // paddingHorizontal: 20,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // icon17: {
+  //   color: 'rgba(254,253,253,1)',
+  //   fontSize: 24,
+  //   height: 27,
+  //   width: 19,
+  // },
+  // logOut: {
+  //   // fontFamily: 'roboto-500',
+  //   color: 'rgba(255,255,255,1)',
+  //   marginLeft: 13,
+  //   marginTop: 6,
+  // },
+  // icon17Row: {
+  //   height: 27,
+  //   flexDirection: 'row',
+  //   flex: 1,
+  //   marginRight: 33,
+  //   marginLeft: 28,
+  //   marginTop: 6,
+  // },
 });
 
-Dashboard.propTypes = {
-  toggleUserType: PropTypes.func.isRequired,
-  isSpaceOwner: PropTypes.bool.isRequired,
-};
+// Dashboard.propTypes = {
+//   toggleUserType: PropTypes.func.isRequired,
+//   isSpaceOwner: PropTypes.bool.isRequired,
+// };
 
-const mapStateToProps = (state) => ({
-  isSpaceOwner: state.user.isSpaceOwner,
-});
+// const mapStateToProps = (state) => ({
+//   isSpaceOwner: state.user.isSpaceOwner,
+// });
 
-export default connect(mapStateToProps, {toggleUserType})(Dashboard);
+// export default connect(mapStateToProps, {toggleUserType})(Dashboard);
+export default Dashboard;

@@ -4,7 +4,12 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function MoreDetailsThree({spaceDetails}) {
+export default function MoreDetailsThree({
+  spaceDetails,
+  pricingDetails,
+  navigation,
+  isSpaceOwner,
+}) {
   const {
     vehicleHeightLimit,
     vehicleSizes: {motorcycle, compact, midSized, large, oversized},
@@ -12,6 +17,7 @@ export default function MoreDetailsThree({spaceDetails}) {
     accessInstructions,
     spaceType,
   } = spaceDetails;
+  const {pricingType, pricingRates} = pricingDetails;
   return (
     <Fragment>
       <View style={styles.rect}>
@@ -111,13 +117,26 @@ export default function MoreDetailsThree({spaceDetails}) {
         <View style={styles.rect7StackRow}>
           <View style={styles.rect7Stack}>
             <View style={styles.rect7}>
-              <Text style={styles.loremIpsum9}>$3.20</Text>
+              <Text style={styles.loremIpsum9}>
+                {pricingType == 'Flat'
+                  ? pricingRates.dailyMax
+                  : pricingRates.perHourRate}
+              </Text>
             </View>
-            <Text style={styles.perHour}>per hour</Text>
+            <Text style={styles.perHour}>
+              {pricingType == 'Flat' ? 'per day' : 'per hour'}
+            </Text>
           </View>
           <MaterialButtonPrimary
             // caption='BUTTON'
-            caption="SCHEDULE BOOKING"
+            onPress={() => {
+              if (isSpaceOwner) {
+                navigation.goBack();
+              } else {
+                navigation.navigate('PayNow');
+              }
+            }}
+            caption={isSpaceOwner ? 'CLOSE' : 'SCHEDULE BOOKING'}
             style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
         </View>
       </View>
@@ -218,16 +237,17 @@ const styles = StyleSheet.create({
   },
   rect4: {
     width: '100%',
-    height: 180,
+    // height: 180,
     backgroundColor: 'rgba(255,255,255,1)',
     // marginLeft: 16,
     marginTop: 20,
+    paddingVertical: 20,
   },
   loremIpsum5: {
     // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
-    marginTop: 17,
+    // marginTop: 17,
     marginLeft: 18,
   },
   loremIpsum6: {
@@ -250,16 +270,17 @@ const styles = StyleSheet.create({
   },
   rect5: {
     width: '100%',
-    height: 170,
+    // height: 170,
     backgroundColor: 'rgba(255,255,255,1)',
     // marginLeft: 16,
     marginTop: 20,
+    paddingVertical: 20,
   },
   gettingHere: {
     // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
     fontSize: 17,
-    marginTop: 18,
+    // marginTop: 18,
     marginLeft: 17,
   },
   loremIpsum8: {

@@ -4,12 +4,7 @@ import MaterialButtonPrimary from '../MaterialButtonPrimary';
 
 export default function MyListingListItem({item, navigation}) {
   console.log(item);
-  const {
-    address,
-    city,
-    state,
-    postalCode,
-  } = item.locationDetails.listingAddress;
+  const {address, city, state, postalCode} = item.locationDetails;
   const viewDetailsHandler = () => {
     navigation.navigate('DetailsScreen', {id: item.id});
   };
@@ -27,7 +22,7 @@ export default function MyListingListItem({item, navigation}) {
             {address}, {city}, {state}, {postalCode}
           </Text>
           <Text style={styles.bookings}>
-            {item.bookings.length} Upcoming Bookings
+            {item.bookings ? item.bookings.length : 'No'} Upcoming Bookings
           </Text>
         </View>
         <View style={styles.tag}>

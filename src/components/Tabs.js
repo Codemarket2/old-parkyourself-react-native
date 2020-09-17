@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MyListingsStack from './SpaceOwner/MyListingsStack';
 import ParkingOrdersStack from './SpaceOwner/ParkingOrdersStack';
-import SpaceOwnerDashboardStack from './SpaceOwner/SpaceOwnerDashboardStack';
+import SpaceOwnerDrawer from './SpaceOwner/SpaceOwnerDrawer';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +52,7 @@ function Tabs({isSpaceOwner}) {
       animationEnabled={true}>
       <Tab.Screen name="My Listings" component={MyListingsStack} />
       <Tab.Screen name="Parking Orders" component={ParkingOrdersStack} />
-      <Tab.Screen name="Dashboard" component={SpaceOwnerDashboardStack} />
+      <Tab.Screen name="Dashboard" component={SpaceOwnerDrawer} />
     </Tab.Navigator>
   ) : (
     <Tab.Navigator

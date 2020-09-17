@@ -1,4 +1,4 @@
-import {v4 as uuidv4} from 'uuid';
+// import {v4 as uuidv4} from 'uuid';
 const {
   ADD_LISTING_LOCATION,
   ADD_LISTING_SPACE_AVAILABLE,
@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
     case ADD_LISTING_LOCATION: {
       return {
         ...state,
-        id: uuidv4(),
+        id: Date.now(),
         locationDetails: payload,
       };
     }

@@ -4,8 +4,14 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
 export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
-  const {propertyName, features} = locationDetails;
-  const {address, city, state, postalCode} = locationDetails.listingAddress;
+  const {
+    propertyName,
+    features,
+    address,
+    city,
+    state,
+    postalCode,
+  } = locationDetails;
 
   return (
     <Fragment>

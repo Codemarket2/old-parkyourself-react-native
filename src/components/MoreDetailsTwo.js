@@ -1,9 +1,9 @@
 import React, {Component, Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 
 export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
-  const {address, city, state, postalCode} = locationDetails.listingAddress;
+  const {address, city, state, postalCode, latlng} = locationDetails;
   const {
     monday,
     tuesday,
@@ -190,7 +190,9 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
               ],
             },
           ]}
-          style={styles.mapView}></MapView>
+          style={styles.mapView}>
+          <Marker coordinate={latlng} />
+        </MapView>
         <Text style={styles.loremIpsum}>
           {address}, {city}, {state}, {postalCode}
         </Text>
@@ -201,7 +203,8 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
           This facility is open 24/7 on {monday && 'Monday'}
           {tuesday && ', Tuesday'}
           {wednesday && ', Wednesday'}
-          {thursday && ', Thursday'},{friday && ', Friday'}
+          {thursday && ', Thursday'}
+          {friday && ', Friday'}
           {saturday && ', Saturday'}
           {sunday && ', Sunday'}.
         </Text>

@@ -6,14 +6,19 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Switch,
 } from 'react-native';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import Svg, {Ellipse} from 'react-native-svg';
+import {toggleUserType} from '../actions/user';
 
-function AppDrawer(props) {
+function AppDrawer({navigation, toggleUserType, isSpaceOwner}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.rect}>
@@ -103,6 +108,23 @@ function AppDrawer(props) {
               style={styles.icon9}></MaterialCommunityIconsIcon>
           </View>
         </TouchableOpacity>
+        <View style={styles.rect12}>
+          <Switch
+            value={isSpaceOwner}
+            style={styles.switch}
+            onValueChange={() => {
+              toggleUserType();
+            }}></Switch>
+          <Text style={styles.loremIpsum2}>Switch to SPACE OWNER</Text>
+        </View>
+        <TouchableOpacity style={styles.rect13} onPress={() => {}}>
+          <View style={styles.logoutRow}>
+            <IoniconsIcon
+              name="ios-log-out"
+              style={styles.logoutIcon}></IoniconsIcon>
+            <Text style={styles.logOut}>LOG OUT</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.ellipseStackRow}>
           <View style={styles.ellipseStack}>
             <Svg viewBox="0 0 43.54 42.25" style={styles.ellipse}>
@@ -117,7 +139,7 @@ function AppDrawer(props) {
             </Svg>
             <EntypoIcon name="user" style={styles.icon19}></EntypoIcon>
           </View>
-          <Text style={styles.mark}>Mark</Text>
+          <Text style={styles.username}>Username</Text>
         </View>
       </View>
     </ScrollView>
@@ -130,7 +152,7 @@ const styles = StyleSheet.create({
   },
   rect: {
     width: '100%',
-    height: 736,
+    // height: 736,
     marginTop: 30,
     // marginLeft: 46,
   },
@@ -531,7 +553,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
   },
-  mark: {
+  username: {
     // fontFamily: 'roboto-500',
     color: '#121212',
     fontSize: 18,
@@ -544,8 +566,96 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 34,
     marginLeft: 26,
-    marginRight: 159,
+    marginBottom: 20,
+    // marginRight: 159,
+  },
+  rect12: {
+    // width: 260,
+    // height: 50,
+    backgroundColor: 'rgba(20,222,113,1)',
+    shadowColor: 'rgba(180,177,177,1)',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    elevation: 20,
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    flexDirection: 'row',
+    marginTop: 15,
+    // marginLeft: 66,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  switch: {
+    // marginLeft: 19,
+    // marginTop: 11,
+  },
+  loremIpsum2: {
+    // fontFamily: 'roboto-regular',
+    color: 'rgba(255,255,255,1)',
+    marginLeft: 14,
+    // marginTop: 15,
+  },
+  rect13: {
+    width: '90%',
+    // height: 45,
+    backgroundColor: 'rgba(39,170,225,1)',
+    shadowColor: 'rgba(180,179,179,1)',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    elevation: 20,
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    flexDirection: 'row',
+    marginTop: 12,
+    // marginBottom: 80,
+    alignSelf: 'center',
+    // paddingVertical: 10,
+    // paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  logoutIcon: {
+    color: 'rgba(254,253,253,1)',
+    fontSize: 24,
+    height: 27,
+    width: 19,
+  },
+  logOut: {
+    // fontFamily: 'roboto-500',
+    color: 'rgba(255,255,255,1)',
+    marginLeft: 13,
+    // marginTop: 6,
+  },
+  logoutRow: {
+    // height: 27,
+    flexDirection: 'row',
+    flex: 1,
+    // marginRight: 33,
+    // marginLeft: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginTop: 6,
   },
 });
 
-export default AppDrawer;
+AppDrawer.propTypes = {
+  toggleUserType: PropTypes.func.isRequired,
+  isSpaceOwner: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isSpaceOwner: state.user.isSpaceOwner,
+});
+
+export default connect(mapStateToProps, {toggleUserType})(AppDrawer);
