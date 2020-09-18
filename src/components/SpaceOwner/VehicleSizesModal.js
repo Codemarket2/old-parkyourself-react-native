@@ -14,7 +14,7 @@ function VehicleSizesModal({onPress}) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.loremIpsum}>How do I determine my space size?</Text>
+        <Text style={styles.heading}>How do I determine my space size?</Text>
         <TouchableOpacity onPress={onPress}>
           <EntypoIcon name="cross" style={styles.cross}></EntypoIcon>
         </TouchableOpacity>
@@ -56,7 +56,9 @@ function VehicleSizesModal({onPress}) {
         </Text>
       </View>
       <View style={styles.vehicle}>
-        <FontAwesomeIcon name="truck" style={styles.icon}></FontAwesomeIcon>
+        <MaterialCommunityIconsIcon
+          name="car-estate"
+          style={styles.icon}></MaterialCommunityIconsIcon>
         <Text style={styles.title}>Large</Text>
 
         <Text style={styles.description}>
@@ -90,26 +92,30 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 20,
   },
   vehicle: {
     alignItems: 'center',
+    marginVertical: 20,
   },
   icon: {
     color: 'rgba(39,170,225,1)',
-    fontSize: 90,
+    fontSize: 80,
   },
   title: {
     // fontFamily: 'roboto-500',
     color: 'rgba(39,170,225,1)',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
   },
   description: {
     textAlign: 'center',
     marginVertical: 10,
     marginHorizontal: 20,
+    fontSize: 16,
+    lineHeight: 22,
   },
   loremIpsum: {
     // fontFamily: 'roboto-500',
@@ -117,9 +123,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     // marginLeft: 26,
   },
+  heading: {
+    color: 'rgba(11,64,148,1)',
+    color: '#27aae1',
+    fontSize: 30,
+    fontWeight: '700',
+    // marginTop: 30,
+    // marginVertical: 20,
+    width: '80%',
+  },
   cross: {
     color: 'rgba(182,182,182,1)',
-    fontSize: 25,
+    fontSize: 40,
     // marginTop: -58,
     // marginLeft: 266,
   },

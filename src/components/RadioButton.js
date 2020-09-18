@@ -6,9 +6,9 @@ export default function RadioButton({checked = false, onPress}) {
   return (
     <TouchableOpacity onPress={onPress}>
       <IoniconsIcon
-        name={checked ? 'radio-button-on' : 'radio-button-off'}
+        name={checked ? 'checkmark-circle' : 'radio-button-off'}
         color="black"
-        size={22}
+        size={28}
       />
     </TouchableOpacity>
   );

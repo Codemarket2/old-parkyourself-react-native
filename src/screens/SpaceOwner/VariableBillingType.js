@@ -15,20 +15,40 @@ import {setListingPricingDetails} from '../../actions/listing';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import TipsSettingRatesModal from '../../components/SpaceOwner/TipsSettingRatesModal';
 import VariableVsFlatModal from '../../components/SpaceOwner/VariableVsFlatModal';
+import NextButton from '../../components/SpaceOwner/NextButton';
+import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
+import Input from '../../components/Input';
 
-function VariableBillingType({navigation, setListingPricingDetails}) {
-  const [perHourRate, setPerHourRate] = useState('$ 1.80');
-  const [perDayRate, setPerDayRate] = useState('$ 13.00');
-  const [perWeekRate, setPerWeekRate] = useState('$ 60.00');
-  const [perMonthRate, setPerMonthRate] = useState('$ 200.00');
-  const [perWeek, setPerWeek] = useState(false);
-  const [perMonth, setPerMonth] = useState(true);
+function VariableBillingType({
+  onBackButtonPress,
+  onNextButtonPress,
+  setListingPricingDetails,
+  pricingDetails,
+}) {
+  const [perHourRate, setPerHourRate] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perHourRate : '$ 1.80',
+  );
+  const [perDayRate, setPerDayRate] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perDayRate : '$ 13.00',
+  );
+  const [perWeekRate, setPerWeekRate] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perWeekRate : '$ 60.00',
+  );
+  const [perMonthRate, setPerMonthRate] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perMonthRate : '$ 200.00',
+  );
+  const [perWeek, setPerWeek] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perWeek : false,
+  );
+  const [perMonth, setPerMonth] = useState(
+    pricingDetails ? pricingDetails.pricingRates.perMonth : true,
+  );
 
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
-  const onPressHandler = () => {
-    setVisible2(true);
+  const backButtonHandler = () => {
+    onBackButtonPress(2);
   };
 
   const onSubmitHandler = () => {
@@ -42,10 +62,13 @@ function VariableBillingType({navigation, setListingPricingDetails}) {
             perDayRate,
             perWeekRate,
             perMonthRate,
+            perWeek,
+            perMonth,
           },
         };
         setListingPricingDetails(pricingDetails);
-        navigation.navigate('SaveSpaceDetails');
+        // navigation.navigate('SaveSpaceDetails');
+        onNextButtonPress();
       } else {
         Alert.alert('Missing Inputs', 'Please fill all required inputs');
       }
@@ -55,72 +78,81 @@ function VariableBillingType({navigation, setListingPricingDetails}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.setPricing1}>Set Pricing</Text>
-      <Text style={styles.loremIpsum}>Set your desired rates</Text>
-      <Text style={styles.flatBillingType}>Variable Billing Type</Text>
-      <Text style={styles.dailyMaximum}>Per Hour</Text>
-      <TextInput
-        placeholder="placeholder"
-        value={perHourRate}
-        onChangeText={(input) => setPerHourRate(input)}
-        style={styles.placeholder}></TextInput>
+    <>
+      <AddListingHeader onPress={backButtonHandler} />
 
-      <Text style={styles.dailyMaximum}>Per Day</Text>
-      <TextInput
-        placeholder="placeholder"
-        value={perDayRate}
-        onChangeText={(input) => setPerDayRate(input)}
-        style={styles.placeholder}></TextInput>
-
-      <Text style={styles.dailyMaximum}>Per Week</Text>
-      <View styles={styles.perWeek}>
-        <TextInput
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* <Text style={styles.setPricing1}>Set Pricing</Text> */}
+        <Text style={styles.heading}>Set your desired rates</Text>
+        <Text style={styles.subHeading}>Variable Billing Type</Text>
+        <Text style={styles.dailyMaximum}>Per Hour</Text>
+        <Input
           placeholder="placeholder"
-          value={perWeekRate}
-          onChangeText={(input) => setPerWeekRate(input)}
-          style={styles.placeholder}></TextInput>
-        <Switch
-          value={perWeek}
-          trackColor={{
-            true: 'rgba(230, 230, 230,1)',
-            false: 'rgba(155,155,155,1)',
-          }}
-          disabled={false}
-          style={styles.switch}></Switch>
-      </View>
+          value={perHourRate}
+          onChangeText={(input) => setPerHourRate(input)}
+          style={styles.placeholder}></Input>
 
-      <Text style={styles.dailyMaximum}>Per Month</Text>
-      <View styles={styles.perWeek}>
-        <TextInput
+        <Text style={styles.dailyMaximum}>Per Day</Text>
+        <Input
           placeholder="placeholder"
-          value={perMonthRate}
-          onChangeText={(input) => setPerMonthRate(input)}
-          style={styles.placeholder}></TextInput>
-        <Switch
-          value={perMonth}
-          trackColor={{
-            true: 'rgba(230, 230, 230,1)',
-            false: 'rgba(155,155,155,1)',
-          }}
-          disabled={false}
-          style={styles.switch}></Switch>
-      </View>
-      <TouchableOpacity onPress={() => setVisible1(true)}>
-        <Text style={styles.loremIpsum2}>
-          Tips for setting appropriate rates
-        </Text>
-      </TouchableOpacity>
-      <MaterialButtonPrimary
+          value={perDayRate}
+          onChangeText={(input) => setPerDayRate(input)}
+          style={styles.placeholder}></Input>
+
+        <Text style={styles.dailyMaximum}>Per Week</Text>
+        <View styles={styles.perWeek}>
+          <Input
+            placeholder="placeholder"
+            value={perWeekRate}
+            onChangeText={(input) => setPerWeekRate(input)}
+            style={styles.placeholder}></Input>
+          <Switch
+            value={perWeek}
+            trackColor={{
+              true: 'rgba(230, 230, 230,1)',
+              false: 'rgba(155,155,155,1)',
+            }}
+            disabled={false}
+            style={styles.switch}></Switch>
+        </View>
+
+        <Text style={styles.dailyMaximum}>Per Month</Text>
+        <View styles={styles.perWeek}>
+          <Input
+            placeholder="placeholder"
+            value={perMonthRate}
+            onChangeText={(input) => setPerMonthRate(input)}
+            style={styles.placeholder}></Input>
+          <Switch
+            value={perMonth}
+            trackColor={{
+              true: 'rgba(230, 230, 230,1)',
+              false: 'rgba(155,155,155,1)',
+            }}
+            disabled={false}
+            style={styles.switch}></Switch>
+        </View>
+        <TouchableOpacity onPress={() => setVisible1(true)}>
+          <Text style={styles.loremIpsum2}>
+            Tips for setting appropriate rates
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setVisible2(true)}>
+          <Text style={styles.loremIpsum2}>Variable vs Flat Rates</Text>
+        </TouchableOpacity>
+
+        {/* <MaterialButtonPrimary
         onPress={onPressHandler}
         caption="NEXT"
-        style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      <TipsSettingRatesModal
-        visible={visible1}
-        onPress={() => setVisible1(false)}
-      />
-      <VariableVsFlatModal visible={visible2} onPress={onSubmitHandler} />
-    </ScrollView>
+        style={styles.materialButtonPrimary1}></MaterialButtonPrimary> */}
+        <TipsSettingRatesModal
+          visible={visible1}
+          onPress={() => setVisible1(false)}
+        />
+        <VariableVsFlatModal visible={visible2} onPress={onSubmitHandler} />
+      </ScrollView>
+      <NextButton onPress={onSubmitHandler} />
+    </>
   );
 }
 
@@ -130,11 +162,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     zIndex: 1,
+    paddingVertical: 50,
+    paddingBottom: 80,
   },
   setPricing1: {
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
+  },
+  heading: {
+    color: 'rgba(11,64,148,1)',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 30,
+    marginVertical: 20,
+  },
+  subHeading: {
+    color: '#27aae1',
+    fontSize: 20,
+    fontWeight: '700',
+    marginTop: 20,
   },
   loremIpsum: {
     // fontFamily: 'roboto-300',
@@ -179,6 +226,7 @@ const styles = StyleSheet.create({
     color: 'rgba(39,170,225,1)',
     textDecorationLine: 'underline',
     marginTop: 37,
+    fontSize: 16,
   },
   materialButtonPrimary1: {
     width: 100,

@@ -4,32 +4,32 @@ import MaterialButtonPrimary from '../MaterialButtonPrimary';
 
 function TipsSettingRatesModal({onPress, visible}) {
   return (
-    <View style={styles.container}>
-      <Modal style={styles.modal} animationType="slide" visible={visible}>
-        <View styles={styles.modalView}>
-          <Text style={styles.loremIpsum}>Tips for setting Rates</Text>
-          <Text style={styles.loremIpsum2}>
-            Take a minute to consider average parking meter and parking lot
-            rates in your area and try to keep your rates competitive. This will
-            help you to get more reservations and earn more!
-          </Text>
-          <MaterialButtonPrimary
-            onPress={onPress}
-            caption="OK"
-            style={styles.materialButtonPrimary}></MaterialButtonPrimary>
-        </View>
-      </Modal>
-    </View>
+    <Modal style={styles.modal} animationType="slide" visible={visible}>
+      <View style={styles.container}>
+        {/* <View styles={styles.modalView}> */}
+        <Text style={styles.heading}>Tips for setting Rates</Text>
+        <Text style={styles.loremIpsum2}>
+          Take a minute to consider average parking meter and parking lot rates
+          in your area and try to keep your rates competitive. This will help
+          you to get more reservations and earn more!
+        </Text>
+        <MaterialButtonPrimary
+          onPress={onPress}
+          caption="OK"
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
+        {/* </View> */}
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    // justifyContent: 'center',
+    // backgroundColor: 'rgba(0,0,0,0.6)',
     width: '100%',
+    padding: 25,
   },
   modalView: {
     width: '80%',
@@ -38,26 +38,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loremIpsum: {
-    // fontFamily: 'roboto-500',
-    color: 'rgba(39,170,225,1)',
-    fontSize: 17,
-    marginTop: 24,
-    alignSelf: 'center',
+  heading: {
+    color: '#27aae1',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 30,
+    marginVertical: 10,
+    textAlign: 'center',
   },
   loremIpsum2: {
     // fontFamily: 'roboto-regular',
     color: '#121212',
-    lineHeight: 18,
-    marginTop: 23,
+    fontSize: 20,
+    lineHeight: 22,
+    marginTop: 21,
+    textAlign: 'center',
     alignSelf: 'center',
-    marginHorizontal: 30,
   },
   materialButtonPrimary: {
-    width: 100,
-    height: 36,
+    width: 120,
+    height: 40,
     backgroundColor: 'rgba(39,170,225,1)',
-    marginTop: 23,
+    marginTop: 50,
     // marginLeft: 106,
     alignSelf: 'center',
   },

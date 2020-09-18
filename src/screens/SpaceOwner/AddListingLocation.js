@@ -1,4 +1,4 @@
-import React, {Component, useState, useRef} from 'react';
+import React, {Component, useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -21,21 +21,48 @@ import {connect} from 'react-redux';
 import {Picker} from '@react-native-community/picker';
 import ImagePicker from 'react-native-image-picker';
 import RadioButton from '../../components/RadioButton';
+import NextButton from '../../components/SpaceOwner/NextButton';
+import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
+import Input from '../../components/Input';
+import RadioListItem from '../../components/RadioListItem';
 
-function AddListingLocation({navigation, addListingLocation}) {
+function AddListingLocation({
+  onBackButtonPress,
+  onNextButtonPress,
+  addListingLocation,
+  locationDetails,
+}) {
   const scrollRef = useRef();
 
   const [activeIndex, setActiveIndex] = useState(1);
 
-  const [listingType, setListingType] = useState('Business');
-  const [propertyType, setPropertyType] = useState('Driveway');
-  const [propertyName, setPropertyName] = useState('');
-  const [country, setCountry] = useState('');
-  const [address, setAddress] = useState('');
-  const [unitNum, setUnitNum] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  // const [width, setWidth] = useState(0);
+
+  const [listingType, setListingType] = useState(
+    locationDetails ? locationDetails.listingType : 'Business',
+  );
+  const [propertyType, setPropertyType] = useState(
+    locationDetails ? locationDetails.propertyType : 'Driveway',
+  );
+  const [propertyName, setPropertyName] = useState(
+    locationDetails ? locationDetails.propertyName : '',
+  );
+  const [country, setCountry] = useState(
+    locationDetails ? locationDetails.country : '',
+  );
+  const [address, setAddress] = useState(
+    locationDetails ? locationDetails.address : '',
+  );
+  const [unitNum, setUnitNum] = useState(
+    locationDetails ? locationDetails.unitNum : '',
+  );
+  const [city, setCity] = useState(locationDetails ? locationDetails.city : '');
+  const [state, setState] = useState(
+    locationDetails ? locationDetails.state : '',
+  );
+  const [postalCode, setPostalCode] = useState(
+    locationDetails ? locationDetails.postalCode : '',
+  );
   const [countryCodes, setCountryCodes] = useState([
     {code: '+93', country: 'Afghanistan'},
     {code: '+358', country: 'Aland Islands'},
@@ -84,15 +111,25 @@ function AddListingLocation({navigation, addListingLocation}) {
     {code: '+84', country: 'United States'},
     {code: '+263', country: 'Zimbabwe'},
   ]);
-  const [code, setCode] = useState(countryCodes[0].code);
-  const [phone, setPhone] = useState('');
+  const [code, setCode] = useState(
+    locationDetails ? locationDetails.code : countryCodes[0].code,
+  );
+  const [phone, setPhone] = useState(
+    locationDetails ? locationDetails.phone : '',
+  );
 
-  const [marker, setMarker] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-  });
+  const [marker, setMarker] = useState(
+    locationDetails
+      ? locationDetails.latlng
+      : {
+          latitude: 37.78825,
+          longitude: -122.4324,
+        },
+  );
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(
+    locationDetails ? locationDetails.images : [],
+  );
 
   const [featureList, setFeatureList] = useState([
     '24/7 access',
@@ -108,7 +145,9 @@ function AddListingLocation({navigation, addListingLocation}) {
     'Unpaved',
     'Valet',
   ]);
-  const [features, setFeatures] = useState([]);
+  const [features, setFeatures] = useState(
+    locationDetails ? locationDetails.features : [],
+  );
 
   const toggleFeatures = (feature) => {
     if (features.includes(feature)) {
@@ -155,6 +194,8 @@ function AddListingLocation({navigation, addListingLocation}) {
         y: 0,
         animated: true,
       });
+    } else {
+      onBackButtonPress();
     }
   };
 
@@ -177,7 +218,9 @@ function AddListingLocation({navigation, addListingLocation}) {
           city &&
           state &&
           postalCode &&
-          phone
+          code &&
+          phone &&
+          marker
         ) {
           let locationData = {
             listingType,
@@ -188,7 +231,8 @@ function AddListingLocation({navigation, addListingLocation}) {
             city,
             state,
             postalCode,
-            phoneNumber: `${code}${phone}`,
+            code,
+            phone,
             latlng: marker,
             propertyType,
             images,
@@ -197,7 +241,8 @@ function AddListingLocation({navigation, addListingLocation}) {
 
           addListingLocation(locationData);
 
-          navigation.navigate('AddListingSpaceDetails');
+          // navigation.navigate('AddListingSpaceDetails');
+          onNextButtonPress();
         } else {
           Alert.alert('Missing Inputs', 'Please fill all required inputs');
         }
@@ -208,13 +253,18 @@ function AddListingLocation({navigation, addListingLocation}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
-      <Text style={styles.addAListing}>Add a Listing</Text>
-      <Text style={styles.location}>Location</Text>
-      {activeIndex == 1 && (
-        <>
-          <Text style={styles.listingType}>Listing Type</Text>
-          {/* <View style={styles.rect}>
+    <>
+      <AddListingHeader
+        onPress={backButtonHandler}
+        icon={activeIndex == 1 ? 'close' : 'arrowleft'}
+      />
+      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+        {activeIndex == 1 && (
+          <>
+            {/* <Text style={styles.heading}>Let's add a Listing</Text> */}
+            {/* <Text style={styles.location}>Location</Text> */}
+            <Text style={styles.heading}>Choose a Listing Type</Text>
+            {/* <View style={styles.rect}>
             <View style={styles.rect2Row}>
               <TouchableOpacity
                 style={listingType == 1 ? styles.activeTab : styles.inactiveTab}
@@ -254,291 +304,299 @@ function AddListingLocation({navigation, addListingLocation}) {
               </TouchableOpacity>
             </View>
           </View> */}
-          <Picker
-            selectedValue={listingType}
-            style={styles.picker}
-            onValueChange={(itemValue, itemIndex) => setListingType(itemValue)}>
-            <Picker.Item label="Business" value="Business" />
-            <Picker.Item label="Residential" value="Residential" />
-            <Picker.Item label="Others" value="Others" />
-          </Picker>
-          <TextInput
-            placeholder="Business/Property Name"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.textInput}
-            value={propertyName}
-            onChangeText={(input) => setPropertyName(input)}></TextInput>
-        </>
-      )}
-      {activeIndex == 2 && (
-        <>
-          <Text style={styles.listingAddress}>Listing Address</Text>
-          <TextInput
-            placeholder="Country"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={country}
-            onChangeText={(input) => setCountry(input)}></TextInput>
-          <TextInput
-            placeholder="Address"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={address}
-            onChangeText={(input) => setAddress(input)}></TextInput>
-          <TextInput
-            placeholder="Unit #"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={unitNum}
-            onChangeText={(input) => setUnitNum(input)}></TextInput>
-          <TextInput
-            placeholder="City/Town"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={city}
-            onChangeText={(input) => setCity(input)}></TextInput>
-          <TextInput
-            placeholder="State/Province"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={state}
-            onChangeText={(input) => setState(input)}></TextInput>
-          <TextInput
-            placeholder="Postal Code"
-            placeholderTextColor="rgba(182,182,182,1)"
-            style={styles.placeholder}
-            value={postalCode}
-            onChangeText={(input) => setPostalCode(input)}></TextInput>
-          <View style={styles.phone}>
-            <Picker
-              selectedValue={code}
-              style={{width: 120, marginTop: 20}}
-              onValueChange={(itemValue, itemIndex) => setCode(itemValue)}>
-              {countryCodes.map((item) => (
-                <Picker.Item
-                  key={item}
-                  label={`${item.code}  ${item.country}`}
-                  value={item.code}
-                />
-              ))}
-            </Picker>
-            <TextInput
-              placeholder="Phone Number"
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={listingType}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setListingType(itemValue)
+                }>
+                <Picker.Item label="Business" value="Business" />
+                <Picker.Item label="Residential" value="Residential" />
+                <Picker.Item label="Others" value="Others" />
+              </Picker>
+            </View>
+            <Input
+              placeholder="Property Name"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.textInput}
+              value={propertyName}
+              onChangeText={(input) => setPropertyName(input)}></Input>
+          </>
+        )}
+        {activeIndex == 2 && (
+          <>
+            <Text style={styles.heading}>Listing Address</Text>
+            <Input
+              placeholder="Country"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
-              value={phone}
-              onChangeText={(input) => setPhone(input)}></TextInput>
-          </View>
-        </>
-      )}
-      {activeIndex == 3 && (
-        <>
-          <Text style={styles.listingAddress}>
-            Mark your location on the map
-          </Text>
+              value={country}
+              onChangeText={(input) => setCountry(input)}></Input>
+            <Input
+              placeholder="Address"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={address}
+              onChangeText={(input) => setAddress(input)}></Input>
+            <Input
+              placeholder="Unit #"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={unitNum}
+              onChangeText={(input) => setUnitNum(input)}></Input>
+            <Input
+              placeholder="City/Town"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={city}
+              onChangeText={(input) => setCity(input)}></Input>
+            <Input
+              placeholder="State/Province"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={state}
+              onChangeText={(input) => setState(input)}></Input>
+            <Input
+              placeholder="Postal Code"
+              placeholderTextColor="rgba(182,182,182,1)"
+              style={styles.placeholder}
+              value={postalCode}
+              onChangeText={(input) => setPostalCode(input)}></Input>
+            <View style={styles.phone}>
+              {/* <View style={styles.pickerContainer}> */}
+              <Picker
+                selectedValue={code}
+                style={{width: 120, marginTop: 10}}
+                onValueChange={(itemValue, itemIndex) => setCode(itemValue)}>
+                {countryCodes.map((item) => (
+                  <Picker.Item
+                    key={item}
+                    label={`${item.code}  ${item.country}`}
+                    value={item.code}
+                  />
+                ))}
+              </Picker>
+              {/* </View> */}
 
-          <MapView
-            provider={MapView.PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            onPress={(event) => {
-              console.log(event.nativeEvent);
-              setMarker({
-                latitude: event.nativeEvent.coordinate.latitude,
-                longitude: event.nativeEvent.coordinate.longitude,
-              });
-            }}
-            customMapStyle={[
-              {
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#f5f5f5',
-                  },
-                ],
-              },
-              {
-                elementType: 'labels.icon',
-                stylers: [
-                  {
-                    visibility: 'off',
-                  },
-                ],
-              },
-              {
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#616161',
-                  },
-                ],
-              },
-              {
-                elementType: 'labels.text.stroke',
-                stylers: [
-                  {
-                    color: '#f5f5f5',
-                  },
-                ],
-              },
-              {
-                featureType: 'administrative.land_parcel',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#bdbdbd',
-                  },
-                ],
-              },
-              {
-                featureType: 'poi',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#eeeeee',
-                  },
-                ],
-              },
-              {
-                featureType: 'poi',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#757575',
-                  },
-                ],
-              },
-              {
-                featureType: 'poi.park',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#e5e5e5',
-                  },
-                ],
-              },
-              {
-                featureType: 'poi.park',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#9e9e9e',
-                  },
-                ],
-              },
-              {
-                featureType: 'road',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#ffffff',
-                  },
-                ],
-              },
-              {
-                featureType: 'road.arterial',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#757575',
-                  },
-                ],
-              },
-              {
-                featureType: 'road.highway',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#dadada',
-                  },
-                ],
-              },
-              {
-                featureType: 'road.highway',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#616161',
-                  },
-                ],
-              },
-              {
-                featureType: 'road.local',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#9e9e9e',
-                  },
-                ],
-              },
-              {
-                featureType: 'transit.line',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#e5e5e5',
-                  },
-                ],
-              },
-              {
-                featureType: 'transit.station',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#eeeeee',
-                  },
-                ],
-              },
-              {
-                featureType: 'water',
-                elementType: 'geometry',
-                stylers: [
-                  {
-                    color: '#c9c9c9',
-                  },
-                ],
-              },
-              {
-                featureType: 'water',
-                elementType: 'labels.text.fill',
-                stylers: [
-                  {
-                    color: '#9e9e9e',
-                  },
-                ],
-              },
-            ]}
-            style={styles.mapView}>
-            <Marker coordinate={marker}></Marker>
-          </MapView>
-        </>
-      )}
+              <TextInput
+                placeholder="Phone Number"
+                placeholderTextColor="rgba(182,182,182,1)"
+                style={styles.placeholder}
+                value={phone}
+                onChangeText={(input) => setPhone(input)}></TextInput>
+            </View>
+          </>
+        )}
+        {activeIndex == 3 && (
+          <>
+            <Text style={styles.heading}>Mark your location on the map</Text>
 
-      {activeIndex == 4 && (
-        <>
-          <Text style={styles.propertyType}>Property Type</Text>
-          <Picker
-            selectedValue={propertyType}
-            style={styles.picker}
-            onValueChange={(itemValue, itemIndex) =>
-              setPropertyType(itemValue)
-            }>
-            <Picker.Item label="Driveway" value="Driveway" />
-            <Picker.Item
-              label="Residential Garage"
-              value="Residential Garage"
-            />
-            <Picker.Item label="Open Air Lot" value="Open Air Lot" />
-            <Picker.Item
-              label="Commercial Parking Structure"
-              value="Commercial Parking Structure"
-            />
-          </Picker>
-          {/* <View style={styles.rect5}>
+            <MapView
+              style={styles.map}
+              provider={MapView.PROVIDER_GOOGLE}
+              initialRegion={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              onPress={(event) => {
+                console.log(event.nativeEvent);
+                setMarker({
+                  latitude: event.nativeEvent.coordinate.latitude,
+                  longitude: event.nativeEvent.coordinate.longitude,
+                });
+              }}
+              customMapStyle={[
+                {
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#f5f5f5',
+                    },
+                  ],
+                },
+                {
+                  elementType: 'labels.icon',
+                  stylers: [
+                    {
+                      visibility: 'off',
+                    },
+                  ],
+                },
+                {
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#616161',
+                    },
+                  ],
+                },
+                {
+                  elementType: 'labels.text.stroke',
+                  stylers: [
+                    {
+                      color: '#f5f5f5',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'administrative.land_parcel',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#bdbdbd',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'poi',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#eeeeee',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'poi',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#757575',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'poi.park',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#e5e5e5',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'poi.park',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#9e9e9e',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'road',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#ffffff',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'road.arterial',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#757575',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#dadada',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'road.highway',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#616161',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'road.local',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#9e9e9e',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'transit.line',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#e5e5e5',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'transit.station',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#eeeeee',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'geometry',
+                  stylers: [
+                    {
+                      color: '#c9c9c9',
+                    },
+                  ],
+                },
+                {
+                  featureType: 'water',
+                  elementType: 'labels.text.fill',
+                  stylers: [
+                    {
+                      color: '#9e9e9e',
+                    },
+                  ],
+                },
+              ]}
+              style={styles.mapView}>
+              <Marker coordinate={marker}></Marker>
+            </MapView>
+          </>
+        )}
+
+        {activeIndex == 4 && (
+          <>
+            <Text style={styles.heading}>Choose a Property Type</Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={propertyType}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setPropertyType(itemValue)
+                }>
+                <Picker.Item label="Driveway" value="Driveway" />
+                <Picker.Item
+                  label="Residential Garage"
+                  value="Residential Garage"
+                />
+                <Picker.Item label="Open Air Lot" value="Open Air Lot" />
+                <Picker.Item
+                  label="Commercial Parking Structure"
+                  value="Commercial Parking Structure"
+                />
+              </Picker>
+            </View>
+            {/* <View style={styles.rect5}>
             <View style={styles.rect6Row}>
               <TouchableOpacity
                 style={
@@ -622,25 +680,25 @@ function AddListingLocation({navigation, addListingLocation}) {
               </TouchableOpacity>
             </View>
           </View> */}
-        </>
-      )}
+          </>
+        )}
 
-      {activeIndex == 5 && (
-        <>
-          <Text style={styles.loremIpsum2}>Add photos of this Listing</Text>
-          <TouchableOpacity
-            style={styles.addPhotoBtn}
-            onPress={imagePickerHandler}>
-            <Text style={styles.addPhotoBtnText}>Add Photos</Text>
-          </TouchableOpacity>
+        {activeIndex == 5 && (
+          <>
+            <Text style={styles.heading}>Add photos of this Listing</Text>
+            <TouchableOpacity
+              style={styles.addPhotoBtn}
+              onPress={imagePickerHandler}>
+              <Text style={styles.addPhotoBtnText}>+ Add Photos</Text>
+            </TouchableOpacity>
 
-          <View style={styles.imageList}>
-            {images.map((item) => (
-              <Image key={item.uri} source={item} style={styles.image} />
-            ))}
-          </View>
+            <View style={styles.imageList}>
+              {images.map((item) => (
+                <Image key={item.uri} source={item} style={styles.image} />
+              ))}
+            </View>
 
-          {/* <View style={styles.rect10Stack}>
+            {/* <View style={styles.rect10Stack}>
             <View style={styles.rect10}>
               <View style={styles.rect11Row}>
                 <TouchableOpacity style={styles.rect11}>
@@ -658,26 +716,25 @@ function AddListingLocation({navigation, addListingLocation}) {
               <Text style={styles.parkingSpaceStal}>Parking Space/Stal</Text>
             </View>
           </View> */}
-        </>
-      )}
+          </>
+        )}
 
-      {activeIndex == 6 && (
-        <>
-          <Text style={styles.listingFeatures}>Listing Features</Text>
-          <View style={styles.features}>
-            {featureList.map((item) => (
-              <View style={styles.feature} key={item}>
-                <Text style={styles.featureText}>{item}</Text>
-                <RadioButton
+        {activeIndex == 6 && (
+          <>
+            <Text style={styles.heading}>What features will you offer?</Text>
+            <View style={styles.features}>
+              {featureList.map((item) => (
+                <RadioListItem
+                  key={item}
+                  label={item}
                   checked={features.includes(item)}
                   onPress={() => {
                     toggleFeatures(item);
                   }}
                 />
-              </View>
-            ))}
-          </View>
-          {/* <View style={styles.rect14}>
+              ))}
+            </View>
+            {/* <View style={styles.rect14}>
             <View style={styles.rect15Row}>
               <View style={styles.rect15}>
                 <Text style={styles.loremIpsum4}>24/7 access</Text>
@@ -729,22 +786,25 @@ function AddListingLocation({navigation, addListingLocation}) {
               </View>
             </View>
           </View> */}
-        </>
-      )}
+          </>
+        )}
 
-      <View style={styles.btnRow}>
-        {activeIndex != 1 && (
+        {/* <View style={styles.btnRow}> */}
+        {/* {activeIndex != 1 && (
           <TouchableOpacity onPress={backButtonHandler}>
             <Text style={styles.backBtnText}>Back</Text>
           </TouchableOpacity>
-        )}
+        )} */}
 
-        <MaterialButtonPrimary
+        {/* <MaterialButtonPrimary
           onPress={onSubmitHandler}
           caption="NEXT"
-          style={styles.materialButtonPrimary}></MaterialButtonPrimary>
-      </View>
-    </ScrollView>
+          style={styles.materialButtonPrimary}></MaterialButtonPrimary> */}
+
+        {/* </View> */}
+      </ScrollView>
+      <NextButton onPress={onSubmitHandler} />
+    </>
   );
 }
 
@@ -754,28 +814,42 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     minHeight: Dimensions.get('window').height,
+    zIndex: 0,
+    paddingVertical: 80,
   },
-  addAListing: {
+  heading: {
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
-    fontSize: 24,
+    fontSize: 30,
+    fontWeight: '700',
+    marginBottom: 10,
   },
   location: {
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
-    fontSize: 18,
+    fontSize: 24,
     marginTop: 17,
+    fontWeight: '500',
+
     // marginLeft: 23,
+  },
+  pickerContainer: {
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    marginBottom: 10,
   },
   picker: {
     width: '100%',
-    marginVertical: 10,
+    // marginVertical: 10,
+    // fontSize: 18,
   },
-  listingType: {
+  label: {
     // fontFamily: 'roboto-500',
     color: '#121212',
-    fontSize: 16,
-    marginTop: 19,
+    fontSize: 18,
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: '700',
     // marginLeft: 24,
   },
   rect: {
@@ -883,19 +957,23 @@ const styles = StyleSheet.create({
     color: '#121212',
     height: 45,
     width: '100%',
-    marginTop: 26,
-    borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1,
+    // marginTop: 26,
+    // borderBottomColor: '#d6d6d6',
+    // borderBottomWidth: 1,
+    fontSize: 18,
     // marginLeft: 23,
   },
   phone: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: '100%',
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
   },
   mapView: {
-    height: 290,
+    height: 400,
     width: 375,
-    marginTop: 41,
+    marginTop: 21,
   },
   propertyType: {
     // fontFamily: 'roboto-500',

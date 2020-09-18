@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Modal} from 'react-native';
+import {StyleSheet, View, Text, Modal, ScrollView} from 'react-native';
 import MaterialButtonPrimary from '../MaterialButtonPrimary';
 
 function VariableVsFlatModal({visible, onPress}) {
   return (
-    <View style={styles.container}>
-      <Modal animationType="slide" visible={visible}>
-        <Text style={styles.loremIpsum}>Variable Rates Vs Flat Rates</Text>
-        <Text style={styles.loremIpsum2}>
+    <Modal animationType="slide" visible={visible}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.heading}>Variable Rates Vs Flat Rates</Text>
+        <Text style={styles.description}>
           Charging a flat rate means Guests will pay a fixed price per day
           regardless of how many hours they reserve. Variable rate means they
           will be charged based on the exact time they reserve.
         </Text>
-        <Text style={styles.loremIpsum3}>Which one should I use?</Text>
-        <Text style={styles.loremIpsum4}>
+        <Text style={styles.heading}>Which one should I use?</Text>
+        <Text style={styles.description}>
           If your listing is in an area where drivers need short term parking
           throughtout the day we recommend charging a variable rate to encourage
           more reservations. If your listing is near a venue and will be mostly
@@ -25,15 +25,29 @@ function VariableVsFlatModal({visible, onPress}) {
           onPress={onPress}
           caption="OK"
           style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      </Modal>
-    </View>
+      </ScrollView>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
+    // flex: 1,
+    padding: 25,
+  },
+  heading: {
+    color: '#27aae1',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 30,
+    marginVertical: 10,
+    // textAlign: 'center',
+  },
+  subHeading: {
+    color: '#27aae1',
+    fontSize: 20,
+    fontWeight: '700',
+    marginTop: 20,
   },
   loremIpsum: {
     // fontFamily: 'roboto-500',
@@ -43,14 +57,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '700',
   },
-  loremIpsum2: {
+  description: {
     // fontFamily: 'roboto-regular',
     color: '#121212',
-    lineHeight: 18,
+    fontSize: 20,
+    lineHeight: 22,
     marginTop: 21,
-    textAlign: 'center',
+    // textAlign: 'center',
     alignSelf: 'center',
-    marginHorizontal: 30,
+    // marginHorizontal: 30,
   },
   loremIpsum3: {
     // fontFamily: 'roboto-500',
@@ -70,10 +85,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   materialButtonPrimary1: {
-    width: 100,
-    height: 36,
+    width: 120,
+    height: 40,
     backgroundColor: 'rgba(39,170,225,1)',
-    marginTop: 45,
+    marginVertical: 45,
     alignSelf: 'center',
   },
 });

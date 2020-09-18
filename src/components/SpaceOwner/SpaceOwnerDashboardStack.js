@@ -14,6 +14,7 @@ import SaveSpaceDetails from '../../screens/SpaceOwner/SaveSpaceDetails';
 import CustomSchedule from '../../screens/SpaceOwner/CustomSchedule';
 import HeaderLogo from '../HeaderLogo';
 import MenuButton from '../MenuButton';
+import AddListing from '../../screens/SpaceOwner/AddListing';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,13 @@ const SpaceOwnerDashboardStack = () => {
         })}
       />
       <Stack.Screen
+        name="AddListing"
+        component={AddListing}
+        // options={({navigation}) => ({
+        //   headerTitle: () => <HeaderLogo />,
+        // })}
+      />
+      {/* <Stack.Screen
         name="AddListingLocation"
         component={AddListingLocation}
         options={({navigation}) => ({
@@ -112,7 +120,7 @@ const SpaceOwnerDashboardStack = () => {
         options={({navigation}) => ({
           headerTitle: () => <HeaderLogo />,
         })}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

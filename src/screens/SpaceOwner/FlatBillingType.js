@@ -13,10 +13,23 @@ import {connect} from 'react-redux';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import TipsSettingRatesModal from '../../components/SpaceOwner/TipsSettingRatesModal';
 import {setListingPricingDetails} from '../../actions/listing';
+import NextButton from '../../components/SpaceOwner/NextButton';
+import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
 
-function FlatBillingType({navigation, setListingPricingDetails}) {
-  const [dailyMax, setDailyMax] = useState('$ 5.00');
+function FlatBillingType({
+  onBackButtonPress,
+  onNextButtonPress,
+  setListingPricingDetails,
+  pricingDetails,
+}) {
+  const [dailyMax, setDailyMax] = useState(
+    pricingDetails ? pricingDetails.pricingRates.dailyMax : '$ 5.00',
+  );
   const [visible, setVisible] = useState(false);
+
+  const backButtonHandler = () => {
+    onBackButtonPress();
+  };
 
   const onSubmitHandler = () => {
     try {
@@ -28,7 +41,8 @@ function FlatBillingType({navigation, setListingPricingDetails}) {
           },
         };
         setListingPricingDetails(pricingDetails);
-        navigation.navigate('SaveSpaceDetails');
+        // navigation.navigate('SaveSpaceDetails');
+        onNextButtonPress(2);
       } else {
         Alert.alert('Missing Inputs', 'Please fill all required inputs');
       }
@@ -38,30 +52,36 @@ function FlatBillingType({navigation, setListingPricingDetails}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.setPricing1}>Set Pricing</Text>
-      <Text style={styles.loremIpsum}>Set your desired rates</Text>
-      <Text style={styles.flatBillingType}>Flat Billing Type</Text>
-      <Text style={styles.dailyMaximum}>Daily Maximum</Text>
-      <TextInput
-        placeholder="placeholder"
-        value={dailyMax}
-        onChangeText={(input) => setDailyMax(input)}
-        style={styles.placeholder}></TextInput>
-      <TouchableOpacity onPress={() => setVisible(true)}>
-        <Text style={styles.loremIpsum2}>
-          Tips for setting appropriate rates
-        </Text>
-      </TouchableOpacity>
-      <MaterialButtonPrimary
+    <>
+      <AddListingHeader onPress={backButtonHandler} />
+
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* <Text style={styles.setPricing1}>Set Pricing</Text> */}
+        <Text style={styles.heading}>Set your desired rates</Text>
+        <Text style={styles.subHeading}>Flat Billing Type</Text>
+        <Text style={styles.dailyMaximum}>Daily Maximum</Text>
+        <TextInput
+          placeholder="placeholder"
+          value={dailyMax}
+          onChangeText={(input) => setDailyMax(input)}
+          style={styles.placeholder}></TextInput>
+        <TouchableOpacity onPress={() => setVisible(true)}>
+          <Text style={styles.loremIpsum2}>
+            Tips for setting appropriate rates
+          </Text>
+        </TouchableOpacity>
+        {/* <MaterialButtonPrimary
         onPress={onSubmitHandler}
         caption="NEXT"
-        style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      <TipsSettingRatesModal
-        visible={visible}
-        onPress={() => setVisible(false)}
-      />
-    </ScrollView>
+        style={styles.materialButtonPrimary1}></MaterialButtonPrimary> */}
+
+        <TipsSettingRatesModal
+          visible={visible}
+          onPress={() => setVisible(false)}
+        />
+      </ScrollView>
+      <NextButton onPress={onSubmitHandler} />
+    </>
   );
 }
 
@@ -71,11 +91,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     zIndex: 1,
+    paddingTop: 50,
   },
   setPricing1: {
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
+  },
+  heading: {
+    color: 'rgba(11,64,148,1)',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 30,
+    marginVertical: 20,
+  },
+  subHeading: {
+    color: '#27aae1',
+    fontSize: 20,
+    fontWeight: '700',
+    marginTop: 20,
   },
   loremIpsum: {
     // fontFamily: 'roboto-300',
@@ -111,6 +145,7 @@ const styles = StyleSheet.create({
     color: 'rgba(39,170,225,1)',
     textDecorationLine: 'underline',
     marginTop: 37,
+    fontSize: 16,
   },
   materialButtonPrimary1: {
     width: 100,

@@ -9,15 +9,30 @@ import {
   Alert,
 } from 'react-native';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
+import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
+import NextButton from '../../components/SpaceOwner/NextButton';
 
-function SetPricingType({navigation}) {
-  const [billingType, setBillingType] = useState(1);
+function SetPricingType({
+  onBackButtonPress,
+  onNextButtonPress,
+  pricingDetails,
+}) {
+  const [billingType, setBillingType] = useState(
+    pricingDetails ? (pricingDetails.pricingType == 'Flat' ? 1 : 0) : 1,
+  );
+
+  const backButtonHandler = () => {
+    onBackButtonPress();
+  };
+
   const onSubmitHandler = () => {
     try {
       if (billingType == 0) {
-        navigation.navigate('VariableBillingType');
+        // navigation.navigate('VariableBillingType');
+        onNextButtonPress(2);
       } else {
-        navigation.navigate('FlatBillingType');
+        // navigation.navigate('FlatBillingType');
+        onNextButtonPress();
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to set pricing type');
@@ -25,50 +40,55 @@ function SetPricingType({navigation}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.setPricing}>Set Pricing</Text>
-      <Text style={styles.loremIpsum}>
-        Choose how you want to charge for the bookings
-      </Text>
-      <View style={styles.rect}>
-        <View style={styles.variableRateColumnRow}>
-          <View style={styles.variableRateColumn}>
-            <Text style={styles.variableRate}>Variable Rate</Text>
-            <Text style={styles.loremIpsum2}>
-              Charge by length of reservation
-            </Text>
+    <>
+      <AddListingHeader onPress={backButtonHandler} />
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* <Text style={styles.setPricing}>Set Pricing</Text> */}
+        <Text style={styles.heading}>
+          Choose how you want to charge for the bookings
+        </Text>
+        <View style={styles.rect}>
+          <View style={styles.variableRateColumnRow}>
+            <View style={styles.variableRateColumn}>
+              <Text style={styles.subHeading}>Variable Rate</Text>
+              <Text style={styles.loremIpsum2}>
+                Charge by length of reservation
+              </Text>
+            </View>
+            <Switch
+              value={billingType == 0}
+              onValueChange={() => setBillingType(0)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
           </View>
-          <Switch
-            value={billingType == 0}
-            onValueChange={() => setBillingType(0)}
-            trackColor={{
-              true: 'rgba(39,170,225,1)',
-              false: 'rgba(230, 230, 230,1)',
-            }}
-            style={styles.switch}></Switch>
         </View>
-      </View>
-      <View style={styles.rect}>
-        <View style={styles.variableRateColumnRow}>
-          <View style={styles.variableRateColumn}>
-            <Text style={styles.variableRate}>Flat Rate only</Text>
-            <Text style={styles.loremIpsum2}>Charge a flat rate per day</Text>
+        <View style={styles.rect}>
+          <View style={styles.variableRateColumnRow}>
+            <View style={styles.variableRateColumn}>
+              <Text style={styles.subHeading}>Flat Rate only</Text>
+              <Text style={styles.loremIpsum2}>Charge a flat rate per day</Text>
+            </View>
+            <Switch
+              value={billingType == 1}
+              onValueChange={() => setBillingType(1)}
+              trackColor={{
+                true: 'rgba(39,170,225,1)',
+                false: 'rgba(230, 230, 230,1)',
+              }}
+              style={styles.switch}></Switch>
           </View>
-          <Switch
-            value={billingType == 1}
-            onValueChange={() => setBillingType(1)}
-            trackColor={{
-              true: 'rgba(39,170,225,1)',
-              false: 'rgba(230, 230, 230,1)',
-            }}
-            style={styles.switch}></Switch>
         </View>
-      </View>
-      <MaterialButtonPrimary
+
+        {/* <MaterialButtonPrimary
         onPress={onSubmitHandler}
         caption="NEXT"
-        style={styles.materialButtonPrimary}></MaterialButtonPrimary>
-    </ScrollView>
+        style={styles.materialButtonPrimary}></MaterialButtonPrimary> */}
+      </ScrollView>
+      <NextButton onPress={onSubmitHandler} />
+    </>
   );
 }
 
@@ -77,11 +97,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     minHeight: Dimensions.get('window').height,
+    paddingTop: 50,
   },
   setPricing: {
     // fontFamily: 'roboto-500',
     color: 'rgba(11,64,148,1)',
     fontSize: 24,
+  },
+  heading: {
+    color: 'rgba(11,64,148,1)',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 30,
+    marginVertical: 20,
+  },
+  subHeading: {
+    color: '#000',
+    fontSize: 20,
+    fontWeight: '500',
+    // marginTop: 40,
   },
   loremIpsum: {
     // fontFamily: 'roboto-regular',
@@ -91,7 +125,7 @@ const styles = StyleSheet.create({
   },
   rect: {
     width: '100%',
-    height: 58,
+    // height: 58,
     borderBottomWidth: 1,
     borderColor: 'rgba(214,214,214,1)',
     marginTop: 20,
@@ -108,13 +142,14 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   variableRateColumnRow: {
-    height: 42,
+    // height: 42,
     flexDirection: 'row',
     marginTop: 6,
     marginLeft: 1,
     marginRight: 9,
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingVertical: 10,
   },
   materialButtonPrimary: {
     width: 100,

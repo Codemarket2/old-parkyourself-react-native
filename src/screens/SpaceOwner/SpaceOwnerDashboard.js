@@ -71,7 +71,7 @@ function SpaceOwnerDashboard({navigation}) {
 
       <TouchableOpacity
         style={styles.rect2}
-        onPress={() => navigationHandler('AddListingLocation')}>
+        onPress={() => navigationHandler('AddListing')}>
         <View style={styles.wrapper}>
           <FontAwesomeIcon
             name="credit-card"
