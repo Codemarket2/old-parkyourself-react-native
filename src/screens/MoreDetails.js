@@ -27,6 +27,7 @@ function MoreDetails({route, listings, navigation, isSpaceOwner}) {
         spaceAvailable={spaceAvailable}
       />
       <MoreDetailsThree
+        locationDetails={locationDetails}
         spaceDetails={spaceDetails}
         pricingDetails={pricingDetails}
         navigation={navigation}

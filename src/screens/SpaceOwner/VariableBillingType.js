@@ -25,23 +25,39 @@ function VariableBillingType({
   setListingPricingDetails,
   pricingDetails,
 }) {
+  const [width, setWidth] = useState(
+    pricingDetails && pricingDetails.pricingType ? 100 : 0,
+  );
+
   const [perHourRate, setPerHourRate] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perHourRate : '$ 1.80',
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perHourRate
+      : '$ 1.80',
   );
   const [perDayRate, setPerDayRate] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perDayRate : '$ 13.00',
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perDayRate
+      : '$ 13.00',
   );
   const [perWeekRate, setPerWeekRate] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perWeekRate : '$ 60.00',
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perWeekRate
+      : '$ 60.00',
   );
   const [perMonthRate, setPerMonthRate] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perMonthRate : '$ 200.00',
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perMonthRate
+      : '$ 200.00',
   );
   const [perWeek, setPerWeek] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perWeek : false,
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perWeek
+      : false,
   );
   const [perMonth, setPerMonth] = useState(
-    pricingDetails ? pricingDetails.pricingRates.perMonth : true,
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.perMonth
+      : true,
   );
 
   const [visible1, setVisible1] = useState(false);
@@ -79,7 +95,7 @@ function VariableBillingType({
 
   return (
     <>
-      <AddListingHeader onPress={backButtonHandler} />
+      <AddListingHeader onPress={backButtonHandler} width={`${width}%`} />
 
       <ScrollView contentContainerStyle={styles.container}>
         {/* <Text style={styles.setPricing1}>Set Pricing</Text> */}

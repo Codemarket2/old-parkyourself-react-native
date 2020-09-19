@@ -33,62 +33,92 @@ function AddListingSpaceDetails({
 }) {
   const scrollRef = useRef();
 
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(
+    spaceDetails && spaceDetails.spaceType ? 6 : 1,
+  );
+
+  const [width, setWidth] = useState(
+    spaceDetails && spaceDetails.spaceType ? 100 : 0,
+  );
 
   const [parkingSpaceType, setParkingSpaceType] = useState(
-    spaceDetails ? spaceDetails.parkingSpaceType : 'Tandem',
+    spaceDetails && spaceDetails.spaceType ? spaceDetails.spaceType : 'Tandem',
   );
   const [qtyOfSpaces, setQtyOfSpaces] = useState(
-    spaceDetails ? spaceDetails.qtyOfSpaces : '',
+    spaceDetails && spaceDetails.qtyOfSpaces ? spaceDetails.qtyOfSpaces : '',
   );
   const [vehicleHeightLimit, setVehicleHeightLimit] = useState(
-    spaceDetails ? spaceDetails.vehicleHeightLimit : '',
+    spaceDetails && spaceDetails.vehicleHeightLimit
+      ? spaceDetails.vehicleHeightLimit
+      : '',
   );
   const [sameSizeSpaces, setSameSizeSpaces] = useState(
-    spaceDetails ? spaceDetails.sameSizeSpaces : false,
+    spaceDetails && spaceDetails.sameSizeSpaces
+      ? spaceDetails.sameSizeSpaces
+      : false,
   );
   const [motorcycle, setMotorcycle] = useState(
-    spaceDetails ? spaceDetails.vehicleSizes.motorcycle : false,
+    spaceDetails && spaceDetails.vehicleSizes
+      ? spaceDetails.vehicleSizes.motorcycle
+      : false,
   );
   const [compact, setCompact] = useState(
-    spaceDetails ? spaceDetails.vehicleSizes.compact : false,
+    spaceDetails && spaceDetails.vehicleSizes
+      ? spaceDetails.vehicleSizes.compact
+      : false,
   );
   const [midSized, setMidSized] = useState(
-    spaceDetails ? spaceDetails.vehicleSizes.midSized : false,
+    spaceDetails && spaceDetails.vehicleSizes
+      ? spaceDetails.vehicleSizes.midSized
+      : false,
   );
   const [large, setLarged] = useState(
-    spaceDetails ? spaceDetails.vehicleSizes.large : false,
+    spaceDetails && spaceDetails.vehicleSizes
+      ? spaceDetails.vehicleSizes.large
+      : false,
   );
   const [oversized, setOversized] = useState(
-    spaceDetails ? spaceDetails.vehicleSizes.oversized : false,
+    spaceDetails && spaceDetails.vehicleSizes
+      ? spaceDetails.vehicleSizes.oversized
+      : false,
   );
   const [visible, setVisible] = useState(false);
   const [motorcycleSpaces, setMotorcycleSpaces] = useState(
-    spaceDetails ? spaceDetails.motorcycleSpaces : '',
+    spaceDetails && spaceDetails.motorcycleSpaces
+      ? spaceDetails.motorcycleSpaces
+      : '',
   );
   const [compactSpaces, setCompactSpaces] = useState(
-    spaceDetails ? spaceDetails.compactSpaces : '',
+    spaceDetails && spaceDetails.compactSpaces
+      ? spaceDetails.compactSpaces
+      : '',
   );
   const [midsizedSpaces, setMidsizedSpaces] = useState(
-    spaceDetails ? spaceDetails.midsizedSpaces : '',
+    spaceDetails && spaceDetails.midsizedSpaces
+      ? spaceDetails.midsizedSpaces
+      : '',
   );
   const [largeSpaces, setLargeSpaces] = useState(
-    spaceDetails ? spaceDetails.largeSpaces : '',
+    spaceDetails && spaceDetails.largeSpaces ? spaceDetails.largeSpaces : '',
   );
   const [oversizedSpaces, setOversizedSpaces] = useState(
-    spaceDetails ? spaceDetails.oversizedSpaces : '',
+    spaceDetails && spaceDetails.oversizedSpaces
+      ? spaceDetails.oversizedSpaces
+      : '',
   );
   const [isLabelled, setIsLabelled] = useState(
-    spaceDetails ? spaceDetails.isLabelled : true,
+    spaceDetails && spaceDetails.isLabelled ? spaceDetails.isLabelled : true,
   );
   const [spaceLabels, setSpaceLabels] = useState(
-    spaceDetails ? spaceDetails.spaceLabels : [],
+    spaceDetails && spaceDetails.spaceLabels ? spaceDetails.spaceLabels : [],
   );
   const [aboutSpace, setAboutSpace] = useState(
-    spaceDetails ? spaceDetails.aboutSpace : '',
+    spaceDetails && spaceDetails.aboutSpace ? spaceDetails.aboutSpace : '',
   );
   const [accessInstructions, setAccessInstructions] = useState(
-    spaceDetails ? spaceDetails.accessInstructions : '',
+    spaceDetails && spaceDetails.accessInstructions
+      ? spaceDetails.accessInstructions
+      : '',
   );
 
   const setParkingSpaceInputs = (qty) => {
@@ -125,6 +155,7 @@ function AddListingSpaceDetails({
         y: 0,
         animated: true,
       });
+      setWidth(width - 20);
     } else {
       onBackButtonPress();
     }
@@ -138,6 +169,7 @@ function AddListingSpaceDetails({
           y: 0,
           animated: true,
         });
+        setWidth(width + 20);
       } else {
         if (
           parkingSpaceType &&
@@ -189,7 +221,7 @@ function AddListingSpaceDetails({
 
   return (
     <>
-      <AddListingHeader onPress={backButtonHandler} />
+      <AddListingHeader onPress={backButtonHandler} width={`${width}%`} />
       <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
         {/* <Text style={styles.addAListing1}>Add a Listing</Text> */}
         {/* <Text style={styles.spaceDetails}>Space Details</Text> */}

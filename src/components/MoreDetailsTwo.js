@@ -25,8 +25,8 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
         <MapView
           provider={MapView.PROVIDER_GOOGLE}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: latlng.latitude,
+            longitude: latlng.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}

@@ -15,6 +15,7 @@ import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import MyListingListItem from '../../components/SpaceOwner/MyListingListItem';
 
 function MyListings({navigation, listings}) {
+  console.log(listings);
   return (
     <View style={styles.container}>
       <View style={styles.myListings4Row}>

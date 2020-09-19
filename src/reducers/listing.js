@@ -1,9 +1,9 @@
-// import {v4 as uuidv4} from 'uuid';
 const {
   ADD_LISTING_LOCATION,
   ADD_LISTING_SPACE_AVAILABLE,
   ADD_LISTING_SPACE_DETAILS,
   SET_LISTING_PRICING_TYPE_AND_RATE,
+  CLEAR_LISTING,
 } = require('../actions/types');
 
 const initialState = {
@@ -42,6 +42,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         pricingDetails: payload,
+      };
+    }
+    case CLEAR_LISTING: {
+      return {
+        id: null,
+        locationDetails: {},
+        spaceDetails: {},
+        spaceAvailable: {},
+        pricingDetails: {},
+        bookings: [],
       };
     }
     default:

@@ -18,7 +18,15 @@ function SetPricingType({
   pricingDetails,
 }) {
   const [billingType, setBillingType] = useState(
-    pricingDetails ? (pricingDetails.pricingType == 'Flat' ? 1 : 0) : 1,
+    pricingDetails && pricingDetails.pricingType
+      ? pricingDetails.pricingType == 'Flat'
+        ? 1
+        : 0
+      : 1,
+  );
+
+  const [width, setWidth] = useState(
+    pricingDetails && pricingDetails.pricingType ? 100 : 0,
   );
 
   const backButtonHandler = () => {
@@ -41,7 +49,7 @@ function SetPricingType({
 
   return (
     <>
-      <AddListingHeader onPress={backButtonHandler} />
+      <AddListingHeader onPress={backButtonHandler} width={`${width}%`} />
       <ScrollView contentContainerStyle={styles.container}>
         {/* <Text style={styles.setPricing}>Set Pricing</Text> */}
         <Text style={styles.heading}>

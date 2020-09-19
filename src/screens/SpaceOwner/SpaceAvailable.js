@@ -22,6 +22,7 @@ import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
 import NextButton from '../../components/SpaceOwner/NextButton';
 import RadioListItem from '../../components/RadioListItem';
 import Input from '../../components/Input';
+import moment from 'moment';
 
 function SpaceAvailable({
   onBackButtonPress,
@@ -31,37 +32,65 @@ function SpaceAvailable({
 }) {
   const scrollRef = useRef();
 
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(
+    spaceAvailable && spaceAvailable.activeDays ? 6 : 1,
+  );
+
+  const [width, setWidth] = useState(
+    spaceAvailable && spaceAvailable.activeDays ? 100 : 0,
+  );
 
   const [monday, setMonday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.monday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.monday
+      : false,
   );
   const [tuesday, setTuesday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.tuesday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.tuesday
+      : false,
   );
   const [wednesday, setWednesday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.wednesday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.wednesday
+      : false,
   );
   const [thursday, setThursday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.thursday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.thursday
+      : false,
   );
   const [friday, setFriday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.friday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.friday
+      : false,
   );
   const [saturday, setSaturday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.saturday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.saturday
+      : false,
   );
   const [sunday, setSunday] = useState(
-    spaceAvailable ? spaceAvailable.activeDays.sunday : false,
+    spaceAvailable && spaceAvailable.activeDays
+      ? spaceAvailable.activeDays.sunday
+      : false,
   );
   const [scheduleType, setScheduleType] = useState(
-    spaceAvailable ? (spaceAvailable.scheduleType == 'daily' ? 1 : 2) : 1,
+    spaceAvailable && spaceAvailable.scheduleType
+      ? spaceAvailable.scheduleType == 'daily'
+        ? 1
+        : 2
+      : 1,
   );
   const [noticeTime, setNoticeTime] = useState(
-    spaceAvailable ? spaceAvailable.noticeTime : '1 Hour',
+    spaceAvailable && spaceAvailable.noticeTime
+      ? spaceAvailable.noticeTime
+      : '1 Hour',
   );
   const [advanceBookingTime, setAdvanceBookingTime] = useState(
-    spaceAvailable ? spaceAvailable.advanceBookingTime : '3 Hours',
+    spaceAvailable && spaceAvailable.advanceBookingTime
+      ? spaceAvailable.advanceBookingTime
+      : '3 Hours',
   );
   const [minTime, setMinTime] = useState(
     spaceAvailable && spaceAvailable.minTime ? spaceAvailable.minTime : 1,
@@ -70,12 +99,20 @@ function SpaceAvailable({
     spaceAvailable && spaceAvailable.maxTime ? spaceAvailable.maxTime : 30,
   );
   const [instantBooking, setInstantBooking] = useState(
-    spaceAvailable ? spaceAvailable.instantBooking : true,
+    spaceAvailable && spaceAvailable.instantBooking
+      ? spaceAvailable.instantBooking
+      : true,
   );
 
   // date picker
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState(
+    spaceAvailable && spaceAvailable.startTime
+      ? spaceAvailable.startTime
+      : null,
+  );
+  const [endTime, setEndTime] = useState(
+    spaceAvailable && spaceAvailable.endTime ? spaceAvailable.endTime : null,
+  );
   const [mode, setMode] = useState('time');
   const [showStart, setStartShow] = useState(false);
   const [showEnd, setEndShow] = useState(false);
@@ -117,6 +154,7 @@ function SpaceAvailable({
         y: 0,
         animated: true,
       });
+      setWidth(width - 20);
     } else {
       onBackButtonPress();
     }
@@ -130,6 +168,7 @@ function SpaceAvailable({
           y: 0,
           animated: true,
         });
+        setWidth(width + 20);
       } else {
         if (
           (monday ||
@@ -184,7 +223,7 @@ function SpaceAvailable({
 
   return (
     <>
-      <AddListingHeader onPress={backButtonHandler} />
+      <AddListingHeader onPress={backButtonHandler} width={`${width}%`} />
       <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
         {/* <Text style={styles.spaceAvailable}>Space Available</Text> */}
 
@@ -247,14 +286,14 @@ function SpaceAvailable({
                 style={styles.button2}
                 onPress={() => showDatepicker('start')}>
                 <Text style={styles.startTime} numberOfLines={1}>
-                  {startTime ? startTime.toString() : 'Start Time'}
+                  {startTime ? moment(startTime).format('lll') : 'Start Time'}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.button3}
                 onPress={() => showDatepicker('end')}>
                 <Text style={styles.endTime} numberOfLines={1}>
-                  {endTime ? endTime.toString() : 'End Time'}
+                  {endTime ? moment(endTime).format('lll') : 'End Time'}
                 </Text>
               </TouchableOpacity>
             </View>

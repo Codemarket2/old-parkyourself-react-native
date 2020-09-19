@@ -5,6 +5,7 @@ import MaterialButtonPrimary from '../components/MaterialButtonPrimary';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function MoreDetailsThree({
+  locationDetails,
   spaceDetails,
   pricingDetails,
   navigation,
@@ -17,6 +18,7 @@ export default function MoreDetailsThree({
     accessInstructions,
     spaceType,
   } = spaceDetails;
+  const {listingType} = locationDetails;
   const {pricingType, pricingRates} = pricingDetails;
   return (
     <Fragment>
@@ -85,7 +87,7 @@ export default function MoreDetailsThree({
           </View> */}
         </View>
         <Text style={styles.loremIpsum3}>
-          This parking space is a residential and {spaceType} parking type.
+          This parking space is a {listingType} and {spaceType} parking type.
         </Text>
         {vehicleHeightLimit && (
           <Text style={styles.loremIpsum4}>

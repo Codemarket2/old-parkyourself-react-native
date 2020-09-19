@@ -17,8 +17,10 @@ function SaveSpaceDetails({
   navigation,
   onBackButtonPress,
   saveSpaceDetails,
-  listing: {locationDetails, spaceDetails, spaceAvailable, pricingDetails},
+  listing,
 }) {
+  const {pricingDetails} = listing;
+
   const backButtonHandler = () => {
     if (pricingDetails.pricingType === 'Flat') {
       onBackButtonPress(2);
@@ -29,14 +31,14 @@ function SaveSpaceDetails({
 
   const onSubmitHandler = () => {
     try {
-      let listingData = {
-        locationDetails,
-        spaceDetails,
-        spaceAvailable,
-        pricingDetails,
-      };
-      console.log(listingData);
-      saveSpaceDetails(listingData);
+      // let listingData = {
+      //   locationDetails,
+      //   spaceDetails,
+      //   spaceAvailable,
+      //   pricingDetails,
+      // };
+      console.log(listing);
+      saveSpaceDetails(listing);
       navigation.navigate('SpaceOwnerDashboard');
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to set pricing details');

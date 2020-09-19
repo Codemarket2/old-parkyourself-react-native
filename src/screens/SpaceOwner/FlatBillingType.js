@@ -22,8 +22,14 @@ function FlatBillingType({
   setListingPricingDetails,
   pricingDetails,
 }) {
+  const [width, setWidth] = useState(
+    pricingDetails && pricingDetails.pricingType ? 100 : 0,
+  );
+
   const [dailyMax, setDailyMax] = useState(
-    pricingDetails ? pricingDetails.pricingRates.dailyMax : '$ 5.00',
+    pricingDetails && pricingDetails.pricingRates
+      ? pricingDetails.pricingRates.dailyMax
+      : '$ 5.00',
   );
   const [visible, setVisible] = useState(false);
 
@@ -53,7 +59,7 @@ function FlatBillingType({
 
   return (
     <>
-      <AddListingHeader onPress={backButtonHandler} />
+      <AddListingHeader onPress={backButtonHandler} width={`${width}%`} />
 
       <ScrollView contentContainerStyle={styles.container}>
         {/* <Text style={styles.setPricing1}>Set Pricing</Text> */}

@@ -4,6 +4,7 @@ const {
   ADD_LISTING_SPACE_DETAILS,
   ADD_LISTING_SPACE_AVAILABLE,
   SET_LISTING_PRICING_TYPE_AND_RATE,
+  CLEAR_LISTING,
 } = require('./types');
 
 export const addListingLocation = (data) => async (dispatch) => {
@@ -40,5 +41,9 @@ export const saveSpaceDetails = (data) => async (dispatch) => {
   dispatch({
     type: ADD_LISTING,
     payload: data,
+  });
+
+  dispatch({
+    type: CLEAR_LISTING,
   });
 };

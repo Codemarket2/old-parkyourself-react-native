@@ -11,7 +11,10 @@ export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
     city,
     state,
     postalCode,
+    images,
   } = locationDetails;
+
+  console.log(images);
 
   return (
     <Fragment>

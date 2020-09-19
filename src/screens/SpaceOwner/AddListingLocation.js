@@ -34,34 +34,46 @@ function AddListingLocation({
 }) {
   const scrollRef = useRef();
 
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(
+    locationDetails && locationDetails.listingType ? 6 : 1,
+  );
 
-  // const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(
+    locationDetails && locationDetails.listingType ? 100 : 0,
+  );
 
   const [listingType, setListingType] = useState(
-    locationDetails ? locationDetails.listingType : 'Business',
+    locationDetails && locationDetails.listingType
+      ? locationDetails.listingType
+      : 'Business',
   );
   const [propertyType, setPropertyType] = useState(
-    locationDetails ? locationDetails.propertyType : 'Driveway',
+    locationDetails && locationDetails.propertyType
+      ? locationDetails.propertyType
+      : 'Driveway',
   );
   const [propertyName, setPropertyName] = useState(
-    locationDetails ? locationDetails.propertyName : '',
+    locationDetails && locationDetails.propertyName
+      ? locationDetails.propertyName
+      : '',
   );
   const [country, setCountry] = useState(
-    locationDetails ? locationDetails.country : '',
+    locationDetails && locationDetails.country ? locationDetails.country : '',
   );
   const [address, setAddress] = useState(
-    locationDetails ? locationDetails.address : '',
+    locationDetails && locationDetails.address ? locationDetails.address : '',
   );
   const [unitNum, setUnitNum] = useState(
-    locationDetails ? locationDetails.unitNum : '',
+    locationDetails && locationDetails.unitNum ? locationDetails.unitNum : '',
   );
   const [city, setCity] = useState(locationDetails ? locationDetails.city : '');
   const [state, setState] = useState(
-    locationDetails ? locationDetails.state : '',
+    locationDetails && locationDetails.state ? locationDetails.state : '',
   );
   const [postalCode, setPostalCode] = useState(
-    locationDetails ? locationDetails.postalCode : '',
+    locationDetails && locationDetails.postalCode
+      ? locationDetails.postalCode
+      : '',
   );
   const [countryCodes, setCountryCodes] = useState([
     {code: '+93', country: 'Afghanistan'},
@@ -112,14 +124,16 @@ function AddListingLocation({
     {code: '+263', country: 'Zimbabwe'},
   ]);
   const [code, setCode] = useState(
-    locationDetails ? locationDetails.code : countryCodes[0].code,
+    locationDetails && locationDetails.code
+      ? locationDetails.code
+      : countryCodes[0].code,
   );
   const [phone, setPhone] = useState(
-    locationDetails ? locationDetails.phone : '',
+    locationDetails && locationDetails.phone ? locationDetails.phone : '',
   );
 
   const [marker, setMarker] = useState(
-    locationDetails
+    locationDetails && locationDetails.latlng
       ? locationDetails.latlng
       : {
           latitude: 37.78825,
@@ -128,7 +142,7 @@ function AddListingLocation({
   );
 
   const [images, setImages] = useState(
-    locationDetails ? locationDetails.images : [],
+    locationDetails && locationDetails.images ? locationDetails.images : [],
   );
 
   const [featureList, setFeatureList] = useState([
@@ -146,7 +160,7 @@ function AddListingLocation({
     'Valet',
   ]);
   const [features, setFeatures] = useState(
-    locationDetails ? locationDetails.features : [],
+    locationDetails && locationDetails.features ? locationDetails.features : [],
   );
 
   const toggleFeatures = (feature) => {
@@ -194,6 +208,7 @@ function AddListingLocation({
         y: 0,
         animated: true,
       });
+      setWidth(width - 20);
     } else {
       onBackButtonPress();
     }
@@ -207,6 +222,7 @@ function AddListingLocation({
           y: 0,
           animated: true,
         });
+        setWidth(width + 20);
       } else {
         if (
           listingType &&
@@ -257,6 +273,7 @@ function AddListingLocation({
       <AddListingHeader
         onPress={backButtonHandler}
         icon={activeIndex == 1 ? 'close' : 'arrowleft'}
+        width={`${width}%`}
       />
       <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
         {activeIndex == 1 && (
@@ -693,9 +710,10 @@ function AddListingLocation({
             </TouchableOpacity>
 
             <View style={styles.imageList}>
-              {images.map((item) => (
-                <Image key={item.uri} source={item} style={styles.image} />
-              ))}
+              {images &&
+                images.map((item) => (
+                  <Image key={item.uri} source={item} style={styles.image} />
+                ))}
             </View>
 
             {/* <View style={styles.rect10Stack}>
@@ -727,7 +745,7 @@ function AddListingLocation({
                 <RadioListItem
                   key={item}
                   label={item}
-                  checked={features.includes(item)}
+                  checked={features ? features.includes(item) : false}
                   onPress={() => {
                     toggleFeatures(item);
                   }}
