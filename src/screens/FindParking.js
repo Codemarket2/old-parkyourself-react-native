@@ -62,7 +62,7 @@ function FindParking({navigation, listings}) {
         item.pricingDetails.pricingType == 'Flat'
           ? item.pricingDetails.pricingRates.dailyMax
           : item.pricingDetails.pricingRates.perDayRate,
-      latlng: {latitude: 37.78 + index / 100, longitude: -122.43 + index / 100},
+      latlng: item.locationDetails.latlng,
       location: `${item.locationDetails.address}, ${item.locationDetails.city}, ${item.locationDetails.state}, ${item.locationDetails.postalCode}`,
     })),
   );
@@ -95,7 +95,7 @@ function FindParking({navigation, listings}) {
     <View style={styles.container}>
       {/* <View style={styles.mapViewStack}> */}
       <MapView
-        provider={MapView.PROVIDER_GOOGLE}
+        //provider={MapView.PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
@@ -283,7 +283,9 @@ function FindParking({navigation, listings}) {
         <TouchableOpacity
           style={styles.button2}
           onPress={() => {
+            if(markers.length>0){
             showSpecificCard(markers[0].id);
+            }
           }}>
           <EntypoIcon name="location-pin" style={styles.icon5}></EntypoIcon>
         </TouchableOpacity>

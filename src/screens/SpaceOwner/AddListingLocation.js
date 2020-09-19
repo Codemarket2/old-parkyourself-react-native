@@ -411,7 +411,7 @@ function AddListingLocation({
 
             <MapView
               style={styles.map}
-              provider={MapView.PROVIDER_GOOGLE}
+              //provider={MapView.PROVIDER_GOOGLE}
               initialRegion={{
                 latitude: marker.latitude,
                 longitude: marker.longitude,

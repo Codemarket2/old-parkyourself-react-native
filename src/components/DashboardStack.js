@@ -25,6 +25,7 @@ export default function DashboardStack() {
   return (
     <Stack.Navigator
       screenOptions={{
+        title:"",
         headerTitle: () => <HeaderLogo />,
         headerStyle: {
           elevation: 0,

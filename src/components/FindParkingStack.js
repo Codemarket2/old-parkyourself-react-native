@@ -19,6 +19,7 @@ export default function FindParkingStack({navigation}) {
   return (
     <Stack.Navigator
       screenOptions={{
+        title:"",
         headerTitle: () => <HeaderLogo />,
         headerStyle: {
           elevation: 0,

@@ -7,6 +7,9 @@ target 'ParkYourSelf_RN' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
+    
+
+  pod 'RNCPicker', :path => '../node_modules/@react-native-community/picker'
 
   target 'ParkYourSelf_RNTests' do
     inherit! :complete
@@ -21,7 +24,8 @@ target 'ParkYourSelf_RN' do
   post_install do |installer|
     flipper_post_install(installer)
   end
-end
+  end
+
 
 target 'ParkYourSelf_RN-tvOS' do
   # Pods for ParkYourSelf_RN-tvOS

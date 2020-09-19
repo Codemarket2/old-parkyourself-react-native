@@ -20,6 +20,7 @@ const MyListingsStack = () => {
         name="MyListingsScreen"
         component={MyListings}
         options={({navigation}) => ({
+          title:"",
           headerTitle: () => <HeaderLogo />,
           headerTitleAlign: 'center',
         })}

@@ -22,6 +22,7 @@ const SpaceOwnerDashboardStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        title:"",
         headerTitle: () => <HeaderLogo />,
         headerStyle: {
           elevation: 0,
@@ -32,6 +33,7 @@ const SpaceOwnerDashboardStack = () => {
         name="SpaceOwnerDashboard"
         component={SpaceOwnerDashboard}
         options={({navigation}) => ({
+          title:"",
           headerTitle: () => <HeaderLogo />,
           headerLeft: () => <MenuButton navigation={navigation} />,
           headerTitleAlign: 'center',
@@ -41,6 +43,7 @@ const SpaceOwnerDashboardStack = () => {
         name="CreateSpaceOwnerProfile"
         component={CreateSpaceOwnerProfile}
         options={({navigation}) => ({
+          title:"",
           headerTitle: () => <HeaderLogo />,
         })}
       />
@@ -48,6 +51,7 @@ const SpaceOwnerDashboardStack = () => {
         name="MyListings"
         component={MyListings}
         options={({navigation}) => ({
+          title:"",
           headerTitle: () => <HeaderLogo />,
         })}
       />
@@ -55,15 +59,17 @@ const SpaceOwnerDashboardStack = () => {
         name="ParkingOrders"
         component={ParkingOrders}
         options={({navigation}) => ({
+          title:"",
           headerTitle: () => <HeaderLogo />,
         })}
       />
       <Stack.Screen
         name="AddListing"
         component={AddListing}
-        // options={({navigation}) => ({
+         options={({navigation}) => ({
+           title:"",
         //   headerTitle: () => <HeaderLogo />,
-        // })}
+         })}
       />
       {/* <Stack.Screen
         name="AddListingLocation"

@@ -23,7 +23,7 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
           </TouchableOpacity>
         </View>
         <MapView
-          provider={MapView.PROVIDER_GOOGLE}
+          //provider={MapView.PROVIDER_GOOGLE}
           initialRegion={{
             latitude: latlng.latitude,
             longitude: latlng.longitude,
