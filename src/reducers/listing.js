@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
     case ADD_LISTING_LOCATION: {
       return {
         ...state,
-        id: Date.now(),
+        id: Date.now().toString(),
         locationDetails: payload,
       };
     }

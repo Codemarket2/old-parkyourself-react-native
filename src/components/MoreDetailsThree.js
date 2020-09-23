@@ -13,7 +13,7 @@ export default function MoreDetailsThree({
 }) {
   const {
     vehicleHeightLimit,
-    vehicleSizes: {motorcycle, compact, midSized, large, oversized},
+    vehicleSizes: {motorcycle, compact, midsized, large, oversized},
     aboutSpace,
     accessInstructions,
     spaceType,
@@ -46,7 +46,7 @@ export default function MoreDetailsThree({
               <Text style={styles.compact}>Compact</Text>
             </View>
           )}
-          {midSized && (
+          {midsized && (
             <View style={styles.rect2}>
               <FontAwesomeIcon
                 name="automobile"
@@ -70,30 +70,14 @@ export default function MoreDetailsThree({
               <Text style={styles.compact}>Oversized</Text>
             </View>
           )}
-
-          {/* <View style={styles.rect2}>
-            <FontAwesomeIcon
-              name='automobile'
-              style={styles.icon}
-            ></FontAwesomeIcon>
-            <Text style={styles.compact}>Compact</Text>
-          </View>
-          <View style={styles.rect3}>
-            <FontAwesomeIcon
-              name='automobile'
-              style={styles.icon1}
-            ></FontAwesomeIcon>
-            <Text style={styles.midSized}>Mid Sized</Text>
-          </View> */}
         </View>
         <Text style={styles.loremIpsum3}>
           This parking space is a {listingType} and {spaceType} parking type.
         </Text>
-        {vehicleHeightLimit && (
-          <Text style={styles.loremIpsum4}>
-            This parking has a {vehicleHeightLimit} height limit.
-          </Text>
-        )}
+        <Text style={styles.loremIpsum4}>
+          This parking has a {vehicleHeightLimit ? vehicleHeightLimit : 'no'}{' '}
+          height limit.
+        </Text>
       </View>
       <View style={styles.rect4}>
         <Text style={styles.loremIpsum5}>Things you should know</Text>
@@ -120,6 +104,7 @@ export default function MoreDetailsThree({
           <View style={styles.rect7Stack}>
             <View style={styles.rect7}>
               <Text style={styles.loremIpsum9}>
+                ${' '}
                 {pricingType == 'Flat'
                   ? pricingRates.dailyMax
                   : pricingRates.perHourRate}
@@ -149,7 +134,8 @@ export default function MoreDetailsThree({
 const styles = StyleSheet.create({
   rect: {
     width: '100%',
-    height: 279,
+    // height: 279,
+    paddingVertical: 20,
     backgroundColor: 'rgba(255,255,255,1)',
     marginTop: 20,
     // marginLeft: 16,
@@ -170,7 +156,7 @@ const styles = StyleSheet.create({
   loremIpsumRow: {
     height: 20,
     flexDirection: 'row',
-    marginTop: 18,
+    // marginTop: 18,
     marginLeft: 15,
     marginRight: 9,
   },
@@ -303,11 +289,11 @@ const styles = StyleSheet.create({
     // marginLeft: 16,
   },
   rect7: {
-    top: 0,
-    left: 0,
-    width: 126,
+    // top: 0,
+    // left: 0,
+    // width: 126,
     height: 42,
-    position: 'absolute',
+    // position: 'absolute',
   },
   loremIpsum9: {
     // fontFamily: 'roboto-900',
@@ -317,15 +303,17 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   perHour: {
-    top: 15,
-    left: 79,
-    position: 'absolute',
+    top: 5,
+    left: 5,
+    // position: 'absolute',
     // fontFamily: 'roboto-regular',
     color: '#121212',
     opacity: 0.53,
   },
   rect7Stack: {
-    width: 131,
+    // width: 131,
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 42,
   },
   materialButtonPrimary1: {
@@ -335,13 +323,14 @@ const styles = StyleSheet.create({
     // marginTop: 2,
   },
   rect7StackRow: {
-    height: 42,
+    padding: 10,
+    // height: 42,
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 15,
-    marginLeft: 14,
-    marginTop: 11,
+    // marginRight: 15,
+    // marginLeft: 14,
+    // marginTop: 11,
   },
 });

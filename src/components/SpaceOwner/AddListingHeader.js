@@ -2,7 +2,12 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 
-const AddListingHeader = ({onPress, width = '100%', icon = 'arrowleft'}) => {
+const AddListingHeader = ({
+  onPress,
+  width = '100%',
+  icon = 'arrowleft',
+  onPressSaveAndExit,
+}) => {
   const onSaveAndExit = () => {
     Alert.alert(
       'Do you really want to exit?',
@@ -15,7 +20,7 @@ const AddListingHeader = ({onPress, width = '100%', icon = 'arrowleft'}) => {
         },
         {
           text: 'OK',
-          onPress: onPress,
+          onPress: onPressSaveAndExit,
         },
       ],
       {cancelable: false},

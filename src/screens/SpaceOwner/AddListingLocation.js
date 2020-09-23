@@ -9,6 +9,7 @@ import {
   Alert,
   Dimensions,
   Image,
+  Modal,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import MapView, {Marker} from 'react-native-maps';
@@ -25,6 +26,7 @@ import NextButton from '../../components/SpaceOwner/NextButton';
 import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
 import Input from '../../components/Input';
 import RadioListItem from '../../components/RadioListItem';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 function AddListingLocation({
   onBackButtonPress,
@@ -42,6 +44,107 @@ function AddListingLocation({
     locationDetails && locationDetails.listingType ? 100 : 0,
   );
 
+  const [validate, setValidate] = useState(false);
+
+  const [visible, setVisible] = useState(false);
+
+  const [countryCodes, setCountryCodes] = useState([
+    {code: '+93', country: 'Afghanistan'},
+    {code: '+358', country: 'Aland Islands'},
+    {code: '+355', country: 'Albania'},
+    {code: '+213', country: 'Algeria'},
+    {code: '+54', country: 'Argentina'},
+    {code: '+61', country: 'Australia'},
+    {code: '+43', country: 'Austria'},
+    {code: '+1', country: 'Bahamas'},
+    {code: '+973', country: 'Bahrain'},
+    {code: '+880', country: 'Bangladesh'},
+    {code: '+1', country: 'Barbados'},
+    {code: '+375', country: 'Belarus'},
+    {code: '+32', country: 'Belgium'},
+    {code: '+975', country: 'Bhutan'},
+    {code: '+55', country: 'Brazil'},
+    {code: '+359', country: 'Bulgaria'},
+    {code: '+855', country: 'Cambodia'},
+    {code: '+1', country: 'Canada'},
+    {code: '+236', country: 'Central African Republic'},
+    {code: '+56', country: 'Chile'},
+    {code: '+86', country: 'China'},
+    {code: '+57', country: 'Colombia'},
+    {code: '+506', country: 'Costa Rica'},
+    {code: '+53', country: 'Cuba'},
+    {code: '+420', country: 'Czech Republic'},
+    {code: '+45', country: 'Denmark'},
+    {code: '+1', country: 'Dominica'},
+    {code: '+1', country: 'Dominican Republic'},
+    {code: '+593', country: 'Ecuador'},
+    {code: '+20', country: 'Egypt'},
+    {code: '+251', country: 'Ethiopia'},
+    {code: '+679', country: 'Fiji'},
+    {code: '+358', country: 'Finland'},
+    {code: '+33', country: 'France'},
+    {code: '+995', country: 'Georgia'},
+    {code: '+49', country: 'Germany'},
+    {code: '+30', country: 'Greece'},
+    {code: '+299', country: 'Greenland'},
+    {code: '+224', country: 'Guinea'},
+    {code: '+852', country: 'Hong Kong'},
+    {code: '+36', country: 'Hungary'},
+    {code: '+91', country: 'India'},
+    {code: '+98', country: 'Iran'},
+    {code: '+964', country: 'Iraq'},
+    {code: '+39', country: 'Italy'},
+    {code: '+1', country: 'Jamaica'},
+    {code: '+81', country: 'Japan'},
+    {code: '+254', country: 'Kenya'},
+    {code: '+965', country: 'Kuwait'},
+    {code: '+961', country: 'Lebanon'},
+    {code: '+218', country: 'Libya'},
+    {code: '+352', country: 'Luxembourg'},
+    {code: '+853', country: 'Macau'},
+    {code: '+389', country: 'Macedonia'},
+    {code: '+60', country: 'Malaysia'},
+    {code: '+230', country: 'Mauritius'},
+    {code: '+52', country: 'Mexico'},
+    {code: '+95', country: 'Myanmar'},
+    {code: '+264', country: 'Namibia'},
+    {code: '+31', country: 'Netherlands'},
+    {code: '+64', country: 'New Zealand'},
+    {code: '+234', country: 'Nigeria'},
+    {code: '+850', country: 'North Korea'},
+    {code: '+47', country: 'Norway'},
+    {code: '+968', country: 'Oman'},
+    {code: '+92', country: 'Pakistan'},
+    {code: '+507', country: 'Panama'},
+    {code: '+63', country: 'Philippines'},
+    {code: '+351', country: 'Portugal'},
+    {code: '+974', country: 'Qatar'},
+    {code: '+242', country: 'Republic of the Congo'},
+    {code: '+7', country: 'Russia'},
+    {code: '+378', country: 'San Marino'},
+    {code: '+966', country: 'Saudi Arabia'},
+    {code: '+65', country: 'Singapore'},
+    {code: '+252', country: 'Somalia'},
+    {code: '+27', country: 'South Africa'},
+    {code: '+34', country: 'Spain'},
+    {code: '+94', country: 'Sri Lanka'},
+    {code: '+41', country: 'Switzerland'},
+    {code: '+886', country: 'Taiwan'},
+    {code: '+66', country: 'Thailand'},
+    {code: '+90', country: 'Turkey'},
+    {code: '+256', country: 'Uganda'},
+    {code: '+380', country: 'Ukraine'},
+    {code: '+971', country: 'United Arab Emirates'},
+    {code: '+44', country: 'United Kingdom'},
+    {code: '+1', country: 'United States'},
+    {code: '+39', country: 'Vatican'},
+    {code: '+58', country: 'Venezuela'},
+    {code: '+84', country: 'Vietnam'},
+    {code: '+967', country: 'Yemen'},
+    {code: '+260', country: 'Zambia'},
+    {code: '+263', country: 'Zimbabwe'},
+  ]);
+
   const [listingType, setListingType] = useState(
     locationDetails && locationDetails.listingType
       ? locationDetails.listingType
@@ -58,7 +161,9 @@ function AddListingLocation({
       : '',
   );
   const [country, setCountry] = useState(
-    locationDetails && locationDetails.country ? locationDetails.country : '',
+    locationDetails && locationDetails.country
+      ? locationDetails.country
+      : countryCodes[0].country,
   );
   const [address, setAddress] = useState(
     locationDetails && locationDetails.address ? locationDetails.address : '',
@@ -75,54 +180,7 @@ function AddListingLocation({
       ? locationDetails.postalCode
       : '',
   );
-  const [countryCodes, setCountryCodes] = useState([
-    {code: '+93', country: 'Afghanistan'},
-    {code: '+358', country: 'Aland Islands'},
-    {code: '+355', country: 'Albania'},
-    {code: '+213', country: 'Algeria'},
-    {code: '+54', country: 'Argentina'},
-    {code: '+61', country: 'Australia'},
-    {code: '+43', country: 'Austria'},
-    {code: '+973', country: 'Bahrain'},
-    {code: '+880', country: 'Bangladesh'},
-    {code: '+375', country: 'Belarus'},
-    {code: '+32', country: 'Belgium'},
-    {code: '+55', country: 'Brazil'},
-    {code: '+359', country: 'Bulgaria'},
-    {code: '+855', country: 'Cambodia'},
-    {code: '+1', country: 'Canada'},
-    {code: '+236', country: 'Central African Republic'},
-    {code: '+56', country: 'Chile'},
-    {code: '+86', country: 'China'},
-    {code: '+506', country: 'Costa Rica'},
-    {code: '+53', country: 'Cuba'},
-    {code: '+20', country: 'Egypt'},
-    {code: '+33', country: 'France'},
-    {code: '+49', country: 'Germany'},
-    {code: '+30', country: 'Greece'},
-    {code: '+852', country: 'Hong Kong'},
-    {code: '+91', country: 'India'},
-    {code: '+98', country: 'Iran'},
-    {code: '+964', country: 'Iraq'},
-    {code: '+39', country: 'Italy'},
-    {code: '+81', country: 'Japan'},
-    {code: '+60', country: 'Malaysia'},
-    {code: '+230', country: 'Mauritius'},
-    {code: '+95', country: 'Myanmar'},
-    {code: '+64', country: 'New Zealand'},
-    {code: '+92', country: 'Pakistan'},
-    {code: '+351', country: 'Portugal'},
-    {code: '+7', country: 'Russia'},
-    {code: '+966', country: 'Saudi Arabia'},
-    {code: '+65', country: 'Singapore'},
-    {code: '+27', country: 'South Africa'},
-    {code: '+34', country: 'Spain'},
-    {code: '+66', country: 'Thailand'},
-    {code: '+90', country: 'Turkey'},
-    {code: '+44', country: 'United Kingdom'},
-    {code: '+84', country: 'United States'},
-    {code: '+263', country: 'Zimbabwe'},
-  ]);
+
   const [code, setCode] = useState(
     locationDetails && locationDetails.code
       ? locationDetails.code
@@ -217,51 +275,59 @@ function AddListingLocation({
   const onSubmitHandler = () => {
     try {
       if (activeIndex != 6) {
-        setActiveIndex(activeIndex + 1);
-        scrollRef.current.scrollTo({
-          y: 0,
-          animated: true,
-        });
-        setWidth(width + 20);
-      } else {
         if (
-          listingType &&
-          propertyType &&
-          propertyName &&
-          country &&
-          address &&
-          unitNum &&
-          city &&
-          state &&
-          postalCode &&
-          code &&
-          phone &&
-          marker
+          (activeIndex == 1 && propertyName) ||
+          (activeIndex == 2 &&
+            country &&
+            address &&
+            unitNum &&
+            city &&
+            state &&
+            postalCode &&
+            code &&
+            phone) ||
+          (activeIndex == 3 &&
+            country &&
+            address &&
+            unitNum &&
+            city &&
+            state &&
+            postalCode &&
+            code &&
+            phone) ||
+          activeIndex == 4 ||
+          activeIndex == 5
         ) {
-          let locationData = {
-            listingType,
-            propertyName: propertyName,
-            country,
-            address,
-            unitNum,
-            city,
-            state,
-            postalCode,
-            code,
-            phone,
-            latlng: marker,
-            propertyType,
-            images,
-            features,
-          };
-
-          addListingLocation(locationData);
-
-          // navigation.navigate('AddListingSpaceDetails');
-          onNextButtonPress();
+          setValidate(false);
+          setActiveIndex(activeIndex + 1);
+          scrollRef.current.scrollTo({
+            y: 0,
+            animated: true,
+          });
+          setWidth(width + 20);
         } else {
-          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+          setValidate(true);
         }
+      } else {
+        let locationData = {
+          listingType,
+          propertyName: propertyName,
+          country,
+          address,
+          unitNum,
+          city,
+          state,
+          postalCode,
+          code,
+          phone,
+          latlng: marker,
+          propertyType,
+          images,
+          features,
+        };
+
+        addListingLocation(locationData);
+        onNextButtonPress();
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to add location data');
@@ -275,52 +341,15 @@ function AddListingLocation({
         icon={activeIndex == 1 ? 'close' : 'arrowleft'}
         width={`${width}%`}
       />
-      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={styles.container}
+        ref={scrollRef}>
         {activeIndex == 1 && (
           <>
             {/* <Text style={styles.heading}>Let's add a Listing</Text> */}
             {/* <Text style={styles.location}>Location</Text> */}
             <Text style={styles.heading}>Choose a Listing Type</Text>
-            {/* <View style={styles.rect}>
-            <View style={styles.rect2Row}>
-              <TouchableOpacity
-                style={listingType == 1 ? styles.activeTab : styles.inactiveTab}
-                onPress={() => {
-                  setListingType(1);
-                }}>
-                <Text
-                  style={
-                    listingType == 1 ? styles.activeText : styles.inactiveText
-                  }>
-                  Business
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={listingType == 2 ? styles.activeTab : styles.inactiveTab}
-                onPress={() => {
-                  setListingType(2);
-                }}>
-                <Text
-                  style={
-                    listingType == 2 ? styles.activeText : styles.inactiveText
-                  }>
-                  Residential
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={listingType == 3 ? styles.activeTab : styles.inactiveTab}
-                onPress={() => {
-                  setListingType(3);
-                }}>
-                <Text
-                  style={
-                    listingType == 3 ? styles.activeText : styles.inactiveText
-                  }>
-                  Others
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
             <View style={styles.pickerContainer}>
               <Picker
                 selectedValue={listingType}
@@ -338,47 +367,243 @@ function AddListingLocation({
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.textInput}
               value={propertyName}
+              validate={validate}
               onChangeText={(input) => setPropertyName(input)}></Input>
           </>
         )}
         {activeIndex == 2 && (
           <>
             <Text style={styles.heading}>Listing Address</Text>
+            {/* <Modal visible={visible}>
+              <View style={styles.modalView}>
+                <TouchableOpacity
+                  style={styles.closeIcon}
+                  onPress={() => {
+                    setVisible(false);
+                  }}>
+                  <IoniconsIcon
+                    name="close-outline"
+                    size={28}
+                    color="#b6b6b6"
+                  />
+                </TouchableOpacity>
+                <GooglePlacesAutocomplete
+                  placeholder="Search"
+                  onPress={(data, details = null) => {
+                    // 'details' is provided when fetchDetails = true
+                    console.log(data, details);
+                  }}
+                  poweredContainer={false}
+                  listViewDisplayed={false}
+                  // currentLocation={true}
+                  // currentLocationLabel="Current Location"
+                  nearbyPlacesAPI="GooglePlacesSearch"
+                  GooglePlacesSearchQuery={{
+                    rankby: 'distance',
+                    type: ['cities'],
+                  }}
+                  GooglePlacesDetailsQuery={{
+                    fields: ['formatted_address', 'geometry'],
+                  }}
+                  debounce={200}
+                  filterReverseGeocodingByTypes={[
+                    'locality',
+                    'administrative_area_level_3',
+                  ]}
+                  enablePoweredByContainer={false}
+                  query={{
+                    key: 'AIzaSyDF0pzALjYYanPshuclFzq_2F24xZWZjOg',
+                    language: 'en',
+                    location: '30.36214,78.26541',
+                    radius: 100,
+                  }}
+                  styles={{
+                    textInputContainer: {
+                      width: '100%',
+                      padding: 0,
+                      backgroundColor: '#fff',
+                      borderTopWidth: 0,
+                      borderBottomColor: '#d6d6d6',
+                      marginTop: 20,
+                    },
+                    listView: {
+                      // position: 'absolute',
+                      backgroundColor: 'rgb(255,255,255)',
+                      // top: 40,
+                      // zIndex: 99999,
+                    },
+                    row: {
+                      backgroundColor: 'rgb(255,255,255)',
+                    },
+                    textInput: {
+                      height: '100%',
+                      marginTop: 0,
+                      marginBottom: 0,
+                      marginLeft: 0,
+                      marginRight: 0,
+                    },
+                  }}
+                />
+              </View>
+            </Modal> */}
+
+            <GooglePlacesAutocomplete
+              placeholder="Search your location"
+              onPress={(data, details = null) => {
+                // 'details' is provided when fetchDetails = true
+                // console.log(data);
+                // console.log(details);
+
+                let add = '';
+                add += data.structured_formatting.main_text;
+
+                setMarker({
+                  latitude: details.geometry.location.lat,
+                  longitude: details.geometry.location.lng,
+                });
+
+                details.address_components.forEach((item) => {
+                  if (item.types.includes('route')) {
+                    add += `, ${item.long_name}`;
+                  }
+                  if (item.types.includes('sublocality')) {
+                    add += `, ${item.long_name}`;
+                    // console.log('address :', add);
+                  }
+                  if (item.types.includes('country')) {
+                    console.log('country :', item.long_name);
+                    setCountry(item.long_name);
+
+                    setCode(
+                      countryCodes.filter((i) => i.country == item.long_name)[0]
+                        .code,
+                    );
+                  }
+                  if (item.types.includes('administrative_area_level_1')) {
+                    console.log('state :', item.long_name);
+                    setState(item.long_name);
+                  }
+                  if (item.types.includes('administrative_area_level_2')) {
+                    console.log('city :', item.long_name);
+                    setCity(item.long_name);
+                  }
+                  if (item.types.includes('postal_code')) {
+                    console.log('postal code :', item.long_name);
+                    setPostalCode(item.long_name);
+                  }
+                });
+
+                setAddress(add);
+              }}
+              poweredContainer={false}
+              listViewDisplayed={false}
+              fetchDetails={true}
+              // currentLocation={true}
+              // currentLocationLabel="Current Location"
+              nearbyPlacesAPI="GooglePlacesSearch"
+              GooglePlacesSearchQuery={{
+                rankby: 'distance',
+                type: ['cities'],
+              }}
+              GooglePlacesDetailsQuery={{
+                fields: ['formatted_address', 'geometry'],
+              }}
+              debounce={200}
+              filterReverseGeocodingByTypes={[
+                'locality',
+                'administrative_area_level_3',
+              ]}
+              enablePoweredByContainer={false}
+              query={{
+                key: 'AIzaSyDF0pzALjYYanPshuclFzq_2F24xZWZjOg',
+                language: 'en',
+                location: '30.36214,78.26541',
+                radius: 100,
+              }}
+              styles={{
+                textInputContainer: {
+                  width: '100%',
+                  padding: 0,
+                  backgroundColor: '#fff',
+                  borderWidth: 2,
+                  borderRadius: 5,
+                  borderColor: '#d6d6d6',
+                  marginTop: 20,
+                  marginBottom: 30,
+                  elevation: 10,
+                },
+                listView: {
+                  position: 'absolute',
+                  backgroundColor: 'rgb(255,255,255)',
+                  top: 70,
+                  zIndex: 99999,
+                },
+                row: {
+                  backgroundColor: 'rgb(255,255,255)',
+                },
+                textInput: {
+                  height: '100%',
+                  marginTop: 0,
+                  marginBottom: 0,
+                  marginLeft: 0,
+                  marginRight: 0,
+                  fontSize: 18,
+                  paddingVertical: 10,
+                },
+              }}
+            />
+
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={country}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) => setCountry(itemValue)}>
+                {countryCodes.map((item) => (
+                  <Picker.Item
+                    key={item}
+                    label={item.country}
+                    value={item.country}
+                  />
+                ))}
+              </Picker>
+            </View>
             <Input
-              placeholder="Country"
-              placeholderTextColor="rgba(182,182,182,1)"
-              style={styles.placeholder}
-              value={country}
-              onChangeText={(input) => setCountry(input)}></Input>
-            <Input
+              // onFocus={() => {
+              //   setVisible(true);
+              // }}
               placeholder="Address"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
               value={address}
+              validate={validate}
               onChangeText={(input) => setAddress(input)}></Input>
             <Input
               placeholder="Unit #"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
               value={unitNum}
+              validate={validate}
               onChangeText={(input) => setUnitNum(input)}></Input>
             <Input
               placeholder="City/Town"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
               value={city}
+              validate={validate}
               onChangeText={(input) => setCity(input)}></Input>
             <Input
               placeholder="State/Province"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
               value={state}
+              validate={validate}
               onChangeText={(input) => setState(input)}></Input>
             <Input
               placeholder="Postal Code"
               placeholderTextColor="rgba(182,182,182,1)"
               style={styles.placeholder}
               value={postalCode}
+              validate={validate}
               onChangeText={(input) => setPostalCode(input)}></Input>
             <View style={styles.phone}>
               {/* <View style={styles.pickerContainer}> */}
@@ -396,12 +621,14 @@ function AddListingLocation({
               </Picker>
               {/* </View> */}
 
-              <TextInput
+              <Input
                 placeholder="Phone Number"
                 placeholderTextColor="rgba(182,182,182,1)"
                 style={styles.placeholder}
                 value={phone}
-                onChangeText={(input) => setPhone(input)}></TextInput>
+                keyboardType="number-pad"
+                validate={validate}
+                onChangeText={(input) => setPhone(input)}></Input>
             </View>
           </>
         )}
@@ -613,90 +840,6 @@ function AddListingLocation({
                 />
               </Picker>
             </View>
-            {/* <View style={styles.rect5}>
-            <View style={styles.rect6Row}>
-              <TouchableOpacity
-                style={
-                  propertyType == 1 ? styles.activeBtn : styles.inactiveBtn
-                }
-                onPress={() => {
-                  setPropertyType(1);
-                }}>
-                <IoniconsIcon
-                  name="ios-car"
-                  style={
-                    propertyType == 1 ? styles.activeIcon : styles.inactiveIcon
-                  }></IoniconsIcon>
-                <Text
-                  style={
-                    propertyType == 1 ? styles.activeText : styles.inactiveText
-                  }>
-                  Driveway
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  propertyType == 2 ? styles.activeBtn : styles.inactiveBtn
-                }
-                onPress={() => {
-                  setPropertyType(2);
-                }}>
-                <MaterialCommunityIconsIcon
-                  name="garage"
-                  style={
-                    propertyType == 2 ? styles.activeIcon : styles.inactiveIcon
-                  }></MaterialCommunityIconsIcon>
-
-                <Text
-                  style={
-                    propertyType == 2 ? styles.activeText : styles.inactiveText
-                  }>
-                  Residential Garage
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.icon2StackRow}>
-              <TouchableOpacity
-                style={
-                  propertyType == 3 ? styles.activeBtn : styles.inactiveBtn
-                }
-                onPress={() => {
-                  setPropertyType(3);
-                }}>
-                <IoniconsIcon
-                  name="ios-car"
-                  style={
-                    propertyType == 3 ? styles.activeIcon : styles.inactiveIcon
-                  }></IoniconsIcon>
-
-                <Text
-                  style={
-                    propertyType == 3 ? styles.activeText : styles.inactiveText
-                  }>
-                  Open Air Lot
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  propertyType == 4 ? styles.activeBtn : styles.inactiveBtn
-                }
-                onPress={() => {
-                  setPropertyType(4);
-                }}>
-                <MaterialCommunityIconsIcon
-                  name="garage"
-                  style={
-                    propertyType == 4 ? styles.activeIcon : styles.inactiveIcon
-                  }></MaterialCommunityIconsIcon>
-                <Text
-                  style={
-                    propertyType == 4 ? styles.activeText : styles.inactiveText
-                  }>
-                  Commercial Parking Structure
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View> */}
           </>
         )}
 
@@ -715,25 +858,6 @@ function AddListingLocation({
                   <Image key={item.uri} source={item} style={styles.image} />
                 ))}
             </View>
-
-            {/* <View style={styles.rect10Stack}>
-            <View style={styles.rect10}>
-              <View style={styles.rect11Row}>
-                <TouchableOpacity style={styles.rect11}>
-                  <EntypoIcon name="image" style={styles.icon4}></EntypoIcon>
-                  <Text style={styles.streetView}>Street View</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.rect12}>
-                  <EntypoIcon name="image" style={styles.icon5}></EntypoIcon>
-                  <Text style={styles.loremIpsum3}>Parking Area Entrance</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.rect13}>
-              <EntypoIcon name="image" style={styles.icon6}></EntypoIcon>
-              <Text style={styles.parkingSpaceStal}>Parking Space/Stal</Text>
-            </View>
-          </View> */}
           </>
         )}
 
@@ -752,74 +876,8 @@ function AddListingLocation({
                 />
               ))}
             </View>
-            {/* <View style={styles.rect14}>
-            <View style={styles.rect15Row}>
-              <View style={styles.rect15}>
-                <Text style={styles.loremIpsum4}>24/7 access</Text>
-              </View>
-              <View style={styles.rect16}>
-                <Text style={styles.carWash}>Car Wash</Text>
-              </View>
-              <View style={styles.rect17}>
-                <Text style={styles.covered}>Covered</Text>
-              </View>
-            </View>
-            <View style={styles.loremIpsum5StackRow}>
-              <View style={styles.loremIpsum5Stack}>
-                <View style={styles.rect20}>
-                  <Text style={styles.eyCharging}>EY Charging</Text>
-                </View>
-              </View>
-              <View style={styles.rect19}>
-                <Text style={styles.fenced}>Fenced</Text>
-              </View>
-              <View style={styles.rect18}>
-                <Text style={styles.mobilePass}>Mobile Pass</Text>
-              </View>
-            </View>
-            <View style={styles.loremIpsum6StackRow}>
-              <View style={styles.loremIpsum6Stack}>
-                <View style={styles.rect23}>
-                  <Text style={styles.paved}>Paved</Text>
-                </View>
-              </View>
-              <View style={styles.rect22}>
-                <Text style={styles.security}>Security</Text>
-              </View>
-              <View style={styles.rect21}>
-                <Text style={styles.staffOnsite}>Staff onsite</Text>
-              </View>
-            </View>
-            <View style={styles.loremIpsum7StackRow}>
-              <View style={styles.loremIpsum7Stack}>
-                <View style={styles.rect26}>
-                  <Text style={styles.tandem}>Tandem</Text>
-                </View>
-              </View>
-              <View style={styles.rect25}>
-                <Text style={styles.unpaved}>Unpaved</Text>
-              </View>
-              <View style={styles.rect24}>
-                <Text style={styles.valet}>Valet</Text>
-              </View>
-            </View>
-          </View> */}
           </>
         )}
-
-        {/* <View style={styles.btnRow}> */}
-        {/* {activeIndex != 1 && (
-          <TouchableOpacity onPress={backButtonHandler}>
-            <Text style={styles.backBtnText}>Back</Text>
-          </TouchableOpacity>
-        )} */}
-
-        {/* <MaterialButtonPrimary
-          onPress={onSubmitHandler}
-          caption="NEXT"
-          style={styles.materialButtonPrimary}></MaterialButtonPrimary> */}
-
-        {/* </View> */}
       </ScrollView>
       <NextButton onPress={onSubmitHandler} />
     </>
@@ -953,6 +1011,14 @@ const styles = StyleSheet.create({
     marginRight: 32,
     marginTop: 5,
   },
+  required: {
+    borderBottomColor: 'red',
+  },
+  requiredText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 10,
+  },
   textInput: {
     // fontFamily: 'roboto-regular',
     color: '#121212',
@@ -981,12 +1047,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // marginLeft: 23,
   },
+  modalView: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  closeIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
   phone: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    borderBottomColor: '#d6d6d6',
-    borderBottomWidth: 1,
+    // borderBottomColor: '#d6d6d6',
+    // borderBottomWidth: 1,
   },
   mapView: {
     height: 400,

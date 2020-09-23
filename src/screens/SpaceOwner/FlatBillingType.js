@@ -15,6 +15,7 @@ import TipsSettingRatesModal from '../../components/SpaceOwner/TipsSettingRatesM
 import {setListingPricingDetails} from '../../actions/listing';
 import NextButton from '../../components/SpaceOwner/NextButton';
 import AddListingHeader from '../../components/SpaceOwner/AddListingHeader';
+import Input from '../../components/Input';
 
 function FlatBillingType({
   onBackButtonPress,
@@ -26,10 +27,12 @@ function FlatBillingType({
     pricingDetails && pricingDetails.pricingType ? 100 : 0,
   );
 
+  const [validate, setValidate] = useState(false);
+
   const [dailyMax, setDailyMax] = useState(
     pricingDetails && pricingDetails.pricingRates
       ? pricingDetails.pricingRates.dailyMax
-      : '$ 5.00',
+      : '5.00',
   );
   const [visible, setVisible] = useState(false);
 
@@ -40,6 +43,7 @@ function FlatBillingType({
   const onSubmitHandler = () => {
     try {
       if (dailyMax) {
+        setValidate(false);
         let pricingDetails = {
           pricingType: 'Flat',
           pricingRates: {
@@ -50,7 +54,7 @@ function FlatBillingType({
         // navigation.navigate('SaveSpaceDetails');
         onNextButtonPress(2);
       } else {
-        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        setValidate(true);
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to set pricing details');
@@ -66,20 +70,18 @@ function FlatBillingType({
         <Text style={styles.heading}>Set your desired rates</Text>
         <Text style={styles.subHeading}>Flat Billing Type</Text>
         <Text style={styles.dailyMaximum}>Daily Maximum</Text>
-        <TextInput
-          placeholder="placeholder"
+        <Input
+          placeholder="Daily Maxmimum (in USD)"
           value={dailyMax}
+          validate={validate}
+          keyboardType="number-pad"
           onChangeText={(input) => setDailyMax(input)}
-          style={styles.placeholder}></TextInput>
+          style={styles.placeholder}></Input>
         <TouchableOpacity onPress={() => setVisible(true)}>
           <Text style={styles.loremIpsum2}>
             Tips for setting appropriate rates
           </Text>
         </TouchableOpacity>
-        {/* <MaterialButtonPrimary
-        onPress={onSubmitHandler}
-        caption="NEXT"
-        style={styles.materialButtonPrimary1}></MaterialButtonPrimary> */}
 
         <TipsSettingRatesModal
           visible={visible}

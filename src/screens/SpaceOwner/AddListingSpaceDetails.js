@@ -41,6 +41,8 @@ function AddListingSpaceDetails({
     spaceDetails && spaceDetails.spaceType ? 100 : 0,
   );
 
+  const [validate, setValidate] = useState(false);
+
   const [parkingSpaceType, setParkingSpaceType] = useState(
     spaceDetails && spaceDetails.spaceType ? spaceDetails.spaceType : 'Tandem',
   );
@@ -67,12 +69,12 @@ function AddListingSpaceDetails({
       ? spaceDetails.vehicleSizes.compact
       : false,
   );
-  const [midSized, setMidSized] = useState(
+  const [midsized, setMidSized] = useState(
     spaceDetails && spaceDetails.vehicleSizes
-      ? spaceDetails.vehicleSizes.midSized
+      ? spaceDetails.vehicleSizes.midsized
       : false,
   );
-  const [large, setLarged] = useState(
+  const [large, setLarge] = useState(
     spaceDetails && spaceDetails.vehicleSizes
       ? spaceDetails.vehicleSizes.large
       : false,
@@ -125,7 +127,19 @@ function AddListingSpaceDetails({
     var num = parseInt(qty);
     let arr = [];
     for (let i = 0; i < num; i++) {
-      arr.push({id: num + 1, label: '', largestSize: ''});
+      arr.push({
+        id: i + 1,
+        label: '',
+        largestSize: oversized
+          ? 'Over Sized'
+          : large
+          ? 'Large'
+          : midsized
+          ? 'Mid Sized'
+          : compact
+          ? 'Compact'
+          : 'Motorcycle',
+      });
     }
     setSpaceLabels(arr);
   };
@@ -136,16 +150,54 @@ function AddListingSpaceDetails({
         index == idx ? {...item, label: label} : {...item},
       ),
     );
-    // console.log(spaceLabels);
+    console.log(spaceLabels);
   };
 
   const setLargestSizeById = (idx, size) => {
+    console.log('in setLargestSizeById');
     setSpaceLabels(
       spaceLabels.map((item, index) =>
         index == idx ? {...item, largestSize: size} : {...item},
       ),
     );
-    // console.log(spaceLabels);
+    console.log(spaceLabels);
+  };
+
+  const checkAllSpaceLabels = () => {
+    var flag = true;
+    spaceLabels.forEach((item) => {
+      if (!item.label || !item.largestSize) {
+        console.log('found invalid space label');
+        flag = false;
+      }
+    });
+    return flag;
+  };
+
+  const checkTotalCount = () => {
+    var flag = true;
+    var sum = 0;
+    if (motorcycle) {
+      sum += parseInt(motorcycleSpaces);
+    }
+    if (compact) {
+      sum += parseInt(compactSpaces);
+    }
+    if (midsized) {
+      sum += parseInt(midsizedSpaces);
+    }
+    if (large) {
+      sum += parseInt(largeSpaces);
+    }
+    if (oversized) {
+      sum += parseInt(oversizedSpaces);
+    }
+
+    if (sum != parseInt(qtyOfSpaces)) {
+      flag = false;
+    }
+
+    return flag;
   };
 
   const backButtonHandler = () => {
@@ -164,27 +216,27 @@ function AddListingSpaceDetails({
   const onSubmitHandler = () => {
     try {
       if (activeIndex != 6) {
-        setActiveIndex(activeIndex + 1);
-        scrollRef.current.scrollTo({
-          y: 0,
-          animated: true,
-        });
-        setWidth(width + 20);
-      } else {
         if (
-          parkingSpaceType &&
-          qtyOfSpaces &&
-          (motorcycle || compact || midSized || large || oversized) &&
-          ((motorcycle && motorcycleSpaces) ||
-            (compact && compactSpaces) ||
-            (midSized && midsizedSpaces) ||
-            (large && largeSpaces) ||
-            (oversized && oversizedSpaces)) &&
-          isLabelled &&
-          spaceLabels.length > 0 &&
-          aboutSpace &&
-          accessInstructions
+          (activeIndex == 1 && qtyOfSpaces) ||
+          activeIndex == 2 ||
+          (activeIndex == 3 &&
+            (motorcycle || compact || midsized || large || oversized) &&
+            checkTotalCount()) ||
+          (activeIndex == 4 && checkAllSpaceLabels()) ||
+          (activeIndex == 5 && aboutSpace)
         ) {
+          setValidate(false);
+          setActiveIndex(activeIndex + 1);
+          scrollRef.current.scrollTo({
+            y: 0,
+            animated: true,
+          });
+          setWidth(width + 20);
+        } else {
+          setValidate(true);
+        }
+      } else {
+        if (accessInstructions) {
           let spaceDetails = {
             spaceType: parkingSpaceType,
             qtyOfSpaces,
@@ -193,7 +245,7 @@ function AddListingSpaceDetails({
             vehicleSizes: {
               motorcycle: motorcycle,
               compact: compact,
-              midSized: midSized,
+              midsized: midsized,
               large: large,
               oversized: oversized,
             },
@@ -208,10 +260,9 @@ function AddListingSpaceDetails({
             accessInstructions,
           };
           addListingSpaceDetails(spaceDetails);
-          // navigation.navigate('SpaceAvailable');
           onNextButtonPress();
         } else {
-          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+          setValidate(true);
         }
       }
     } catch (error) {
@@ -240,52 +291,12 @@ function AddListingSpaceDetails({
                 <Picker.Item label="Side by Side" value="Side by Side" />
               </Picker>
             </View>
-            {/* <View style={styles.rect5}>
-        <View style={styles.rect4Row}>
-          <TouchableOpacity
-            style={
-              parkingSpaceType == 1 ? styles.activeBtn : styles.inactiveBtn
-            }
-            onPress={() => {
-              setParkingSpaceType(1);
-            }}>
-            <IoniconsIcon
-              name="ios-car"
-              style={
-                parkingSpaceType == 1 ? styles.activeIcon : styles.inactiveIcon
-              }></IoniconsIcon>
-            <Text
-              style={
-                parkingSpaceType == 1 ? styles.activeText : styles.inactiveText
-              }>
-              Tandem
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              parkingSpaceType == 2 ? styles.activeBtn : styles.inactiveBtn
-            }
-            onPress={() => {
-              setParkingSpaceType(2);
-            }}>
-            <MaterialCommunityIconsIcon
-              name="garage"
-              style={
-                parkingSpaceType == 2 ? styles.activeIcon : styles.inactiveIcon
-              }></MaterialCommunityIconsIcon>
-            <Text
-              style={
-                parkingSpaceType == 2 ? styles.activeText : styles.inactiveText
-              }>
-              Side by Side
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
+
             <Input
               placeholder="Total Quantity of Parking Spaces"
               placeholderTextColor="rgba(182,182,182,1)"
               value={qtyOfSpaces}
+              validate={validate}
               keyboardType="number-pad"
               onChangeText={(input) => {
                 if (input == '0') {
@@ -318,9 +329,11 @@ function AddListingSpaceDetails({
               onPress={() => setSameSizeSpaces(!sameSizeSpaces)}
             />
             <Input
-              placeholder="Vehicle Height Limit (if applicable)"
+              placeholder="Vehicle Height Limit in meters (if applicable)"
               placeholderTextColor="rgba(182,182,182,1)"
               value={vehicleHeightLimit}
+              keyboardType="number-pad"
+              validate={validate}
               onChangeText={(input) => setVehicleHeightLimit(input)}
               style={styles.textInput1}></Input>
           </>
@@ -346,8 +359,8 @@ function AddListingSpaceDetails({
             />
             <RadioListItem
               label="Mid Sized"
-              checked={midSized}
-              onPress={() => setMidSized(!midSized)}
+              checked={midsized}
+              onPress={() => setMidSized(!midsized)}
             />
             <RadioListItem
               label="Large"
@@ -360,146 +373,83 @@ function AddListingSpaceDetails({
               onPress={() => setOversized(!oversized)}
             />
 
-            {/* <View style={styles.rect6Stack}>
-              <View style={styles.rect6}>
-                <View style={styles.motorcycle1StackStackRow}>
-                  <TouchableOpacity
-                    style={motorcycle ? styles.activeBtn : styles.inactiveBtn}
-                    onPress={() => setMotorcycle(!motorcycle)}>
-                    <FontAwesomeIcon
-                      name="motorcycle"
-                      style={
-                        motorcycle ? styles.activeIcon : styles.inactiveIcon
-                      }></FontAwesomeIcon>
-                    <Text
-                      style={
-                        motorcycle ? styles.activeText : styles.inactiveText
-                      }>
-                      Motorcycle
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={compact ? styles.activeBtn : styles.inactiveBtn}
-                    onPress={() => setCompact(!compact)}>
-                    <MaterialCommunityIconsIcon
-                      name="car-sports"
-                      style={
-                        compact ? styles.activeIcon : styles.inactiveIcon
-                      }></MaterialCommunityIconsIcon>
-                    <Text
-                      style={compact ? styles.activeText : styles.inactiveText}>
-                      Compact
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={midSized ? styles.activeBtn : styles.inactiveBtn}
-                    onPress={() => setMidSized(!midSized)}>
-                    <MaterialCommunityIconsIcon
-                      name="car-side"
-                      style={
-                        midSized ? styles.activeIcon : styles.inactiveIcon
-                      }></MaterialCommunityIconsIcon>
-                    <Text
-                      style={
-                        midSized ? styles.activeText : styles.inactiveText
-                      }>
-                      Mid Sized
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.oversized1StackStack}>
-                  <TouchableOpacity
-                    style={large ? styles.activeBtn : styles.inactiveBtn}
-                    onPress={() => setLarged(!large)}>
-                    <MaterialCommunityIconsIcon
-                      name="car-estate"
-                      style={
-                        large ? styles.activeIcon : styles.inactiveIcon
-                      }></MaterialCommunityIconsIcon>
-                    <Text
-                      style={large ? styles.activeText : styles.inactiveText}>
-                      Large
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={oversized ? styles.activeBtn : styles.inactiveBtn}
-                    onPress={() => setOversized(!oversized)}>
-                    <FontAwesomeIcon
-                      name="truck"
-                      style={
-                        oversized ? styles.activeIcon : styles.inactiveIcon
-                      }></FontAwesomeIcon>
-                    <Text
-                      style={
-                        oversized ? styles.activeText : styles.inactiveText
-                      }>
-                      Oversized
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View> */}
+            {validate &&
+              !(motorcycle || compact || midsized || large || oversized) && (
+                <Text style={styles.requiredText}>
+                  Please select at least one vehicle size
+                </Text>
+              )}
 
             {motorcycle && (
               <View>
                 <Text style={styles.subHeading}>Motorcycle Spaces</Text>
-                <TextInput
+                <Input
                   placeholder="Number of Spaces"
                   placeholderTextColor="rgba(182,182,182,1)"
                   style={styles.numerOfSpaces}
                   value={motorcycleSpaces}
-                  onChangeText={(input) =>
-                    setMotorcycleSpaces(input)
-                  }></TextInput>
+                  keyboardType="number-pad"
+                  validate={validate}
+                  onChangeText={(input) => setMotorcycleSpaces(input)}></Input>
               </View>
             )}
             {compact && (
               <View>
                 <Text style={styles.subHeading}>Compact Car Spaces</Text>
-                <TextInput
+                <Input
                   placeholder="Number of Spaces"
                   placeholderTextColor="rgba(182,182,182,1)"
                   style={styles.numerOfSpaces}
                   value={compactSpaces}
-                  onChangeText={(input) => setCompactSpaces(input)}></TextInput>
+                  keyboardType="number-pad"
+                  validate={validate}
+                  onChangeText={(input) => setCompactSpaces(input)}></Input>
               </View>
             )}
-            {midSized && (
+            {midsized && (
               <View>
                 <Text style={styles.subHeading}>Mid-Sized Car Spaces</Text>
-                <TextInput
+                <Input
                   placeholder="Number of Spaces"
                   placeholderTextColor="rgba(182,182,182,1)"
                   style={styles.numerOfSpaces1}
                   value={midsizedSpaces}
-                  onChangeText={(input) =>
-                    setMidsizedSpaces(input)
-                  }></TextInput>
+                  keyboardType="number-pad"
+                  validate={validate}
+                  onChangeText={(input) => setMidsizedSpaces(input)}></Input>
               </View>
             )}
             {large && (
               <View>
                 <Text style={styles.subHeading}>Large Car Spaces</Text>
-                <TextInput
+                <Input
                   placeholder="Number of Spaces"
                   placeholderTextColor="rgba(182,182,182,1)"
                   style={styles.numerOfSpaces1}
                   value={largeSpaces}
-                  onChangeText={(input) => setLargeSpaces(input)}></TextInput>
+                  keyboardType="number-pad"
+                  validate={validate}
+                  onChangeText={(input) => setLargeSpaces(input)}></Input>
               </View>
             )}
             {oversized && (
               <View>
                 <Text style={styles.subHeading}>Oversized Car Spaces</Text>
-                <TextInput
+                <Input
                   placeholder="Number of Spaces"
                   placeholderTextColor="rgba(182,182,182,1)"
                   style={styles.numerOfSpaces1}
                   value={oversizedSpaces}
-                  onChangeText={(input) =>
-                    setOversizedSpaces(input)
-                  }></TextInput>
+                  keyboardType="number-pad"
+                  validate={validate}
+                  onChangeText={(input) => setOversizedSpaces(input)}></Input>
               </View>
+            )}
+
+            {validate && !checkTotalCount() && (
+              <Text style={styles.requiredText}>
+                Sum of all spaces should be equal to Total Qty. of Spaces
+              </Text>
             )}
 
             <TouchableOpacity onPress={() => setVisible(true)}>
@@ -536,26 +486,20 @@ function AddListingSpaceDetails({
                 <Text style={styles.subHeading}>Enter Space Labels</Text>
                 {spaceLabels.map((item, index) => (
                   <View style={styles.rect7} key={item.id}>
-                    <TextInput
+                    <Input
                       placeholder="Space Label/Number"
                       placeholderTextColor="rgba(182,182,182,1)"
                       value={item.label}
+                      validate={validate}
                       onChangeText={(input) => {
                         setLabelById(index, input);
                       }}
-                      style={styles.spaceLabelNumber}></TextInput>
-                    {/* <TextInput
-              placeholder="Space Label/Number"
-              placeholderTextColor="rgba(182,182,182,1)"
-              style={styles.spaceLabelNumber1}></TextInput> */}
+                      style={styles.spaceLabelNumber}></Input>
                     <Picker
-                      selectedValue={
-                        item.largestSize
-                          ? item.largestSize
-                          : 'Largest Vehicle Size'
-                      }
+                      selectedValue={item.largestSize}
                       style={styles.picker}
                       onValueChange={(itemValue, itemIndex) => {
+                        console.log(itemValue);
                         setLargestSizeById(index, itemValue);
                       }}>
                       {motorcycle && (
@@ -564,12 +508,12 @@ function AddListingSpaceDetails({
                       {compact && (
                         <Picker.Item label="Compact" value="Compact" />
                       )}
-                      {midSized && (
+                      {midsized && (
                         <Picker.Item label="Mid Sized" value="Mid Sized" />
                       )}
                       {large && <Picker.Item label="Large" value="Large" />}
                       {oversized && (
-                        <Picker.Item label="Oversized" value="Oversized" />
+                        <Picker.Item label="Over Sized" value="Over Sized" />
                       )}
                     </Picker>
                   </View>
@@ -582,10 +526,10 @@ function AddListingSpaceDetails({
         {activeIndex == 5 && (
           <>
             <Text style={styles.heading}>Tell Guests about your space</Text>
-            <TextInput
+            <Input
               placeholder="What makes your space great? Is it near notable landmarks or destinations?"
               placeholderTextColor="rgba(182,182,182,1)"
-              numberOfLines={20}
+              // numberOfLines={20}
               inlineImagePadding={10}
               textAlignVertical="top"
               maxLength={300}
@@ -593,7 +537,8 @@ function AddListingSpaceDetails({
               selectTextOnFocus={true}
               style={styles.placeholder}
               value={aboutSpace}
-              onChangeText={(input) => setAboutSpace(input)}></TextInput>
+              validate={validate}
+              onChangeText={(input) => setAboutSpace(input)}></Input>
           </>
         )}
         {activeIndex == 6 && (
@@ -601,10 +546,10 @@ function AddListingSpaceDetails({
             <Text style={styles.heading}>
               Tell Guests what to do when they arrive?
             </Text>
-            <TextInput
+            <Input
               placeholder="Tell Guests what to do when they arrive? Provide special instructions (if any)"
               placeholderTextColor="rgba(182,182,182,1)"
-              numberOfLines={20}
+              // numberOfLines={20}
               inlineImagePadding={10}
               maxLength={300}
               textAlignVertical="top"
@@ -612,23 +557,10 @@ function AddListingSpaceDetails({
               selectTextOnFocus={true}
               style={styles.placeholder}
               value={accessInstructions}
-              onChangeText={(input) =>
-                setAccessInstructions(input)
-              }></TextInput>
+              validate={validate}
+              onChangeText={(input) => setAccessInstructions(input)}></Input>
           </>
         )}
-
-        {/* <View style={styles.btnRow}>
-        {activeIndex != 1 && (
-          <TouchableOpacity onPress={backButtonHandler}>
-            <Text style={styles.backBtnText}>Back</Text>
-          </TouchableOpacity>
-        )}
-        <MaterialButtonPrimary
-          caption="NEXT"
-          style={styles.materialButtonPrimary1}
-          onPress={onSubmitHandler}></MaterialButtonPrimary>
-      </View> */}
       </ScrollView>
       <NextButton onPress={onSubmitHandler} />
     </>
@@ -742,6 +674,14 @@ const styles = StyleSheet.create({
     color: 'rgba(182,182,182,1)',
     marginLeft: 3,
     // marginTop: 8,
+  },
+  required: {
+    borderBottomColor: 'red',
+  },
+  requiredText: {
+    color: 'red',
+    marginTop: 10,
+    fontSize: 13,
   },
   materialRadio1: {
     height: 30,

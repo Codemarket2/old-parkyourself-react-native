@@ -5,96 +5,99 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from 'react-native';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
 import {Calendar} from 'react-native-calendars';
 
-function CustomSchedule({navigation}) {
+function CustomSchedule({visible}) {
   const [mode, setMode] = useState('date');
   const [date, setDate] = useState('');
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.customSchedule}>Custom Schedule</Text>
-      <View style={styles.rect}>
-        {/* <Text style={styles.calendar}>Calendar</Text> */}
-        <Calendar
-          style={styles.calendar}
-          markingType="period"
-          markedDates={{
-            '2020-09-16': {
-              selected: true,
-              marked: true,
-              selectedColor: '#27aae1',
-            },
-            '2020-09-22': {
-              startingDay: true,
-              marked: true,
-              selected: true,
-              color: '#27aae1',
-            },
-            '2020-09-23': {
-              color: '#27aae1',
-              marked: true,
-              dotColor: 'red',
-              activeOpacity: 0,
-              selected: true,
-              endingDay: true,
-            },
-            '2020-09-24': {disabled: true, disableTouchEvent: true},
-          }}
-          // Initially visible month. Default = Date()
-          current={new Date()}
-          // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-          minDate={'2012-05-10'}
-          // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-          maxDate={'2020-12-30'}
-          // Handler which gets executed on day press. Default = undefined
-          onDayPress={(day) => {
-            console.log('selected day', day);
-          }}
-          // // Handler which gets executed on day long press. Default = undefined
-          // onDayLongPress={(day) => {
-          //   console.log('selected day', day);
-          // }}
-          // // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-          // monthFormat={'yyyy MM'}
-          // // Handler which gets executed when visible month changes in calendar. Default = undefined
-          // onMonthChange={(month) => {
-          //   console.log('month changed', month);
-          // }}
-          enableSwipeMonths={true}
-        />
-      </View>
-      <Text style={styles.setCustomTimings}>Set Custom Timings</Text>
-      <Text style={styles.date8January}>Date : 18 January</Text>
-      <View style={styles.button2Row}>
-        <TouchableOpacity style={styles.button2}>
-          <Text style={styles.startTime1}>Start Time</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button1}>
-          <Text style={styles.endTime1}>End Time</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.loremIpsum}>Add another time range</Text>
-      <Text style={styles.date8January}>Date : 25 - 27 January</Text>
-      <View style={styles.button2Row}>
-        <TouchableOpacity style={styles.button2}>
-          <Text style={styles.startTime1}>Start Time</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button1}>
-          <Text style={styles.endTime1}>End Time</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.loremIpsum}>Add another time range</Text>
+    <Modal visible={visible}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.customSchedule}>Custom Schedule</Text>
+        <View style={styles.rect}>
+          {/* <Text style={styles.calendar}>Calendar</Text> */}
+          <Calendar
+            style={styles.calendar}
+            markingType="period"
+            markedDates={{
+              '2020-09-16': {
+                selected: true,
+                marked: true,
+                selectedColor: '#27aae1',
+              },
+              '2020-09-22': {
+                startingDay: true,
+                marked: true,
+                selected: true,
+                color: '#27aae1',
+              },
+              '2020-09-23': {
+                color: '#27aae1',
+                marked: true,
+                dotColor: 'red',
+                activeOpacity: 0,
+                selected: true,
+                endingDay: true,
+              },
+              '2020-09-24': {disabled: true, disableTouchEvent: true},
+            }}
+            // Initially visible month. Default = Date()
+            current={new Date()}
+            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+            minDate={'2012-05-10'}
+            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+            maxDate={'2020-12-30'}
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={(day) => {
+              console.log('selected day', day);
+            }}
+            // // Handler which gets executed on day long press. Default = undefined
+            // onDayLongPress={(day) => {
+            //   console.log('selected day', day);
+            // }}
+            // // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            // monthFormat={'yyyy MM'}
+            // // Handler which gets executed when visible month changes in calendar. Default = undefined
+            // onMonthChange={(month) => {
+            //   console.log('month changed', month);
+            // }}
+            enableSwipeMonths={true}
+          />
+        </View>
+        <Text style={styles.setCustomTimings}>Set Custom Timings</Text>
+        <Text style={styles.date8January}>Date : 18 January</Text>
+        <View style={styles.button2Row}>
+          <TouchableOpacity style={styles.button2}>
+            <Text style={styles.startTime1}>Start Time</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button1}>
+            <Text style={styles.endTime1}>End Time</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.loremIpsum}>Add another time range</Text>
+        <Text style={styles.date8January}>Date : 25 - 27 January</Text>
+        <View style={styles.button2Row}>
+          <TouchableOpacity style={styles.button2}>
+            <Text style={styles.startTime1}>Start Time</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button1}>
+            <Text style={styles.endTime1}>End Time</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.loremIpsum}>Add another time range</Text>
 
-      <MaterialButtonPrimary
-        onPress={() => {
-          navigation.navigate('SpaceAvailable');
-        }}
-        caption="SAVE SCHEDULE"
-        style={styles.materialButtonPrimary7}></MaterialButtonPrimary>
-    </ScrollView>
+        <MaterialButtonPrimary
+          onPress={() => {
+            navigation.navigate('SpaceAvailable');
+          }}
+          caption="SAVE SCHEDULE"
+          style={styles.materialButtonPrimary7}></MaterialButtonPrimary>
+      </ScrollView>
+    </Modal>
   );
 }
 

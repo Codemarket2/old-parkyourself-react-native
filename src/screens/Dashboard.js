@@ -8,19 +8,21 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-// import {connect} from 'react-redux';
-// import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import SimpleLineIconsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-// import {toggleUserType} from '../actions/user';
+import EvilIconsIcon from 'react-native-vector-icons/EvilIcons';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-function Dashboard({navigation}) {
+function Dashboard({navigation, vehicles}) {
   const [showPersonalForm, setShowPersonalForm] = useState(false);
   const [showBusinessForm, setShowBusinessForm] = useState(false);
+  const [showVehicles, setShowVehicles] = useState(false);
 
   const navigationHandler = (screen) => {
     navigation.navigate(screen);
@@ -121,16 +123,57 @@ function Dashboard({navigation}) {
           name="arrow-right"
           style={styles.icon2}></FontAwesomeIcon>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.rect2}>
-        <View style={styles.wrapper}>
-          <FontAwesomeIcon name="car" style={styles.icon}></FontAwesomeIcon>
-          <Text style={styles.btnText}>Vehicles</Text>
-        </View>
+      <View style={styles.rect}>
+        <TouchableOpacity
+          style={styles.rect2}
+          onPress={() => setShowVehicles(!showVehicles)}>
+          <View style={styles.wrapper}>
+            <FontAwesomeIcon name="car" style={styles.icon}></FontAwesomeIcon>
+            <Text style={styles.btnText}>Vehicles</Text>
+          </View>
 
-        <FontAwesomeIcon
-          name="arrow-right"
-          style={styles.icon2}></FontAwesomeIcon>
-      </TouchableOpacity>
+          <FontAwesomeIcon
+            name={showVehicles ? 'arrow-down' : 'arrow-right'}
+            style={styles.icon2}></FontAwesomeIcon>
+        </TouchableOpacity>
+
+        {showVehicles && (
+          <View style={styles.form}>
+            {vehicles &&
+              vehicles.map((item) => (
+                <View style={styles.vehicle} key={item.id}>
+                  <Text style={styles.vehicleName}>
+                    {item.year} {item.make} {item.model}
+                  </Text>
+                  <View style={styles.iconBtnRow}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate('AddVehicle', {vehicle: item});
+                      }}
+                      style={styles.iconBtn}>
+                      <EvilIconsIcon name="pencil" size={28} color="#888" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {}} style={styles.iconBtn}>
+                      <EvilIconsIcon name="trash" size={28} color="#888" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('AddVehicle', {vehicle: null});
+              }}
+              style={styles.addVehicleBtn}>
+              <EntypoIcon
+                name="circle-with-plus"
+                style={styles.icon5}></EntypoIcon>
+              <Text style={styles.addVehicle}>Add New Vehicles</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
       <TouchableOpacity
         style={styles.rect2}
         onPress={() => {
@@ -288,6 +331,42 @@ const styles = StyleSheet.create({
     fontSize: 25,
     height: 27,
   },
+  icon5: {
+    color: 'rgba(39,170,225,1)',
+    fontSize: 30,
+    // height: 33,
+    // width: 30,
+  },
+  addVehicleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginTop: 10,
+  },
+  addVehicle: {
+    // fontFamily: 'roboto-regular',
+    color: 'rgba(39,170,225,1)',
+    fontSize: 18,
+    marginLeft: 23,
+    // marginTop: 6,
+  },
+  vehicle: {
+    padding: 10,
+    borderBottomColor: '#d6d6d6',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  vehicleName: {
+    fontSize: 18,
+  },
+  iconBtnRow: {
+    flexDirection: 'row',
+  },
+  iconBtn: {
+    marginHorizontal: 5,
+  },
   profile: {
     // fontFamily: 'roboto-300',
     color: '#121212',
@@ -417,14 +496,12 @@ const styles = StyleSheet.create({
   // },
 });
 
-// Dashboard.propTypes = {
-//   toggleUserType: PropTypes.func.isRequired,
-//   isSpaceOwner: PropTypes.bool.isRequired,
-// };
+Dashboard.propTypes = {
+  vehicles: PropTypes.array.isRequired,
+};
 
-// const mapStateToProps = (state) => ({
-//   isSpaceOwner: state.user.isSpaceOwner,
-// });
+const mapStateToProps = (state) => ({
+  vehicles: state.user.vehicles,
+});
 
-// export default connect(mapStateToProps, {toggleUserType})(Dashboard);
-export default Dashboard;
+export default connect(mapStateToProps, null)(Dashboard);

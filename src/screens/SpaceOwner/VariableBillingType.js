@@ -29,25 +29,27 @@ function VariableBillingType({
     pricingDetails && pricingDetails.pricingType ? 100 : 0,
   );
 
+  const [validate, setValidate] = useState(false);
+
   const [perHourRate, setPerHourRate] = useState(
     pricingDetails && pricingDetails.pricingRates
       ? pricingDetails.pricingRates.perHourRate
-      : '$ 1.80',
+      : '1.80',
   );
   const [perDayRate, setPerDayRate] = useState(
     pricingDetails && pricingDetails.pricingRates
       ? pricingDetails.pricingRates.perDayRate
-      : '$ 13.00',
+      : '13.00',
   );
   const [perWeekRate, setPerWeekRate] = useState(
     pricingDetails && pricingDetails.pricingRates
       ? pricingDetails.pricingRates.perWeekRate
-      : '$ 60.00',
+      : '60.00',
   );
   const [perMonthRate, setPerMonthRate] = useState(
     pricingDetails && pricingDetails.pricingRates
       ? pricingDetails.pricingRates.perMonthRate
-      : '$ 200.00',
+      : '200.00',
   );
   const [perWeek, setPerWeek] = useState(
     pricingDetails && pricingDetails.pricingRates
@@ -71,6 +73,7 @@ function VariableBillingType({
     setVisible2(false);
     try {
       if (perHourRate && perDayRate && perWeekRate && perMonthRate) {
+        setValidate(false);
         let pricingDetails = {
           pricingType: 'Variable',
           pricingRates: {
@@ -86,7 +89,7 @@ function VariableBillingType({
         // navigation.navigate('SaveSpaceDetails');
         onNextButtonPress();
       } else {
-        Alert.alert('Missing Inputs', 'Please fill all required inputs');
+        setValidate(true);
       }
     } catch (error) {
       Alert.alert('Something Went wrong!', 'Unable to set pricing details');
@@ -103,24 +106,30 @@ function VariableBillingType({
         <Text style={styles.subHeading}>Variable Billing Type</Text>
         <Text style={styles.dailyMaximum}>Per Hour</Text>
         <Input
-          placeholder="placeholder"
+          placeholder="Per Hour (in USD)"
           value={perHourRate}
           onChangeText={(input) => setPerHourRate(input)}
+          keyboardType="number-pad"
+          validate={validate}
           style={styles.placeholder}></Input>
 
         <Text style={styles.dailyMaximum}>Per Day</Text>
         <Input
-          placeholder="placeholder"
+          placeholder="Per Day (in USD)"
           value={perDayRate}
           onChangeText={(input) => setPerDayRate(input)}
+          keyboardType="number-pad"
+          validate={validate}
           style={styles.placeholder}></Input>
 
         <Text style={styles.dailyMaximum}>Per Week</Text>
         <View styles={styles.perWeek}>
           <Input
-            placeholder="placeholder"
+            placeholder="Per Week (in USD)"
             value={perWeekRate}
             onChangeText={(input) => setPerWeekRate(input)}
+            keyboardType="number-pad"
+            validate={validate}
             style={styles.placeholder}></Input>
           <Switch
             value={perWeek}
@@ -135,9 +144,11 @@ function VariableBillingType({
         <Text style={styles.dailyMaximum}>Per Month</Text>
         <View styles={styles.perWeek}>
           <Input
-            placeholder="placeholder"
+            placeholder="Per Month (in USD)"
             value={perMonthRate}
             onChangeText={(input) => setPerMonthRate(input)}
+            keyboardType="number-pad"
+            validate={validate}
             style={styles.placeholder}></Input>
           <Switch
             value={perMonth}

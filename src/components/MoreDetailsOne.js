@@ -3,7 +3,13 @@ import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
-export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
+export default function MoreDetailsOne({
+  locationDetails,
+  scheduleType,
+  startTime,
+  endTime,
+  isSpaceOwner,
+}) {
   const {
     propertyName,
     features,
@@ -13,8 +19,6 @@ export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
     postalCode,
     images,
   } = locationDetails;
-
-  console.log(images);
 
   return (
     <Fragment>
@@ -42,36 +46,30 @@ export default function MoreDetailsOne({locationDetails, startDate, endDate}) {
         style={styles.image}></Image>
       <View style={styles.rect2}>
         <Text style={styles.loremIpsum3}>
-          {moment(startDate).format('lll')} to {moment(endDate).format('lll')}
+          {scheduleType == 'daily'
+            ? `${moment(startTime).format('lll')} to ${moment(endTime).format(
+                'lll',
+              )}`
+            : '24 Hours a day'}
         </Text>
-        <View style={styles.loremIpsum4Row}>
-          <Text style={styles.loremIpsum4}>
-            My time has been Extended for free
-          </Text>
-          <TouchableOpacity>
-            <Text style={styles.why}>Why?</Text>
-          </TouchableOpacity>
-        </View>
+        {!isSpaceOwner && (
+          <View style={styles.loremIpsum4Row}>
+            <Text style={styles.loremIpsum4}>
+              My time has been Extended for free
+            </Text>
+            <TouchableOpacity>
+              <Text style={styles.why}>Why?</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={styles.rect3Row}>
           {features &&
             features.map((item) => (
-              <View style={styles.rect3}>
+              <View style={styles.rect3} key={item}>
                 <Text style={styles.valet}>{item}</Text>
               </View>
             ))}
-          {/* <View style={styles.rect3}>
-            <Text style={styles.valet}>VALET</Text>
-          </View>
-          <View style={styles.rect4}>
-            <Text style={styles.covered}>COVERED</Text>
-          </View>
-          <View style={styles.rect5}>
-            <Text style={styles.onSiteStaff}>ON SITE STAFF</Text>
-          </View> */}
         </View>
-        {/* <View style={styles.rect6}>
-          <Text style={styles.accessible}>ACCESSIBLE</Text>
-        </View> */}
       </View>
     </Fragment>
   );

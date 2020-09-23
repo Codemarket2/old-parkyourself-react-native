@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import RadioButton from '../../components/RadioButton';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialButtonPrimary from '../../components/MaterialButtonPrimary';
@@ -39,6 +38,11 @@ function SpaceAvailable({
   const [width, setWidth] = useState(
     spaceAvailable && spaceAvailable.activeDays ? 100 : 0,
   );
+
+  const [validate, setValidate] = useState(false);
+
+  //for custom schedule modal
+  const [visible, setVisible] = useState(false);
 
   const [monday, setMonday] = useState(
     spaceAvailable && spaceAvailable.activeDays
@@ -83,14 +87,12 @@ function SpaceAvailable({
       : 1,
   );
   const [noticeTime, setNoticeTime] = useState(
-    spaceAvailable && spaceAvailable.noticeTime
-      ? spaceAvailable.noticeTime
-      : '1 Hour',
+    spaceAvailable && spaceAvailable.noticeTime ? spaceAvailable.noticeTime : 1,
   );
   const [advanceBookingTime, setAdvanceBookingTime] = useState(
     spaceAvailable && spaceAvailable.advanceBookingTime
       ? spaceAvailable.advanceBookingTime
-      : '3 Hours',
+      : 3,
   );
   const [minTime, setMinTime] = useState(
     spaceAvailable && spaceAvailable.minTime ? spaceAvailable.minTime : 1,
@@ -163,55 +165,54 @@ function SpaceAvailable({
   const onSubmitHandler = () => {
     try {
       if (activeIndex != 6) {
-        setActiveIndex(activeIndex + 1);
-        scrollRef.current.scrollTo({
-          y: 0,
-          animated: true,
-        });
-        setWidth(width + 20);
-      } else {
         if (
-          (monday ||
-            tuesday ||
-            wednesday ||
-            thursday ||
-            friday ||
-            saturday ||
-            sunday) &&
-          scheduleType &&
-          noticeTime &&
-          startTime &&
-          endTime &&
-          minTime &&
-          maxTime &&
-          advanceBookingTime &&
-          instantBooking
+          (activeIndex == 1 &&
+            (monday ||
+              tuesday ||
+              wednesday ||
+              thursday ||
+              friday ||
+              saturday ||
+              sunday)) ||
+          (activeIndex == 2 &&
+            ((scheduleType == 1 && startTime && endTime) ||
+              scheduleType == 2)) ||
+          (activeIndex == 3 && noticeTime) ||
+          (activeIndex == 4 && advanceBookingTime) ||
+          activeIndex == 5
         ) {
-          let spaceAvailableData = {
-            activeDays: {
-              monday: monday,
-              tuesday: tuesday,
-              wednesday: wednesday,
-              thursday: thursday,
-              friday: friday,
-              saturday: saturday,
-              sunday: sunday,
-            },
-            scheduleType: scheduleType == 1 ? 'daily' : 'custom',
-            startTime,
-            endTime,
-            noticeTime,
-            advanceBookingTime,
-            minTime,
-            maxTime,
-            instantBooking,
-          };
-          addListingSpaceAvailable(spaceAvailableData);
-          // navigation.navigate('SetPricingType');
-          onNextButtonPress();
+          setValidate(false);
+          setActiveIndex(activeIndex + 1);
+          scrollRef.current.scrollTo({
+            y: 0,
+            animated: true,
+          });
+          setWidth(width + 20);
         } else {
-          Alert.alert('Missing Inputs', 'Please fill all required inputs');
+          setValidate(true);
         }
+      } else {
+        let spaceAvailableData = {
+          activeDays: {
+            monday: monday,
+            tuesday: tuesday,
+            wednesday: wednesday,
+            thursday: thursday,
+            friday: friday,
+            saturday: saturday,
+            sunday: sunday,
+          },
+          scheduleType: scheduleType == 1 ? 'daily' : '24hours',
+          startTime,
+          endTime,
+          noticeTime,
+          advanceBookingTime,
+          minTime,
+          maxTime,
+          instantBooking,
+        };
+        addListingSpaceAvailable(spaceAvailableData);
+        onNextButtonPress();
       }
     } catch (error) {
       Alert.alert(
@@ -267,6 +268,20 @@ function SpaceAvailable({
               checked={sunday}
               onPress={() => setSunday(!sunday)}
             />
+            {validate &&
+              !(
+                monday ||
+                tuesday ||
+                wednesday ||
+                thursday ||
+                friday ||
+                saturday ||
+                sunday
+              ) && (
+                <Text style={styles.requiredText}>
+                  Please select at least one day
+                </Text>
+              )}
           </>
         )}
 
@@ -282,20 +297,43 @@ function SpaceAvailable({
             />
 
             <View style={styles.button2Row}>
-              <TouchableOpacity
-                style={styles.button2}
-                onPress={() => showDatepicker('start')}>
-                <Text style={styles.startTime} numberOfLines={1}>
-                  {startTime ? moment(startTime).format('lll') : 'Start Time'}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button3}
-                onPress={() => showDatepicker('end')}>
-                <Text style={styles.endTime} numberOfLines={1}>
-                  {endTime ? moment(endTime).format('lll') : 'End Time'}
-                </Text>
-              </TouchableOpacity>
+              <View style={styles.wrapper}>
+                <TouchableOpacity
+                  style={
+                    validate && scheduleType == 1 && !startTime
+                      ? {...styles.button2, ...styles.required}
+                      : styles.button2
+                  }
+                  onPress={() => showDatepicker('start')}>
+                  <Text style={styles.startTime} numberOfLines={1}>
+                    {startTime ? moment(startTime).format('lll') : 'Start Time'}
+                  </Text>
+                </TouchableOpacity>
+                {validate && scheduleType == 1 && !startTime && (
+                  <Text style={styles.requiredText}>
+                    This field is required
+                  </Text>
+                )}
+              </View>
+
+              <View style={styles.wrapper}>
+                <TouchableOpacity
+                  style={
+                    validate && scheduleType == 1 && !endTime
+                      ? {...styles.button2, ...styles.required}
+                      : styles.button2
+                  }
+                  onPress={() => showDatepicker('end')}>
+                  <Text style={styles.endTime} numberOfLines={1}>
+                    {endTime ? moment(endTime).format('lll') : 'End Time'}
+                  </Text>
+                </TouchableOpacity>
+                {validate && scheduleType == 1 && !endTime && (
+                  <Text style={styles.requiredText}>
+                    This field is required
+                  </Text>
+                )}
+              </View>
             </View>
 
             {showStart && (
@@ -327,7 +365,7 @@ function SpaceAvailable({
             <TouchableOpacity
               style={styles.rect9}
               onPress={() => {
-                navigation.navigate('CustomSchedule');
+                // navigation.navigate('CustomSchedule');
               }}>
               <Text style={styles.loremIpsum4}>SET A CUSTOM SCHEDULE</Text>
             </TouchableOpacity>
@@ -339,14 +377,32 @@ function SpaceAvailable({
             <Text style={styles.heading}>
               How much notice do you need before a Guest arrives?
             </Text>
-            <View style={styles.button}>
-              <Input
-                style={styles.hour}
-                value={noticeTime}
-                onChangeText={(input) => {
-                  setNoticeTime(input);
-                }}></Input>
+            <View style={styles.rect10}>
+              <View style={styles.iconRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (noticeTime != 1) {
+                      setNoticeTime(noticeTime - 1);
+                    }
+                  }}>
+                  <EntypoIcon
+                    name="circle-with-minus"
+                    style={styles.icon}></EntypoIcon>
+                </TouchableOpacity>
+                <Text style={styles.loremIpsum11}>
+                  {noticeTime} {noticeTime == 1 ? 'Hour' : 'Hours'}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setNoticeTime(noticeTime + 1);
+                  }}>
+                  <EntypoIcon
+                    name="circle-with-plus"
+                    style={styles.icon2}></EntypoIcon>
+                </TouchableOpacity>
+              </View>
             </View>
+
             <Text style={styles.description}>
               Tip : At least 2 days&#39; notice can help you plan for a
               guest&#39;s arrival, but you might miss out last minute trips.
@@ -359,18 +415,35 @@ function SpaceAvailable({
             <Text style={styles.heading}>
               How far in advance can guests book?
             </Text>
-            <View style={styles.button}>
-              <Input
-                style={styles.loremIpsum8}
-                value={advanceBookingTime}
-                onChangeText={(input) => {
-                  setAdvanceBookingTime(input);
-                }}
-              />
+            <View style={styles.rect10}>
+              <View style={styles.iconRow}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (advanceBookingTime != 1) {
+                      setAdvanceBookingTime(advanceBookingTime - 1);
+                    }
+                  }}>
+                  <EntypoIcon
+                    name="circle-with-minus"
+                    style={styles.icon}></EntypoIcon>
+                </TouchableOpacity>
+                <Text style={styles.loremIpsum11}>
+                  {advanceBookingTime}{' '}
+                  {advanceBookingTime == 1 ? 'Hour' : 'Hours'}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setAdvanceBookingTime(advanceBookingTime + 1);
+                  }}>
+                  <EntypoIcon
+                    name="circle-with-plus"
+                    style={styles.icon2}></EntypoIcon>
+                </TouchableOpacity>
+              </View>
             </View>
             <Text style={styles.description}>
-              Tip : At least 2 days&#39; notice can help you plan for a
-              guest&#39;s arrival, but you might miss out last minute trips.
+              Tip : Avoid cancelling or declining guests by only unblocking
+              dates you can host.
             </Text>
           </>
         )}
@@ -431,8 +504,8 @@ function SpaceAvailable({
               </View>
             </View>
             <Text style={styles.description}>
-              Tip : At least 2 days&#39; notice can help you plan for a
-              guest&#39;s arrival, but you might miss out last minute trips.
+              Tip : Shorter trips can mean more reservations but you might have
+              to turn over your space more often.
             </Text>
           </>
         )}
@@ -454,17 +527,6 @@ function SpaceAvailable({
             />
           </>
         )}
-        {/* <View style={styles.btnRow}>
-        {activeIndex != 1 && (
-          <TouchableOpacity onPress={backButtonHandler}>
-            <Text style={styles.backBtnText}>Back</Text>
-          </TouchableOpacity>
-        )}
-        <MaterialButtonPrimary
-          onPress={onSubmitHandler}
-          caption="NEXT"
-          style={styles.materialButtonPrimary1}></MaterialButtonPrimary>
-      </View> */}
       </ScrollView>
       <NextButton onPress={onSubmitHandler} />
     </>
@@ -545,8 +607,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'center',
   },
+  wrapper: {
+    width: '45%',
+  },
   button2: {
-    width: '50%',
+    width: '100%',
     height: 39,
     borderBottomWidth: 1,
     borderColor: 'rgba(182,182,182,1)',
@@ -575,9 +640,9 @@ const styles = StyleSheet.create({
   button2Row: {
     height: 39,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 21,
     // marginLeft: 25,
-    marginRight: 28,
     marginBottom: 30,
   },
   materialRadio2: {
@@ -609,7 +674,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     borderWidth: 2,
     borderColor: 'rgba(39,170,225,1)',
-    marginTop: 21,
+    marginTop: 30,
     // marginLeft: 27,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -625,6 +690,14 @@ const styles = StyleSheet.create({
     color: 'rgba(11,64,148,1)',
     fontSize: 17,
     marginTop: 30,
+  },
+  required: {
+    borderBottomColor: 'red',
+  },
+  requiredText: {
+    color: 'red',
+    marginTop: 5,
+    fontSize: 13,
   },
   button: {
     width: '100%',

@@ -1,9 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import moment from 'moment';
 
 export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
   const {address, city, state, postalCode, latlng} = locationDetails;
+  const {scheduleType, startTime, endTime, activeDays} = spaceAvailable;
   const {
     monday,
     tuesday,
@@ -12,7 +14,7 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
     friday,
     saturday,
     sunday,
-  } = spaceAvailable.activeDays;
+  } = activeDays;
   return (
     <Fragment>
       <View style={styles.rect}>
@@ -200,7 +202,13 @@ export default function MoreDetailsTwo({locationDetails, spaceAvailable}) {
       <View style={styles.rect2}>
         <Text style={styles.hours}>Hours</Text>
         <Text style={styles.loremIpsum2}>
-          This facility is open 24/7 on {monday && 'Monday'}
+          This facility is open{' '}
+          {scheduleType == 'daily'
+            ? `from ${moment(startTime).format('lll')} to ${moment(
+                endTime,
+              ).format('lll')}`
+            : '24/7'}{' '}
+          on {monday && 'Monday'}
           {tuesday && ', Tuesday'}
           {wednesday && ', Wednesday'}
           {thursday && ', Thursday'}

@@ -14,13 +14,15 @@ function MoreDetails({route, listings, navigation, isSpaceOwner}) {
     spaceDetails,
     pricingDetails,
   } = listingDetail;
-  const {startDate, endDate} = spaceAvailable;
+  const {startTime, endTime, scheduleType} = spaceAvailable;
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MoreDetailsOne
         locationDetails={locationDetails}
-        startDate={startDate}
-        endDate={endDate}
+        scheduleType={scheduleType}
+        startTime={startTime}
+        endTime={endTime}
+        isSpaceOwner={isSpaceOwner}
       />
       <MoreDetailsTwo
         locationDetails={locationDetails}
