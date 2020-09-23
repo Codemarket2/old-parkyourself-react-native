@@ -412,7 +412,6 @@ function AddListingLocation({
                   ]}
                   enablePoweredByContainer={false}
                   query={{
-                    key: 'AIzaSyDF0pzALjYYanPshuclFzq_2F24xZWZjOg',
                     language: 'en',
                     location: '30.36214,78.26541',
                     radius: 100,
@@ -515,7 +514,7 @@ function AddListingLocation({
               ]}
               enablePoweredByContainer={false}
               query={{
-                key: 'AIzaSyDF0pzALjYYanPshuclFzq_2F24xZWZjOg',
+                key: 'API_KEY',
                 language: 'en',
                 location: '30.36214,78.26541',
                 radius: 100,
