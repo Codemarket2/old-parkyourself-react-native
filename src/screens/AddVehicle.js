@@ -409,48 +409,6 @@ function AddVehicle({navigation, route, addVehicle}) {
             </View> */}
           </>
         )}
-        {/* <View style={styles.rectStack}>
-        <View style={styles.rect}>
-          <View style={styles.button5Row}>
-            <TouchableOpacity style={styles.button5}>
-              <FontAwesomeIcon
-                name="motorcycle"
-                style={styles.icon2}></FontAwesomeIcon>
-              <Text style={styles.motorcycle}>Motorcycle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button6}>
-              <View style={styles.icon3Stack}>
-                <MaterialCommunityIconsIcon
-                  name="car-sports"
-                  style={styles.icon3}></MaterialCommunityIconsIcon>
-                <Text style={styles.compact}>Compact</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button7}>
-              <View style={styles.icon4Stack}>
-                <MaterialCommunityIconsIcon
-                  name="car-side"
-                  style={styles.icon4}></MaterialCommunityIconsIcon>
-                <Text style={styles.midSized}>Mid Sized</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.button8}>
-            <FontAwesomeIcon
-              name="truck"
-              style={styles.icon6}></FontAwesomeIcon>
-            <Text style={styles.oversized}>Oversized</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.button9}>
-          <View style={styles.icon5Stack}>
-            <MaterialCommunityIconsIcon
-              name="car-estate"
-              style={styles.icon5}></MaterialCommunityIconsIcon>
-            <Text style={styles.large}>Large</Text>
-          </View>
-        </TouchableOpacity>
-      </View> */}
 
         {activeIndex == 8 && (
           <>
